@@ -1,0 +1,29 @@
+.center {
+    text-align: center;
+    font-family: monospace;
+    margin-top: -200px;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: #000000;
+    float: left;
+    text-decoration: none;
+    transition: background-color .5s;
+    border: 1px solid #DDD;
+    margin: 0 4px;
+    font-size: 18px;
+    margin-top: 10px;
+    padding: 3px;
+
+}
+
+
+ a:hover {
+    background-color: #90B2D8;
+    color: white;
+    cursor: pointer;
+}
