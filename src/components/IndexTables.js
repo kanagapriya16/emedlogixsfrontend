@@ -3,35 +3,7 @@ import "../styles/Pagination.css";
 import { Box, TextField, Typography } from '@mui/material';
 import { Pagin } from './pagination';
 const IndexTables = () => {
-  const items = [
-    "0-9",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-  ];
-
+  
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(null);
 
@@ -72,8 +44,8 @@ const IndexTables = () => {
           height: "20px",
           width: "100%",
           textAlign: "left",
-          ml: "-60px",
-          mt: "20px"
+          ml: "-50px",
+          mt: "40px"
         }}
       >
         <Pagin />

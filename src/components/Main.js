@@ -93,21 +93,30 @@ export const Main = ({ isValueSelected }) => {
               width: "55%",
               display: "flex",
               border: "0.5px solid grey",
+            
             }}
           >
             {" "}
-            <Button
+            <Button 
                 onClick={handleIndexClick}
               variant="contained"
               sx={{
                 textAlign: "center",
-                mt: "-35px",
-                width: "100px",
+                mt: "0px",
+                width: "80px",
                 position: "absolute",
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px",
-                textTransform: "lowercase",
-                backgroundColor: "#90B2D8",
+                height:"40px",
+               
+                textTransform: "none",
+                color:"#F2BE71",
+                backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
+                border:"1px solid #90B2D8",
+                
+                
+       
+        "&:hover": {
+          backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
+        },
               }}
             >
               {showIndx ? "" : ""}
@@ -126,14 +135,20 @@ export const Main = ({ isValueSelected }) => {
               variant="contained"
               sx={{
                 textAlign: "center",
-                mt: "-35px",
+                mt: "0px",
                 width: "100px",
                 position: "absolute",
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px",
-                ml: "100px",
-                textTransform: "lowercase",
-                backgroundColor: "#90B2D8",
+                height:"40px",
+                marginLeft:"85px",
+                textTransform: "none",
+                color:"rgb(138, 175, 198)",
+                backgroundColor: showIndx ? "#C1E3FF" : "#90B2D8",
+               
+                "&:hover": {
+                  backgroundColor: showIndx ? "#C1E3FF" : "#90B2D8",
+                },
+                
+               
               }}
             >
               {showTable ? "" : ""}
@@ -145,14 +160,18 @@ export const Main = ({ isValueSelected }) => {
               variant="contained"
               sx={{
                 textAlign: "center",
-                mt: "-35px",
-                width: "100px",
+                mt: "0px",
+                width: "80px",
                 position: "absolute",
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px",
-                ml: "200px",
-                textTransform: "lowercase",
-                backgroundColor: "#90B2D8",
+                height:"40px",
+              marginLeft:"190px",
+                textTransform: "none",
+                color:"#F2BE71",
+                backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
+                border:"1px solid #90B2D8",
+                "&:hover": {
+                  backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
+                },
               }}
             >
               {showDrug ? "" : ""}

@@ -80,7 +80,7 @@ export default function NeoplasmTable() {
           width: "100%",
           textAlign: "left",
           ml: "1px",
-          mt: "125px"
+          mt: "140px"
         }}
       >
         <Pagin />
@@ -88,7 +88,7 @@ export default function NeoplasmTable() {
       <Box sx={{mt:"30px"}}>
       <TableContainer
         sx={{
-          mt: "-20px",
+          mt: "-25px",
           display: "flex",
           position: "absolute",
           width: "910px",

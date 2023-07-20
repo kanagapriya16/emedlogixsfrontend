@@ -21,8 +21,14 @@ const Chapternotes = () => {
         console.error("Error:", error);
       }
     };
-    fetchBooks();
-  }, [global.values.code]);
+  
+    if (global.values && global.values.code) {
+      fetchBooks();
+    } else {
+     
+      setResults(null);
+    }
+  }, [global.values]);
 
   console.log("our result is", results);
   const shouldDisplayClassification = (classification, index) => {
