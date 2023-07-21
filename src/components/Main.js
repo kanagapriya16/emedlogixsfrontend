@@ -141,13 +141,13 @@ export const Main = ({ isValueSelected }) => {
                 height:"40px",
                 marginLeft:"85px",
                 textTransform: "none",
-                color:"rgb(138, 175, 198)",
-                backgroundColor: showIndx ? "#C1E3FF" : "#90B2D8",
-               
-                "&:hover": {
-                  backgroundColor: showIndx ? "#C1E3FF" : "#90B2D8",
-                },
                 
+                color:"#F2BE71",
+                backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
+                border:"1px solid #90B2D8",
+                "&:hover": {
+                  backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
+                },
                
               }}
             >

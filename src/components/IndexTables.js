@@ -1,14 +1,43 @@
-import React, { useState } from 'react'
+
+
+import React, { Fragment, useState } from 'react';
 import "../styles/Pagination.css";
 import { Box, TextField, Typography } from '@mui/material';
 import { Pagin } from './pagination';
+
+
+
+const renderChildRows = (row, depthLevel = 1) => {
+  if (row.child) {
+    const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
+    return (
+      <>
+        <tr key={row.child.id}>
+          <td style={{ paddingLeft: `${paddingLeftValue}px` }}>
+            <ul style={{ listStyleType: "circle", paddingLeft: "20px", margin: 0 }}>
+              {row.child.title && (
+                <li>
+                  {row.child.title}
+                 
+                  <a href={`YOUR_CCC_URL_PREFIX/${row.code}`} target="_blank" style={{ color: "blue" }}>
+                    {row.child.code !== null && row.child.code !=="null" && ` ${row.child.code}`}
+                    </a>
+                </li>
+              )}
+            </ul>
+          </td>
+        </tr>
+        {renderChildRows(row.child, depthLevel + 1)} 
+      </>
+    );
+  }
+  return null;
+};
 const IndexTables = () => {
-  
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(null);
-
   React.useEffect(() => {
-    console.log("enter index table")
+    console.log("enter index table");
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code) {
@@ -16,7 +45,6 @@ const IndexTables = () => {
           if (response.ok) {
             const data = await response.json();
             setIndex(data);
-
           } else {
             console.error("Failed to fetch data");
           }
@@ -29,17 +57,13 @@ const IndexTables = () => {
     };
     fetchBooks();
   }, [global.values?.code]);
-  console.log("our index is", index);
-
-
-
-
+console.log("our index is", index);
 
 
 
   return (
     <>
-      <Box
+   <Box
         sx={{
           height: "20px",
           width: "100%",
@@ -69,81 +93,52 @@ const IndexTables = () => {
 
 
       </div>
-
-
-
-      <div style={{ overflowX: "scroll", width: "796px", overflowY: "scroll", height: "450px", backgroundColor: "#c7e1ed" }}>
-        <table style={{marginLeft:"10px"}}>
-
-
-
-         
- 
-
-<tbody style={{ textAlign: "left" }}>
-  {index
-    ?.filter((item) => {
-      return search.toLowerCase() === ""
-        ? item
-        : item.title.toLowerCase().includes(search);
-    })
-    .map((row) => {
-      return (
-        <>
-          <tr key={row.id} style={{ marginLeft: "-80px" }}>
-            <td>
-              <ul style={{ listStyleType: "square", paddingLeft: "20px", margin: 0 }}>
-                <li>
-                  {row.title}
-                </li>
-              </ul>
-            </td>
-            {row.seealso && (
-              <td>
-                <a href={`YOUR_CLSO_URL_PREFIX/${row.seealso}`} target="_blank" style={{ color: "blue"}}>
-                  seeAlso {row.seealso}
-                </a>
-              </td>
-            )}
-            {row.see && (
-              <td>
-                <a href={`YOUR_CCC_URL_PREFIX/${row.see}`} target="_blank" style={{ color: "blue"}}>
-                  see {row.see}
-                </a>
-              </td>
-            )}
-            <td>
-              <a href={`YOUR_URL_PREFIX/${row.code}`} target="_blank">
-                {row.code}
-              </a>
-            </td>
-          </tr>
-
-          {row.termHierarchyList && row.termHierarchyList.length > 0 && (
-            row.termHierarchyList.map((add, addIndex) => {
-              return (
-                <tr key={add.id}>
-                  <td style={{ paddingLeft: "40px" }}>
-                    <ul style={{ listStyleType: "circle", paddingLeft: "20px", margin: 0 }} >
-                      <li>
-                        {add.title}
-                      </li>
+      <div style={{ overflowX: "scroll", width: "796px", overflowY: "scroll", height: "450px", backgroundColor: "#C7E1ED" }}>
+        <table style={{ marginLeft: "10px" }}>
+          <tbody style={{ textAlign: "left" }}>
+            {index
+              ?.filter((item) => {
+                return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search);
+              })
+              .map((row) => (
+                <Fragment key={row.id}>
+                <tr style={{ marginLeft: "-80px" }}>
+                  <td>
+                    <ul style={{ listStyleType: "square", paddingLeft: "20px", margin: 0 }}>
+                      <li>{row.title}</li>
                     </ul>
                   </td>
+                  {row.seealso !== null && row.seealso !== "null" && (
+                    <td>
+                      <a href={`YOUR_CLSO_URL_PREFIX/${row.seealso}`} target="_blank" style={{ color: "blue" }}>
+                        SeeAlso {row.seealso}
+                      </a>
+                    </td>
+                  )}
+                  {row.see !== null && row.see !== "null" &&  (
+                    <td>
+                      <a href={`YOUR_CCC_URL_PREFIX/${row.see}`} target="_blank" style={{ color: "blue" }}>
+                        See {row.see}
+                      </a>
+                    </td>
+                  )}
+                  <td>
+                    <a href={`YOUR_URL_PREFIX/${row.code}`} target="_blank">
+                      {row.code}
+                    </a>
+                  </td>
                 </tr>
-              )
-            })
-          )}
-        </>
-      )
-    })
-  }
-</tbody>
-
+                {renderChildRows(row)}
+              </Fragment>
+              ))}
+          </tbody>
         </table>
       </div>
-
     </>
-  )
-}
+  );
+};
 export default IndexTables;
+
+
+
+
