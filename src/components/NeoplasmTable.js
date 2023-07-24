@@ -7,7 +7,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, Stack, TextField, Typography } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { Pagin } from "./pagination";
 import { useState } from "react";
 import "../App.css"
@@ -82,7 +82,7 @@ export default function NeoplasmTable() {
           height: "20px",
           width: "100%",
           textAlign: "left",
-          ml: "-70px",
+          ml: "-40px",
           mt: "240px"
         }}
       >
