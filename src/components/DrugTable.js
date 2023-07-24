@@ -40,6 +40,7 @@ export default function NeoplasmTable() {
   console.log("neo enter");
   //console.log(global.values.code);
   const [drug, setDrug] = useState(null);
+  const [drug1, setDrug1] = useState(null);
 
   React.useEffect(() => {
     const fetchBooks = async () => {
@@ -62,6 +63,34 @@ export default function NeoplasmTable() {
     };
     fetchBooks();
   }, [global.values?.code]);
+
+  //all values of drug
+  React.useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+       
+          const response = await fetch(`/codes/allDetails/drug`);
+          if (response.ok) {
+            const data = await response.json();
+            setDrug1(data);
+  
+          } else {
+            console.error("Failed to fetch data");
+          }
+        
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    fetchBooks();
+  }, []);
+  console.log("our drug1 is", drug1);
+  
+
+
+
+
+
   console.log("our drug is", drug);
   const [result, setResult] = useState([]);
   const [open, setOpen] = useState(false);
@@ -88,13 +117,14 @@ export default function NeoplasmTable() {
       <Box sx={{mt:"30px"}}>
       <TableContainer
         sx={{
-          mt: "-25px",
+          mt: "-0.5px",
           display: "flex",
           position: "absolute",
           width: "910px",
           ml: "-115px",
           height:"440px",
           overflowY: "scroll",
+          overflowX:"scroll"
         }}
       >
         <Table sx={{ height: "5px" }}>
@@ -213,42 +243,64 @@ export default function NeoplasmTable() {
               </StyledTableCell>
             </TableRow>
           </TableHead>
+          
           <TableBody>
-            {drug
-              ?.filter((item) => {
-                return search.toLowerCase() === ""
-                  ? item
-                  : item.title.toLowerCase().includes(search);
-              })
-              .map((row) => (
-                <StyledTableRow key={row.id} >
-                  <StyledTableCell component="th" scope="row">
-                    {row.title}
-                  </StyledTableCell >
-                  {row.code.map((value) => (
-                    <StyledTableCell
-                      key={row.id}
-                      sx={{
-                        border: "1px solid grey",
-                        height: "auto",
-                      }}
-                      align="center"
-                    >
-                      {value}
-                      
-                    </StyledTableCell>
-                  ))}
-                </StyledTableRow>
-              ))}
-          </TableBody>
+  {global.values?.code !== null &&
+    drug
+      ?.filter((item) => {
+        return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search);
+      })
+      .map((row) => (
+        <StyledTableRow key={row.id}>
+          <StyledTableCell component="th" scope="row">
+            {row.title}
+          </StyledTableCell>
+          {row.code.map((value) => (
+            <StyledTableCell
+              key={row.id}
+              sx={{
+                border: "1px solid grey",
+                height: "auto",
+              }}
+              align="center"
+            >
+              {value}
+            </StyledTableCell>
+          ))}
+        </StyledTableRow>
+      ))}
+
+  {!global.values?.code  &&
+    drug1
+      ?.filter((item) => {
+        return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search);
+      })
+      .map((row) => (
+        <StyledTableRow key={row.id}>
+          <StyledTableCell component="th" scope="row">
+            {row.title}
+          </StyledTableCell>
+          {row.code.map((value) => (
+            <StyledTableCell
+              key={row.id}
+              sx={{
+                border: "1px solid grey",
+                height: "auto",
+              }}
+              align="center"
+            >
+              {value}
+            </StyledTableCell>
+          ))}
+        </StyledTableRow>
+      ))}
+</TableBody>
         </Table>
       </TableContainer>
       </Box>
     </>
   );
 }
-
-
 
 
 

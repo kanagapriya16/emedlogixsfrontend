@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -38,6 +37,7 @@ export default function NeoplasmTable() {
   console.log("neo enter");
  
   const [neo, setNeo] = useState(null);
+  const [neo1, setNeo1] = useState(null);
 
   React.useEffect(() => {
     const fetchBooks = async () => {
@@ -62,6 +62,32 @@ export default function NeoplasmTable() {
   }, [global.values?.code]);
   console.log("our neo is", neo);
 
+//All neoplasm values
+React.useEffect(() => {
+  const fetchBooks = async () => {
+    try {
+     
+        const response = await fetch(`/codes/allDetails/neoplasm`);
+        if (response.ok) {
+          const data = await response.json();
+          setNeo1(data);
+
+        } else {
+          console.error("Failed to fetch data");
+        }
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  fetchBooks();
+}, []);
+console.log("our neo1 is", neo1);
+
+
+
+
+
 
 
   const [result, setResult] = useState([]);
@@ -83,14 +109,15 @@ export default function NeoplasmTable() {
           width: "100%",
           textAlign: "left",
           ml: "-40px",
-          mt: "240px"
+          mt: "240px",
+         
         }}
       >
         <Pagin />
       </Box>
       <TableContainer
         sx={{
-          mt: "58px",
+          mt: "100px",
           display: "flex",
           position: "absolute",
           width: "910px",
@@ -216,33 +243,54 @@ export default function NeoplasmTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {neo
-              ?.filter((item) => {
-                return search.toLowerCase() === ""
-                  ? item
-                  : item.title.toLowerCase().includes(search);
-              })
-              .map((row) => (
-                <StyledTableRow key={row.id} >
-                  <StyledTableCell component="th" scope="row">
-                    {row.title}
-                  </StyledTableCell >
-                  {row.code.map((value, index) => (
-                    <StyledTableCell
-                      key={index}
-                      sx={{
-                        border: "1px solid grey",
-                        
-                      }}
-                      align="center"
-                    >
-                      {value}
-                      
-                    </StyledTableCell>
-                  ))}
-                </StyledTableRow>
-              ))}
-          </TableBody>
+          {global.values?.code !== null &&
+  neo
+    ?.filter((item) => {
+      return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search);
+    })
+    .map((row) => (
+      <StyledTableRow key={row.id}>
+        <StyledTableCell component="th" scope="row">
+          {row.title}
+        </StyledTableCell>
+        {row.code.map((value, index) => (
+          <StyledTableCell
+            key={index}
+            sx={{
+              border: "1px solid grey",
+            }}
+            align="center"
+          >
+            {value}
+          </StyledTableCell>
+        ))}
+      </StyledTableRow>
+    ))}
+
+{!global.values?.code &&
+  neo1
+    ?.filter((item) => {
+      return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search);
+    })
+    .map((row) => (
+      <StyledTableRow key={row.id}>
+        <StyledTableCell component="th" scope="row">
+          {row.title}
+        </StyledTableCell>
+        {row.code.map((value, index) => (
+          <StyledTableCell
+            key={index}
+            sx={{
+              border: "1px solid grey",
+            }}
+            align="center"
+          >
+            {value}
+          </StyledTableCell>
+        ))}
+      </StyledTableRow>
+    ))}
+    </TableBody>
         </Table>
       </TableContainer>
     </>
