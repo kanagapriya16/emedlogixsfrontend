@@ -67,7 +67,7 @@ React.useEffect(() => {
   const fetchBooks = async () => {
     try {
      
-        const response = await fetch(`/codes/allDetails/neoplasm`);
+        const response = await fetch(`/codes/alldetails/neoplasm`);
         if (response.ok) {
           const data = await response.json();
           setNeo1(data);

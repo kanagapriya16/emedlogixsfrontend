@@ -124,7 +124,7 @@ export default function NeoplasmTable() {
           ml: "-115px",
           height:"440px",
           overflowY: "scroll",
-          overflowX:"scroll"
+   
         }}
       >
         <Table sx={{ height: "5px" }}>
@@ -301,7 +301,6 @@ export default function NeoplasmTable() {
     </>
   );
 }
-
 
 
 
