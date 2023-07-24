@@ -102,34 +102,43 @@ console.log("our index is", index);
               })
               .map((row) => (
                 <Fragment key={row.id}>
-                <tr style={{ marginLeft: "-80px" }}>
-                  <td>
-                    <ul style={{ listStyleType: "square", paddingLeft: "20px", margin: 0 }}>
-                      <li>{row.title}</li>
-                    </ul>
-                  </td>
-                  {row.seealso !== null && row.seealso !== "null" && (
+                  <tr>
                     <td>
-                      <a href={`YOUR_CLSO_URL_PREFIX/${row.seealso}`} target="_blank" style={{ color: "blue" }}>
-                        SeeAlso {row.seealso}
+                      <ul style={{ listStyleType: "square", paddingLeft: "20px", margin: 0 }}>
+                        {row.nemod ? ( // Check if nemod has a value
+                          <li>
+                            {row.title}
+                            {' '}
+                            {row.nemod}
+                          </li>
+                        ) : (
+                          <li>{row.title}</li>
+                        )}
+                      </ul>
+                    </td>
+                    {/* ... (previous code) */}
+                    {row.seealso !== null && row.seealso !== "null" && (
+                      <td>
+                        <a href={`YOUR_CLSO_URL_PREFIX/${row.seealso}`} target="_blank" style={{ color: "blue" }}>
+                          SeeAlso {row.seealso}
+                        </a>
+                      </td>
+                    )}
+                    {row.see !== null && row.see !== "null" && (
+                      <td>
+                        <a href={`YOUR_CCC_URL_PREFIX/${row.see}`} target="_blank" style={{ color: "blue" }}>
+                          See {row.see}
+                        </a>
+                      </td>
+                    )}
+                    <td>
+                      <a href={`YOUR_URL_PREFIX/${row.code}`} target="_blank">
+                        {row.code}
                       </a>
                     </td>
-                  )}
-                  {row.see !== null && row.see !== "null" &&  (
-                    <td>
-                      <a href={`YOUR_CCC_URL_PREFIX/${row.see}`} target="_blank" style={{ color: "blue" }}>
-                        See {row.see}
-                      </a>
-                    </td>
-                  )}
-                  <td>
-                    <a href={`YOUR_URL_PREFIX/${row.code}`} target="_blank">
-                      {row.code}
-                    </a>
-                  </td>
-                </tr>
-                {renderChildRows(row)}
-              </Fragment>
+                  </tr>
+                  {renderChildRows(row)}
+                </Fragment>
               ))}
           </tbody>
         </table>
