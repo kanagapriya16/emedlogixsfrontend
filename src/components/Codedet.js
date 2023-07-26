@@ -6,8 +6,11 @@ import React, { useEffect, useState } from "react";
 
 
 const Codedet = () => {
+  console.log("enter codedet page")
+  console.log(global.index,"codedet index value")
   const [result, setResult] = useState(null);
   const [isClosed, setIsClosed] = useState(false);
+  
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -26,6 +29,12 @@ const Codedet = () => {
     };
     fetchBooks();
   }, [global.values]);
+
+
+
+
+
+
   const handleClose = () => {
     setIsClosed(true);
     window.location.reload();
@@ -33,6 +42,8 @@ const Codedet = () => {
   console.log("our result is", result);
   return (
     <div className="division">
+      
+ 
       {!isClosed && global.values && global.values.code && (
         <div>
           <div>
@@ -58,6 +69,7 @@ const Codedet = () => {
                 onClick={handleClose}
               />
             </Button>
+        
           </div>
           <table>
             <thead>
@@ -119,6 +131,17 @@ const Codedet = () => {
           </table>
         </div>
       )}
+
+
+
+
+
+
+
+
+
+
+
     </div>
   );
 };
