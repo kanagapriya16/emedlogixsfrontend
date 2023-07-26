@@ -1,5 +1,5 @@
 
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "../styles/Pagination.css";
 import { Box, TextField, Typography } from "@mui/material";
 import { Pagin } from "./pagination";
@@ -21,9 +21,7 @@ const renderChildRows = (row, depthLevel = 1) => {
                 <li>
                   {row.child.title}
                   <a
-                    href={`YOUR_CCC_URL_PREFIX/${row.code}`}
-                    target="_blank"
-                    style={{ color: "blue" }}
+                  style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                   >
                     {row.child.code !== null &&
                       row.child.code !== "null" &&
@@ -44,6 +42,9 @@ const IndexTables = () => {
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
+  const [clickedCode, setClickedCode] = useState(null);
+const [result1,setResult1]=useState([])
+  
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
@@ -98,7 +99,35 @@ const IndexTables = () => {
 
 
 
+console.log(clickedCode);
+global.index=clickedCode;
+console.log(global.index);
 
+
+const handleCodeClick = (code) => {
+  setClickedCode(code);
+  fetchCodeDetails(code); // Call the function to fetch code details
+};
+
+// Function to fetch code details
+const fetchCodeDetails = async (code) => {
+  try {
+    if (code) {
+      const response = await fetch(`/codes/${code}/details/?version=${global.years}`);
+      if (response.ok) {
+        const data = await response.json();
+        setResult1(data);
+      } else {
+        console.error("Failed to fetch data");
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+console.log(result1);
+global.values=result1;
   return (
     <>
       <Box
@@ -173,13 +202,12 @@ const IndexTables = () => {
                         )}
                       </ul>
                     </td>
-                    {/* ... (previous code) */}
+                  
                     {row.seealso !== null && row.seealso !== "null" && (
                       <td>
                         <a
-                          href={`YOUR_CLSO_URL_PREFIX/${row.seealso}`}
-                          target="_blank"
-                          style={{ color: "blue" }}
+                          
+                          style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           SeeAlso {row.seealso}
                         </a>
@@ -188,16 +216,15 @@ const IndexTables = () => {
                     {row.see !== null && row.see !== "null" && (
                       <td>
                         <a
-                          href={`YOUR_CCC_URL_PREFIX/${row.see}`}
-                          target="_blank"
-                          style={{ color: "blue" }}
+                          
+                          style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           See {row.see}
                         </a>
                       </td>
                     )}
                     <td>
-                      <a href={`YOUR_URL_PREFIX/${row.code}`} target="_blank">
+                      <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}>
                         {row.code}
                       </a>
                     </td>
@@ -226,7 +253,7 @@ const IndexTables = () => {
                           margin: 0,
                         }}
                       >
-                        {row.nemod ? ( // Check if nemod has a value
+                        {row.nemod ? ( 
                           <li>
                             {row.title} {row.nemod}
                           </li>
@@ -235,13 +262,13 @@ const IndexTables = () => {
                         )}
                       </ul>
                     </td>
-                    {/* ... (previous code) */}
+                    
                     {row.seealso !== null && row.seealso !== "null" && (
                       <td>
                         <a
-                          href={`YOUR_CLSO_URL_PREFIX/${row.seealso}`}
-                          target="_blank"
-                          style={{ color: "blue" }}
+                       
+                       
+                       style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           SeeAlso {row.seealso}
                         </a>
@@ -250,9 +277,9 @@ const IndexTables = () => {
                     {row.see !== null && row.see !== "null" && (
                       <td>
                         <a
-                          href={`YOUR_CCC_URL_PREFIX/${row.see}`}
-                          target="_blank"
-                          style={{ color: "blue" }}
+                          
+                         
+                          style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           See {row.see}
                         </a>
@@ -260,9 +287,13 @@ const IndexTables = () => {
                     )}
                      {row.code !== null && row.code !== "null" && (
                     <td>
-                      <a href={`YOUR_URL_PREFIX/${row.code}`} target="_blank">
-                        {row.code}
-                      </a>
+                     <a
+                     style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                     onClick={() => handleCodeClick(row.code)}    
+                      
+                    >
+                      {row.code}
+                    </a>
                     </td>
                      )}
                   </tr>
@@ -273,6 +304,7 @@ const IndexTables = () => {
 
         </table>
       </div>
+    
     </>
   );
 };

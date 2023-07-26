@@ -55,7 +55,8 @@ function a11yProps(index) {
   };
 }
 
-export const Main = ({ isValueSelected }) => {
+export const Main = () => {
+  console.log("enter main")
   const [value, setValue] = useState(0);
   const [showTable, setShowTable] = useState(false);
   const [showIndx, setShowIndex] = useState(false);
@@ -235,7 +236,7 @@ export const Main = ({ isValueSelected }) => {
                 Code details
               </Typography>
               <Box sx={{ marginRight: "20px" }}>
-                {isValueSelected && <Codedet />}
+                { <Codedet />}
               </Box>
               <Box
                 sx={{

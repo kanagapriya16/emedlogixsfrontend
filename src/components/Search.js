@@ -3,29 +3,47 @@ import React, { Fragment, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../App.css";
 import { Main } from "./Main";
+import IndexTables from "./IndexTables";
 const Search = () => {
   const [result, setResult] = useState([]);
+  const [result1, setResult1] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [first, setFirst] = useState("");
   const [word, setWord] = useState("");
-  const [isValueSelected, setIsValueSelected] = useState(false);
+
+
   function handleChange(e) {
     setWord(e.target.value);
   }
   console.log(word);
+
+
+  
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         if (word) {
-          const response = await fetch(`/codes/${word}/matches`);
+          let response;
+          const regex = /^[a-zA-Z]$|^[a-zA-Z]+\d+$/;
+          if (regex.test(word)) {
+            response = await fetch(`/codes/${word}/matches`);
+          } else if (/^[a-zA-Z]{3}$/.test(word)) {
+            response = await fetch(`/codes/${word}/description`);
+          } else {
+        
+            console.error("Invalid input");
+            return;
+          }
+
           if (response.ok) {
             const data = await response.json();
-            setResult(data);
+            setResult1(data);
           } else {
             console.error("Failed to fetch data");
           }
         } else {
-          setResult([]);
+          setResult1([]);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -33,12 +51,18 @@ const Search = () => {
     };
     fetchBooks();
   }, [word]);
-  console.log("our result is", result);
+
+  console.log("our result is", result1);
+
   console.log(first);
   global.values = first;
   console.log(global.values && global.values.code);
   console.log(word);
   global.words=word;
+
+
+
+
   return (
     <>
       <Box
@@ -57,8 +81,8 @@ const Search = () => {
             <Autocomplete
               id="users"
               defaultValue={null}
-              getOptionLabel={(result) => `${result.id} ${result.description}`}
-              options={result}
+              getOptionLabel={(result1) => `${result1.id} ${result1.description}`}
+              options={result1}
               sx={{
                 width: "1450px",
                 backgroundColor: "white",
@@ -92,12 +116,13 @@ const Search = () => {
               }
               onChange={(event, newValue) => {
                 setFirst(newValue);
-                setIsValueSelected(true);
+              
+                
               }}
               autoSelect
-              renderOption={(props, result) => (
+              renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
-                  {result.id} {result.description}
+                  {result1.id} {result1.description}
                 </Box>
               )}
               renderInput={(params) => (
@@ -111,7 +136,8 @@ const Search = () => {
           </Fragment>
         </Stack>
       </Box>
-      <Main isValueSelected={isValueSelected} />
+      <Main />
+     
     </>
   );
 };
