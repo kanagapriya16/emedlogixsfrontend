@@ -23,6 +23,7 @@ console.log(global.index)
   
 
   useEffect(() => {
+    global.inatbleresult = null;
     const fetchBooks = async () => {
       try {
         if (word) {

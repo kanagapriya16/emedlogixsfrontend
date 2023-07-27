@@ -14,7 +14,7 @@ const Codedet = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code && global.years) {
+        if (global.values && global.values.code && global.years && global.intable==null) {
           const response = await fetch(`/codes/${global.values.code}/details/?version=${global.years}`);
           if (response.ok) {
             const data = await response.json();
@@ -32,6 +32,28 @@ const Codedet = () => {
 
 
 
+    
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        if (global.intableresult && global.intableresult.code && global.years) {
+          const response = await fetch(`/codes/${global.values.code}/details/?version=${global.years}`);
+          if (response.ok) {
+            const data = await response.json();
+            setResult(data);
+          } else {
+            console.error("Failed to fetch data");
+          }
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    fetchBooks();
+  }, [global.intableresult]);
+
+
+
 
 
 
@@ -39,12 +61,16 @@ const Codedet = () => {
     setIsClosed(true);
     window.location.reload();
   };
+ 
+
   console.log("our result is", result);
   return (
-    <div className="division">
+ 
+ 
+ <div className="division">
       
  
-      {!isClosed && global.values && global.values.code && (
+      {!isClosed && global.values && global.values.code && global.intableresult==null &&(
         <div>
           <div>
             <Button
@@ -134,6 +160,94 @@ const Codedet = () => {
 
 
 
+
+{!isClosed &&  global.intableresult!==null && global.intable &&(
+        <div>
+          <div>
+            <Button
+              disableFocusRipple
+              disableRipple
+              sx={{
+                border: "0.5px solid green",
+                textAlign: "center",
+                height: "20px",
+                width: "80px",
+                backgroundColor: "#ADD8E6",
+                marginLeft: "125px",
+              }}
+            >
+              {global.intable}
+              <Close
+                sx={{
+                  width: "20px",
+                  ml: "5px",
+                  color: "#4169E1",
+                }}
+                onClick={handleClose}
+              />
+            </Button>
+        
+          </div>
+          <table>
+            <thead>
+              <tr></tr>
+            </thead>
+            <tbody>
+              {global.intableresult && (
+                <tr key={global.intableresult.code}>
+                  <td>{global.intableresult.code}</td>
+                  <td>{global.intableresult.longDescription}</td>
+                  <td>
+                    {global.intableresult.billable === true ? (
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "150px",
+                          height: "15px",
+                          color: "white",
+                          fontFamily: "sans-serif",
+                          ml: "20px",
+                          backgroundColor: "green",
+                          textTransform: "lowercase",
+                          fontWeight: "700px",
+                          textAlign: "center",
+                          "&:hover": {
+                            backgroundColor: "green",
+                          },
+                        }}
+                      >
+                        Billable Codes
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        disableElevation
+                        disableFocusRipple
+                        sx={{
+                          width: "150px",
+                          height: "15px",
+                          color: "white",
+                          fontFamily: "sans-serif",
+                          ml: "170px",
+                          backgroundColor: "orange",
+                          textTransform: "lowercase",
+                          fontWeight: "700px",
+                          textAlign: "center",
+                          "&:hover": {
+                            backgroundColor: "orange",
+                          },
+                        }}
+                      >
+                        NonBillable Codes
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
 
 
 
