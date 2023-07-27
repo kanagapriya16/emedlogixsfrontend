@@ -5,6 +5,8 @@ import "../App.css";
 import { Main } from "./Main";
 import IndexTables from "./IndexTables";
 const Search = () => {
+console.log(global.index)
+
   const [result, setResult] = useState([]);
   const [result1, setResult1] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -55,7 +57,15 @@ const Search = () => {
   console.log("our result is", result1);
 
   console.log(first);
+
+  
+
+
   global.values = first;
+
+
+ 
+  
   console.log(global.values && global.values.code);
   console.log(word);
   global.words=word;
