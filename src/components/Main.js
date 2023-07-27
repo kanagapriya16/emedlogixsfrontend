@@ -78,9 +78,7 @@ export const Main = () => {
   };
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setShowIndex(false);
-    setShowTable(false);
-    setShowdrug(false);
+   
   };
  
 

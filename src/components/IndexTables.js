@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import "../styles/Pagination.css";
 import { Box, TextField, Typography } from "@mui/material";
 import { Pagin } from "./pagination";
+import Search from "./Search";
 const renderChildRows = (row, depthLevel = 1) => {
   if (row.child) {
     const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
@@ -100,8 +101,7 @@ const [result1,setResult1]=useState([])
 
 
 console.log(clickedCode);
-global.index=clickedCode;
-console.log(global.index);
+
 
 
 const handleCodeClick = (code) => {
@@ -127,7 +127,9 @@ const fetchCodeDetails = async (code) => {
 };
 
 console.log(result1);
-global.values=result1;
+global.index=result1;
+console.log(global.index);
+
   return (
     <>
       <Box
@@ -224,7 +226,8 @@ global.values=result1;
                       </td>
                     )}
                     <td>
-                      <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}>
+                      <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                       onClick={() => handleCodeClick(row.code)}  >
                         {row.code}
                       </a>
                     </td>
@@ -304,11 +307,12 @@ global.values=result1;
 
         </table>
       </div>
-    
+  
     </>
   );
 };
 export default IndexTables;
+
 
 
 
