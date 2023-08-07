@@ -23,6 +23,7 @@ import DrugTable from "./DrugTable";
 
 import IndexTables from "./IndexTables";
 import NeoplasmTable from "./NeoplasmTable";
+import IndexTables1 from "./IndexTable1";
 
 
 
@@ -61,31 +62,57 @@ export const Main = () => {
   const [showTable, setShowTable] = useState(false);
   const [showIndx, setShowIndex] = useState(false);
   const [showDrug, setShowdrug] = useState(false);
-  const handleIndexClick = () => {
-    setShowIndex(!showIndx);
-    setShowTable(false);
-    setShowdrug(false);
+    
+
+  const handleIndexClick = (index) => {
+    
+ 
   };
   const handleTableClick = () => {
-    setShowTable(!showTable);
-    setShowIndex(false);
-    setShowdrug(false);
+  
   };
   const handleDrugClick = () => {
-    setShowdrug(!showDrug);
-    setShowIndex(false);
-    setShowTable(false);
+    
   };
   const handleChange = (event, newValue) => {
     setValue(newValue);
    
   };
+  const [activeBtn, setActiveBtn] = useState(null);
+
+  const handleNavBtnClick = (btnId) => {
+    setActiveBtn(btnId);
+    setShowIndex(!showIndx);
+    setShowTable(false);
+    setShowdrug(false);
+  };
+  const handleNavBtnClick2 = (btnId) => {
+    setActiveBtn(btnId);
+    setShowTable(!showTable);
+    setShowIndex(false);
+    setShowdrug(false);
+  };
+ 
+  const handleNavBtnClick3 = (btnId) => {
+    setActiveBtn(btnId);
+    setShowdrug(!showDrug);
+    setShowIndex(false);
+    setShowTable(false);
+  };
+ 
  
 
   return (
     <div>
       <Container maxWidth="4px">
         <Stack direction={"row"} gap={"10px"} mt={2.5}>
+
+
+
+       
+     
+     
+
           <Box
             sx={{
               height: "635px",
@@ -95,87 +122,67 @@ export const Main = () => {
             
             }}
           >
+         
             {" "}
-            <Button 
-                onClick={handleIndexClick}
-              variant="contained"
-              sx={{
-                textAlign: "center",
-                mt: "0px",
-                width: "80px",
-                position: "absolute",
-                height:"40px",
+            <button style={{
+                   width:"100px",
+                   height:"30px",
                
-                textTransform: "none",
-                color:"#F2BE71",
-                backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
-                border:"1px solid #90B2D8",
-                
-                
-       
-        "&:hover": {
-          backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
-        },
-              }}
-            >
-              {showIndx ? "" : ""}
-              Index
-            </Button>
+
+            }}
+        className={`nav-btn ${activeBtn === 'btn1' ? 'active' : ''}`}
+        onClick={() => handleNavBtnClick('btn1')}
+      >
+        Index
+      </button>
             <div
               style={{
                 position: "absolute",
-                marginTop: "200px",
+              marginTop:"17px"
+        
               }}
             >
-              {showIndx && <IndexTables/>}
+              {showIndx && <IndexTables1/>}
             </div>
-            <Button
-                onClick={handleTableClick}
-              variant="contained"
-              sx={{
-                textAlign: "center",
-                mt: "0px",
-                width: "100px",
-                position: "absolute",
-                height:"40px",
-                marginLeft:"85px",
-                textTransform: "none",
-                
-                color:"#F2BE71",
-                backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
-                border:"1px solid #90B2D8",
-                "&:hover": {
-                  backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
-                },
+            <button style={{
+              
+                      marginLeft:"5px",
+                      width:"100px",
+                      height:"30px",
+                  
+                  
                
-              }}
-            >
-              {showTable ? "" : ""}
-              Neoplasam
-            </Button>
-            {showTable && <NeoplasmTable/>}
-            <Button
-               onClick={handleDrugClick}
-              variant="contained"
-              sx={{
-                textAlign: "center",
-                mt: "0px",
-                width: "80px",
-                position: "absolute",
-                height:"40px",
-              marginLeft:"190px",
-                textTransform: "none",
-                color:"#F2BE71",
-                backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
-                border:"1px solid #90B2D8",
-                "&:hover": {
-                  backgroundColor: showIndx ? "rgb(138, 175, 198)" : "rgb(138, 175, 198)",
-                },
-              }}
-            >
-              {showDrug ? "" : ""}
-              Drugs
-            </Button>
+            }}
+        className={`nav-btn ${activeBtn === 'btn2' ? 'active' : ''}`}
+        onClick={() => handleNavBtnClick2('btn2')}
+      >
+        Neoplasm
+      </button>
+      <div style={{
+
+
+position:"absolute",
+
+
+
+
+
+      }}> 
+      {showTable && <NeoplasmTable/>}
+
+      </div>
+            
+            <button style={{
+                 
+                      marginLeft:"5px",
+                      width:"100px",
+                      height:"30px"
+            }}
+        className={`nav-btn ${activeBtn === 'btn3' ? 'active' : ''}`}
+        onClick={() => handleNavBtnClick3('btn3')}
+      >
+       Drug
+      </button>
             <div
               style={{
                 position: "absolute",
@@ -184,6 +191,7 @@ export const Main = () => {
             >
               {showDrug && <DrugTable/>}
             </div>
+       
         
           </Box>
 

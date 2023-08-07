@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import PropTypes from "prop-types";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -18,11 +19,16 @@ function CircularProgressWithLabel(props) {
           alignItems: "center",
           justifyContent: "center",
         }}
+      ></Box>
+      <Typography
+        mt={6}
+        variant="caption"
+        component="div"
+        color="text.secondary"
+        marginLeft={-7}
       >
-        <Typography variant="caption" component="div" color="text.secondary">
-          {`${Math.round(props.value)}%`}
-        </Typography>
-      </Box>
+        {`${Math.round(props.value)}%`}loading
+      </Typography>
     </Box>
   );
 }
@@ -41,7 +47,7 @@ export default function CircularWithValueLabel() {
       setProgress((prevProgress) =>
         prevProgress >= 100 ? 0 : prevProgress + 1
       );
-    }, 800);
+    }, 100);
     return () => {
       clearInterval(timer);
     };

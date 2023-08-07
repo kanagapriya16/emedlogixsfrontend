@@ -97,7 +97,10 @@ const Codedet = () => {
             </Button>
         
           </div>
-          <table>
+          <table style={{
+            marginLeft:"250px",
+            marginTop:"-10px"
+          }}>
             <thead>
               <tr></tr>
             </thead>
@@ -160,7 +163,7 @@ const Codedet = () => {
 
 
 
-
+{/*
 {!isClosed &&  global.intableresult!==null && global.intable &&(
         <div>
           <div>
@@ -188,10 +191,12 @@ const Codedet = () => {
             </Button>
         
           </div>
-          <table>
-            <thead>
-              <tr></tr>
-            </thead>
+          <table style={{
+            marginLeft:"250px",
+            marginTop:"-10px"
+          }}>
+
+            
             <tbody>
               {global.intableresult && (
                 <tr key={global.intableresult.code}>
@@ -248,7 +253,7 @@ const Codedet = () => {
           </table>
         </div>
       )}
-
+                      */}
 
 
 

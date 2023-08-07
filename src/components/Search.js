@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "../App.css";
 import { Main } from "./Main";
 import IndexTables from "./IndexTables";
+import { Alphabet } from "./Alphabet";
 const Search = () => {
 console.log(global.index)
 
@@ -28,16 +29,29 @@ console.log(global.index)
       try {
         if (word) {
           let response;
-          const regex = /^[a-zA-Z]$|^[a-zA-Z]+\d+$/;
-          if (regex.test(word)) {
+         const regex = /^[a-zA-Z]$|^[a-zA-Z]+\d+$/;
+         if (regex.test(word)) {
             response = await fetch(`/codes/${word}/matches`);
-          } else if (/^[a-zA-Z]{3}$/.test(word)) {
-            response = await fetch(`/codes/${word}/description`);
-          } else {
-        
-            console.error("Invalid input");
-            return;
           }
+       else if (/^[a-zA-Z]{3}$/.test(word)) {
+           response = await fetch(`/codes/${word}/description`);
+         } 
+        // else if (/^[a-zA-Z ]{3}$|^\[a-zA-Z]+(\s\[a-zA-Z]+)?$/.test(word)) {
+           ///response = await fetch(`/codes/description?keywords=${word}`);
+        // } 
+          
+          else {
+        
+           console.error("Invalid input");
+         return;
+         }
+
+
+
+
+        
+
+
 
           if (response.ok) {
             const data = await response.json();
@@ -148,6 +162,7 @@ console.log(global.index)
         </Stack>
       </Box>
       <Main />
+
      
     </>
   );

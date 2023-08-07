@@ -3,8 +3,8 @@ import "../styles/Pagination.css";
 
 export const Pagin = () => {
   const items = [
-    "0-9",
-    "A",
+    
+  "A",
     "B",
     "C",
     "D",
@@ -20,6 +20,7 @@ export const Pagin = () => {
     "N",
     "O",
     "P",
+  
     "R",
     "S",
     "T",
@@ -63,27 +64,39 @@ export const Pagin = () => {
 
 
   
+  const [activeBtnIndex, setActiveBtnIndex] = useState(0);
+
+  const handleClick1 = (index) => {
+    setActiveBtnIndex(index);
+  };
+  
 
  
 
   return (
     <div>
-      <div className="center">
-        <div className="pagination">
-          {items.map((item, index) => (
-            <a key={index} onClick={() => handleClick(item)}>
-              {item}
-            </a>
-          ))}
-        </div>
-      </div>
-      <div>
+     
+     
+     
+    
+       
       
+         <div className="center">
+         <div className="pagination">
         
-      
-
+        
+  {items.map((item, index) => (
+  <button style={{
+   
+  }}  onClick={() => handleClick1(index)}  className={`btn ${index === activeBtnIndex ? 'active' : ''}`}> {item}</button> ))}
+          
+             </div>
+             
       </div>
-    </div>
+      </div>
+
+    
+   
   );
 };
 
