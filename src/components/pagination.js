@@ -20,6 +20,7 @@ export const Pagin = () => {
     "N",
     "O",
     "P",
+    "Q",
     "R",
     "S",
     "T",

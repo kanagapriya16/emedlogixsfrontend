@@ -34,6 +34,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     height: 1,
   },
 }));
+function getTitleFromNestedChild(row) {
+  if (row.child?.child?.child?.child?.code) {
+    return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`
+  }
+  else if (row.child?.child?.child?.code) {
+    return ` ${row.child.title} - ${row.child.child.title} - ${row.child.child.child.title} `;
+  } else if (row.child?.child?.code) {
+    return ` ${row.child.title} - ${row.child.child.title} `;
+  } else if (row.child?.code) {
+    return ` ${row.child.title} `;
+  } else {
+    return row.title;
+  }
+}
+
 export default function NeoplasmTable() {
   console.log("neo enter");
   const [drug, setDrug] = useState(null);
@@ -233,29 +248,80 @@ export default function NeoplasmTable() {
                 {global.values?.code !== null &&
                   drug
                     ?.filter((item) => {
-                      return search.toLowerCase() === ""
-                        ? item
-                        : item.title.toLowerCase().includes(search);
+                      return (
+                        search.toLowerCase() === "" ||
+                        item.title.toLowerCase().includes(search)
+                      );
                     })
-                    .map((row) => (
-                      <StyledTableRow key={row.id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.title}
-                        </StyledTableCell>
-                        {row.code.map((value) => (
-                          <StyledTableCell
-                            key={row.id}
-                            sx={{
-                              border: "1px solid grey",
-                              height: "auto",
-                            }}
-                            align="center"
-                          >
-                            {value}
+                    .map((row) => {
+                      // Check if the parent or child code array has a value of null
+                      const hasValidParentCode = row.code && row.code[0] !== "null";
+                      const hasValidChildCode =
+                        row.child &&
+                        row.child.code &&
+                        row.child.code[0] !== "null";
+                      const hasValidChildChildCode =
+                        row.child &&
+                        row.child.child &&
+                        row.child.child.code &&
+                        row.child.child.code[0] !== "null";
+                      const hasValidChildChildChildCode =
+                        row.child &&
+                        row.child.child &&
+                        row.child.child.child &&
+                        row.child.child.child.code &&
+                        row.child.child.child.code[0] !== "null";
+                      const hasValidChildChildChildChildCode =
+                        row.child &&
+                        row.child.child &&
+                        row.child.child.child &&
+                        row.child.child.child.child &&
+                        row.child.child.child.child.code &&
+                        row.child.child.child.child.code[0] !== "null";
+                      // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
+                      if (!(hasValidParentCode || hasValidChildCode || hasValidChildChildCode || hasValidChildChildChildCode || hasValidChildChildChildChildCode)) {
+                        return null;
+                      }
+                      // Concatenate the values of the code array into a single string
+                      const codeDetails = (hasValidChildChildChildChildCode
+                        ? row.child.child.child.child.code
+                        : hasValidChildChildChildCode
+                          ? row.child.child.child.code
+                          : hasValidChildChildCode
+                            ? row.child.child.code
+                            : hasValidChildCode
+                              ? row.child.code
+                              : row.code
+                      ).join(", ");
+                      // Split the codeDetails into chunks of six elements
+                      const chunkedCodeDetails = codeDetails.split(", ").reduce((acc, code) => {
+                        if (!acc.length || acc[acc.length - 1].length === 6) {
+                          acc.push([code]);
+                        } else {
+                          acc[acc.length - 1].push(code);
+                        }
+                        return acc;
+                      }, []);
+                      return chunkedCodeDetails.map((chunk, index) => (
+                        <StyledTableRow key={`${row.id}_${index}`}>
+                          <StyledTableCell component="th" scope="row">
+                            {getTitleFromNestedChild(row)}
                           </StyledTableCell>
-                        ))}
-                      </StyledTableRow>
-                    ))}
+                          {Array.from({ length: 6 }).map((_, colIndex) => (
+                            <StyledTableCell
+                              key={`${row.id}_${index}_${colIndex}`}
+                              sx={{
+                                border: "1px solid grey",
+                              }}
+                              align="center"
+                            >
+                              {/* Display the code details for each column */}
+                              {chunk[colIndex] || "-"}
+                            </StyledTableCell>
+                          ))}
+                        </StyledTableRow>
+                      ));
+                    })}
                 {!global.values?.code &&
                   drug1
                     ?.filter((item) => {
@@ -290,13 +356,3 @@ export default function NeoplasmTable() {
     </>
   );
 }
-
- 
-
-
-
-
-
-
-
-

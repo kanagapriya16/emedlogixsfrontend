@@ -1,9 +1,9 @@
-
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import "../styles/Pagination.css";
 import { Box, TextField, Typography } from "@mui/material";
 import { Pagin } from "./pagination";
-import Search from "./Search";
+
+
 const renderChildRows = (row, depthLevel = 1) => {
   if (row.child) {
     const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
@@ -22,7 +22,7 @@ const renderChildRows = (row, depthLevel = 1) => {
                 <li>
                   {row.child.title}
                   <a
-                  style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                   style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                   >
                     {row.child.code !== null &&
                       row.child.code !== "null" &&
@@ -44,8 +44,8 @@ const IndexTables = () => {
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
-const [result1,setResult1]=useState([])
-  
+  const [result1,setResult1]=useState([])
+    
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
@@ -70,12 +70,10 @@ const [result1,setResult1]=useState([])
     fetchBooks();
   }, [global.values?.code]);
   console.log("our index is", index);
-
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
-       
           const response = await fetch(`/codes/alldetails/index`);
           if (response.ok) {
             const data = await response.json();
@@ -83,7 +81,6 @@ const [result1,setResult1]=useState([])
           } else {
             console.error("Failed to fetch data");
           }
-       
       } catch (error) {
         console.error("Error:", error);
       }
@@ -94,41 +91,41 @@ const [result1,setResult1]=useState([])
   }, []);
   console.log("our index1 is", index1);
 
+  const handleCodeClick = (code) => {
+    setClickedCode(code);
+    fetchCodeDetails(code); // Call the function to fetch code details
+    global.intable = null;
+   // global.values = null; 
+    
+  };
 
-
-
-
-
-
-console.log(clickedCode);
-
-
-
-const handleCodeClick = (code) => {
-  setClickedCode(code);
-  fetchCodeDetails(code); // Call the function to fetch code details
-};
-
-// Function to fetch code details
-const fetchCodeDetails = async (code) => {
-  try {
-    if (code) {
-      const response = await fetch(`/codes/${code}/details/?version=${global.years}`);
-      if (response.ok) {
-        const data = await response.json();
-        setResult1(data);
-      } else {
-        console.error("Failed to fetch data");
+  
+  // Function to fetch code details when a row.code is clicked
+  const fetchCodeDetails = async (code) => {
+    try {
+      if (code) {
+        const response = await fetch(`/codes/${code}/details/?version=${global.years}`);
+        if (response.ok) {
+          const data = await response.json();
+          setResult1(data);
+        } else {
+          console.error("Failed to fetch data");
+        }
       }
+    } catch (error) {
+      console.error("Error:", error);
     }
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+  };
+  
+  console.log(result1);
+global.intableresult=result1;
+console.log(global.intableresult)
+  console.log(clickedCode);
 
-console.log(result1);
-global.index=result1;
-console.log(global.index);
+global.intable=clickedCode;
+
+
+
 
   return (
     <>
@@ -204,12 +201,11 @@ console.log(global.index);
                         )}
                       </ul>
                     </td>
-                  
+                    {/* ... (previous code) */}
                     {row.seealso !== null && row.seealso !== "null" && (
                       <td>
                         <a
-                          
-                          style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                       style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           SeeAlso {row.seealso}
                         </a>
@@ -218,8 +214,7 @@ console.log(global.index);
                     {row.see !== null && row.see !== "null" && (
                       <td>
                         <a
-                          
-                          style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                        style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           See {row.see}
                         </a>
@@ -227,7 +222,7 @@ console.log(global.index);
                     )}
                     <td>
                       <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}
-                       onClick={() => handleCodeClick(row.code)}  >
+                      onClick={() => handleCodeClick(row.code)} >
                         {row.code}
                       </a>
                     </td>
@@ -236,7 +231,6 @@ console.log(global.index);
                 </Fragment>
               ))}
           </tbody>
-
           <tbody style={{ textAlign: "left" }}>
           {!global.values?.code &&
             index1
@@ -256,7 +250,7 @@ console.log(global.index);
                           margin: 0,
                         }}
                       >
-                        {row.nemod ? ( 
+                        {row.nemod ? ( // Check if nemod has a value
                           <li>
                             {row.title} {row.nemod}
                           </li>
@@ -265,13 +259,11 @@ console.log(global.index);
                         )}
                       </ul>
                     </td>
-                    
+                    {/* ... (previous code) */}
                     {row.seealso !== null && row.seealso !== "null" && (
                       <td>
                         <a
-                       
-                       
-                       style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                         style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           SeeAlso {row.seealso}
                         </a>
@@ -280,9 +272,7 @@ console.log(global.index);
                     {row.see !== null && row.see !== "null" && (
                       <td>
                         <a
-                          
-                         
-                          style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                         style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
                           See {row.see}
                         </a>
@@ -290,13 +280,10 @@ console.log(global.index);
                     )}
                      {row.code !== null && row.code !== "null" && (
                     <td>
-                     <a
-                     style={{ color: "blue" ,borderBottom:"1px solid blue"}}
-                     onClick={() => handleCodeClick(row.code)}    
-                      
-                    >
-                      {row.code}
-                    </a>
+                      <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}
+                       onClick={() => handleCodeClick(row.code)}  >
+                        {row.code}
+                      </a>
                     </td>
                      )}
                   </tr>
@@ -304,16 +291,10 @@ console.log(global.index);
                 </Fragment>
               ))}
           </tbody>
-
         </table>
       </div>
-  
     </>
   );
 };
 export default IndexTables;
-
-
-
-
 
