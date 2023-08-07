@@ -108,7 +108,7 @@ console.log(global.index)
                     ),
                 },
               }}
-              isoptionequalToValue={(option, value) =>
+              isoptionequaltovalue={(option, value) =>
                 option.description === value.description
               }
               noOptionsText={"PLEASE ENTER VALID CODES"}
