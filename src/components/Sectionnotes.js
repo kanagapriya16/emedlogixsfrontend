@@ -5,6 +5,10 @@ import "../styles/Sectionnotes.css";
 const Sectionnotes = () => {
   const [results, setResults] = useState(null);
   const [globalValuesCode, setGlobalValuesCode] = useState(null);
+
+
+
+  
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -31,6 +35,8 @@ const Sectionnotes = () => {
     }
   }, [global.values]);
   console.log("our result is", results);
+
+
   return (
     <div className="section">
       <div>
