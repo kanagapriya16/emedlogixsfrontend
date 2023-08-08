@@ -37,7 +37,8 @@ const renderChildRows = (row, depthLevel = 1) => {
 };
 const Codenotes1 = () => {
   const [index1, setIndex1] = useState(null);
-  const [search, setSearch] = useState("");
+  
+ 
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
@@ -58,9 +59,15 @@ const Codenotes1 = () => {
     fetchBooks();
   }, []);
   console.log("our index1 is", index1);
+  console.log(global.searches);
+  const search=global.searches;
+  
   return (
+    
     <>
+
       <div>
+   
         <tbody style={{ textAlign: "left" }}>
 
           {!global.values?.code &&
@@ -98,7 +105,7 @@ const Codenotes1 = () => {
                         <a
                           style={{ color: "blue", borderBottom: "1px solid blue" }}
                         >
-                          SeeAlso {row.seealso}
+                           {row.seealso}
                         </a>
                       </td>
                     )}
@@ -107,7 +114,7 @@ const Codenotes1 = () => {
                         <a
                           style={{ color: "blue", borderBottom: "1px solid blue" }}
                         >
-                          See {row.see}
+                          {row.see}
                         </a>
                       </td>
                     )}

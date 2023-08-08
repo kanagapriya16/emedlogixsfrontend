@@ -7,7 +7,7 @@ import { Alphabet } from "./Alphabet";
 
 
 const renderChildRows = (row, depthLevel = 1) => {
-  if (row.child) {
+  if (row.child && row.child.code !== null) {
     const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
     return (
       <>
@@ -22,14 +22,17 @@ const renderChildRows = (row, depthLevel = 1) => {
             >
               {row.child.title && (
                 <li>
-                  {row.child.title}
+                   {row.child.title}{" "}
+                  {row.child.code !== null && row.child.code !== "null" && (
                   <a
                    style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                   >
-                    {row.child.code !== null &&
+                    {row.child.code}
+                      {/* {row.child.code !== null &&
                       row.child.code !== "null" &&
-                      ` ${row.child.code}`}
+                      ` ${row.child.code}`}*/}
                   </a>
+                  )}
                 </li>
               )}
             </ul>
@@ -51,15 +54,13 @@ const IndexTables1 = () => {
   
   const [activeBtnIndex, setActiveBtnIndex] = useState(0);
 
-  const handleClick1 = (index) => {
-    setActiveBtnIndex(index);
-  };
+
     
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code) {
+        if (global.values && global.values.code !== null) {
           const response = await fetch(`/codes/${global.values.code}/index`);
           if (response.ok) {
             const data = await response.json();
@@ -77,7 +78,9 @@ const IndexTables1 = () => {
   
     // Clear the previous index data before fetching new data
     setIndex(null);
-    fetchBooks();
+    if (global.values && global.values.code !== null) {
+      fetchBooks();
+    }
   }, [global.values?.code]);
   console.log("our index is", index);
 
@@ -109,7 +112,7 @@ const IndexTables1 = () => {
     setIndex(null);
     fetchBooks();
   }, []);
-  console.log("our index1 is", index1);*/
+  console.log("our index1 is", index1);
 
 
 
@@ -155,7 +158,7 @@ const IndexTables1 = () => {
 //console.log(global.intableresult)
  // console.log(clickedCode);
 
-//global.intable=clickedCode;
+//global.intable=clickedCode;*/
 
 
 
@@ -167,42 +170,43 @@ const IndexTables1 = () => {
           height: "20px",
           width: "100%",
           textAlign: "left",
-          ml: "14%",
+          ml: "17%",
         
         }}
       >
-       {!global.values && !global.values.code && <Alphabet />}
+         {!global.values || !global.values.code ? <Alphabet /> : null}
       </Box>
     
 
-<div  style={{  marginTop:"-70px"
-} }>
-
-<TextField
-    sx={{
-      width: "120px",
- 
-      "& input": {
-        height: "4px",
-     
-        color: (theme) =>
-          theme.palette.getContrastText(theme.palette.background.paper),
-      },
-    }}
-    placeholder=" Use Filter"
-    onChange={(e) => setSearch(e.target.value)}
-  />
-</div>
+      {global.values && global.values.code && (
+  <div style={{ marginTop: "0px" ,position:"absolute"}}>
+    <TextField
+      sx={{
+        width: "120px",
+        "& input": {
+          height: "4px",
+          color: (theme) =>
+            theme.palette.getContrastText(theme.palette.background.paper),
+        },
+      }}
+      placeholder=" Use Filter"
+      onChange={(e) => setSearch(e.target.value)}
+    />
+  </div>
+)}
       
-
+      {global.values && global.values.code && (
       <div
         style={{
       
-          width: "796px",
+          width: "790px",
        
-          height: "450px",
+          height: "550px",
           backgroundColor: "#C7E1ED",
-          marginTop:"30px"
+          marginTop:"33px",
+          overflow:"scroll",
+    
+         
         }}
       >
 
@@ -228,12 +232,12 @@ const IndexTables1 = () => {
                           margin: 0,
                         }}
                       >
-                        {row.nemod ? ( // Check if nemod has a value
+                        {row.nemod ?  ( // Check if nemod has a value
                           <li>
-                            {row.title} {row.nemod}
+                            {row.title} {row.nemod !== null && row.nemod !== "null" && row.nemod}
                           </li>
                         ) : (
-                          <li>{row.title}</li>
+                          <li>{ row.title}</li>
                         )}
                       </ul>
                     </td>
@@ -243,7 +247,7 @@ const IndexTables1 = () => {
                         <a
                        style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
-                          SeeAlso {row.seealso}
+                           {row.seealso}
                         </a>
                       </td>
                     )}
@@ -252,7 +256,7 @@ const IndexTables1 = () => {
                         <a
                         style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
-                          See {row.see}
+                           {row.see}
                         </a>
                       </td>
                     )}
@@ -260,7 +264,7 @@ const IndexTables1 = () => {
                       <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                      // onClick={() => handleCodeClick(row.code)}
                       >
-                     {row.code !== null && row.code}
+                     {row.code !== null && row.code !== "null" && row.code}
                       </a>
                     </td>
                   </tr>
@@ -274,72 +278,11 @@ const IndexTables1 = () => {
 
 
 
-          <tbody style={{ textAlign: "left" }}>
-            
-          {!global.values?.code &&
-            index1
-              ?.filter((item) => {
-                return search.toLowerCase() === ""
-                  ? item
-                  : item.title.toLowerCase().includes(search);
-              })
-              .map((row) => (
-                <Fragment key={row.id}>
-                  <tr>
-                    <td>
-                      <ul
-                        style={{
-                          listStyleType: "square",
-                          paddingLeft: "20px",
-                          margin: 0,
-                        }}
-                      >
-                        {row.nemod !== null && row.nemod !== "null" ? ( // Check if nemod has a value
-                          <li>
-                            {row.title} {row.nemod}
-                          </li>
-                        ) : (
-                          <li>{row.title}</li>
-                        )}
-                      </ul>
-                    </td>
-                   
-                    {row.seealso !== null && row.seealso !== "null" && (
-                      <td>
-                        <a
-                         style={{ color: "blue" ,borderBottom:"1px solid blue"}}
-                        >
-                          SeeAlso {row.seealso}
-                        </a>
-                      </td>
-                    )}
-                    {row.see !== null && row.see !== "null" && (
-                      <td>
-                        <a
-                         style={{ color: "blue" ,borderBottom:"1px solid blue"}}
-                        >
-                          See {row.see}
-                        </a>
-                      </td>
-                    )}
-                     {row.code !== null && row.code !== "null" && (
-                    <td>
-                      <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}
-                     // onClick={() => handleCodeClick(row.code)} 
-                        >
-                   {row.code !== null && row.code}
-                      </a>
-                    </td>
-                     )}
-                  </tr>
-                  {renderChildRows(row)}
-                </Fragment>
-              ))}
-          </tbody>
+         
           
         </table>
       </div>
-       
+      )}
     </>
   );
 };

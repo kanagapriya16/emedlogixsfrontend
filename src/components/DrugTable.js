@@ -325,15 +325,21 @@ export default function DrugTable() {
                           </StyledTableCell>
                           {Array.from({ length: 6 }).map((_, colIndex) => (
                             <StyledTableCell
-                              key={`${row.id}_${index}_${colIndex}`}
-                              sx={{
-                                border: "1px solid grey",
-                              }}
-                              align="center"
-                            >
-                              {/* Display the code details for each column */}
-                              {chunk[colIndex] || "-"}
-                            </StyledTableCell>
+                            key={`${row.id}_${index}_${colIndex}`}
+                            sx={{
+                              border: "1px solid grey",
+                            }}
+                            align="center"
+                          >
+                            {/* Display the code details for each column */}
+                            {chunk[colIndex] !== "--" ? (
+                              <a style={{ borderBottom: "0.5px solid blue" }}>
+                                {chunk[colIndex]}
+                              </a>
+                            ) : (
+                              chunk[colIndex] // Render the value as it is (in this case, "-")
+                            )}
+                          </StyledTableCell>
                           ))}
                         </StyledTableRow>
                       ));
@@ -352,18 +358,24 @@ export default function DrugTable() {
                         </StyledTableCell>
                         {row.code.map((value, index) => (
                           <StyledTableCell
-                            key={index}
-                            sx={{
-                              border: "1px solid grey",
-                            }}
-                            align="center"
-                          >
-                            <a style={{
-                              borderBottom:"0.5px solid blue"
-                            }}>
-                            {value}
-                              </a>
-                          </StyledTableCell>
+                          key={index}
+                          sx={{
+                            border: "1px solid grey",
+                          }}
+                          align="center"
+                        >
+                          {value !== "--" ? (
+                            <a
+                              style={{
+                                borderBottom: "0.5px solid blue",
+                              }}
+                            >
+                              {value}
+                            </a>
+                          ) : (
+                            "--"
+                          )}
+                        </StyledTableCell>
                         ))}
                       </StyledTableRow>
                     ))}

@@ -4,6 +4,7 @@ import {
   Stack,
   Tab,
   Tabs,
+  TextField,
 } from "@mui/material";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
@@ -44,6 +45,7 @@ export const Alphabet = () => {
   const [showIndx, setShowIndex] = useState(false);
   const [showDrug, setShowdrug] = useState(false);
   const [activeBtn, setActiveBtn] = useState(null);
+  const [search, setSearch] = useState("");
   const tabLabels = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -59,29 +61,46 @@ export const Alphabet = () => {
     setShowTable(false);
     setShowdrug(false);
   };
+
+
+
+  console.log(search);
+  global.searches=search;
+
+
   return (
     <div>
-      <Stack direction={"column"} ml={10} mt={9}  >
-        <Box
-          sx={{
-            height: "300px",
-            width: "100%",
-            gap: "0px"
-          }}>
+   <div style={{ marginTop: "50px",marginLeft:"-27px"}}>
+    <TextField
+      sx={{
+        width: "200px",
+        "& input": {
+          height: "4px",
+          color: (theme) =>
+            theme.palette.getContrastText(theme.palette.background.paper),
+        },
+      }}
+      placeholder=" Use Filter"
+      onChange={(e) => setSearch(e.target.value)}
+    />
+  </div>
+      <Stack direction={"column"} ml={20} mt={1.5} sx={{width:"5px"}} >
+       
           <Box
             sx={{
               height: "30px",
               width: "52vw",
               background: "linear-gradient(to right, #E9F8FF,#90B2D8 , #C1E3FF)",
+            
               color: "black",
               fontFamily: "sans-serif",
               fontSize: "13px",
-              marginLeft: "-200px",
+             
               mt: "-12px",
-              ml: "-191px"
+              ml: "-189px"
             }}>
             <Stack direction={"row"} gap={"0px"} ml={5}  >
-              <Box sx={{ width: "100%" }}>
+              <Box sx={{ width: "100%"}}>
                 <Box sx={{ marginTop: "-10px" }}>
                   <Tabs
                     value={value}
@@ -547,10 +566,15 @@ export const Alphabet = () => {
                 <div
                   className="tabpanels"
                   style={{
-                    height: "52vh",
-                    width: "47.5vw",
+                    height: "60vh",
+                    width: "51.5vw",
                     overflowY: "scroll",
-                    paddingLeft: "30px",
+                   
+                    backgroundColor: "#C7E1ED",
+                    marginTop:"-7.5px",
+                    marginLeft:"-5%"
+          
+                  
                   }}>
                   {" "}
                   <CustomTabPanel
@@ -641,7 +665,7 @@ export const Alphabet = () => {
               </Box>
             </Stack>
           </Box>
-        </Box>
+     
       </Stack>
     </div>
   );
