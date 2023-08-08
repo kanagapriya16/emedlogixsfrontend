@@ -57,11 +57,9 @@ export default function DrugTable() {
         }
       } catch (error) {
         console.error("Error:", error);
-      } finally {
-        setIsLoading(false); // Set isLoading to false when the API call is completed
-      }
+      } 
     };
-    setIsLoading(true); // Set isLoading to true before making the API call
+    // Set isLoading to true before making the API call
     setDrug(null); // Clear the previous drug data before fetching new data
     fetchDrugData();
   }, [global.values?.code]);
@@ -129,12 +127,12 @@ export default function DrugTable() {
               marginTop: "30%",
             }}
           >
-            <CircularWithValueLabel />
+         
           </div>
         ) : (
           <TableContainer
             sx={{
-              mt: "-0.5px",
+              mt: "-230px",
               display: "flex",
               position: "absolute",
               width: "910px",
@@ -360,7 +358,11 @@ export default function DrugTable() {
                             }}
                             align="center"
                           >
+                            <a style={{
+                              borderBottom:"0.5px solid blue"
+                            }}>
                             {value}
+                              </a>
                           </StyledTableCell>
                         ))}
                       </StyledTableRow>

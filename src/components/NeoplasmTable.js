@@ -123,7 +123,7 @@ export default function NeoplasmTable() {
       </Box>
       <TableContainer
         sx={{
-          mt: "100px",
+          mt: "-200px",
           display: "flex",
           position: "absolute",
           width: "910px",
