@@ -4,6 +4,7 @@ import { Box, TextField, Typography } from "@mui/material";
 import { Pagin } from "./pagination";
 import CircularWithValueLabel from "./circularper";
 import { Alphabet } from "./Alphabet";
+import { Loads } from "./Loads";
 
 
 const renderChildRows = (row, depthLevel = 1) => {
@@ -50,6 +51,7 @@ const IndexTables1 = () => {
   const [index1, setIndex1] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
   const [result1,setResult1]=useState([]);
+ 
 
   
   const [activeBtnIndex, setActiveBtnIndex] = useState(0);
@@ -85,62 +87,20 @@ const IndexTables1 = () => {
   console.log("our index is", index);
 
 
+  const handleClick = (event, codes) => {
 
-
-
-
-
-  /*React.useEffect(() => {
-    console.log("enter index table");
-    const fetchBooks = async () => {
-      try {
-          const response = await fetch(`/codes/alldetails/index`);
-          if (response.ok) {
-            const data = await response.json();
-            setIndex1(data);
-          } else {
-            console.error("Failed to fetch data");
-          }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-      finally{
-        setIsLoading(false)
-      }
-    };
-    // Clear the previous index data before fetching new data
-    setIndex(null);
-    fetchBooks();
-  }, []);
-  console.log("our index1 is", index1);
-
-
-
-
-
-
-
-
-  const handleCodeClick = (code) => {
-    setClickedCode(code);
-    fetchCodeDetails(code); // Call the function to fetch code details
-    global.intable = null;
-   // global.values = null; 
-    
+    console.log(`Code clicked: ${codes}`);
+  
+    fetchCodeDetails(codes); 
   };
 
 
 
-
-
-
-
-  
-  // Function to fetch code details when a row.code is clicked
-  const fetchCodeDetails = async (code) => {
+   // Function to fetch code details when a row.code is clicked
+   const fetchCodeDetails = async (codes) => {
     try {
-      if (code) {
-        const response = await fetch(`/codes/${code}/details/?version=${global.years}`);
+      if (codes) {
+        const response = await fetch(`/codes/${codes}/details/?version=${global.years}`);
         if (response.ok) {
           const data = await response.json();
           setResult1(data);
@@ -154,16 +114,11 @@ const IndexTables1 = () => {
   };
   
   console.log(result1);
-//global.intableresult=result1;
-//console.log(global.intableresult)
- // console.log(clickedCode);
 
-//global.intable=clickedCode;*/
+  
 
 
-
-
-  return (
+return (
     <>
       <Box
         sx={{
@@ -247,7 +202,7 @@ const IndexTables1 = () => {
                         <a
                        style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
-                           {row.seealso}
+                          seeAlso {row.seealso}
                         </a>
                       </td>
                     )}
@@ -256,16 +211,16 @@ const IndexTables1 = () => {
                         <a
                         style={{ color: "blue" ,borderBottom:"1px solid blue"}}
                         >
-                           {row.see}
+                           See{row.see}
                         </a>
                       </td>
                     )}
                     <td>
                       <a style={{ color: "blue" ,borderBottom:"1px solid blue"}}
-                     // onClick={() => handleCodeClick(row.code)}
-                      >
+                   onClick={(event) =>handleClick(event, row.code)}>
                      {row.code !== null && row.code !== "null" && row.code}
                       </a>
+                      
                     </td>
                   </tr>
                   {renderChildRows(row)}
@@ -273,8 +228,18 @@ const IndexTables1 = () => {
               ))}
           </tbody>
 
-         
-
+          
+          {global.values?.code !== null && index && index.length === 0 && (
+          <Typography
+            marginLeft={30}
+            variant="caption"
+            color={"#4185D2"}
+            fontWeight={800}
+          >
+            <h3>No Index codes found for the given search criteria.</h3>
+          </Typography>
+        )}
+        
 
 
 

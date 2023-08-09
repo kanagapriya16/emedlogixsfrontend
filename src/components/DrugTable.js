@@ -6,12 +6,13 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 
 import { useState } from "react";
 import "../App.css";
-import CircularWithValueLabel from "./circularper";
-import { Pagin } from "./pagination";
+
+
+import { Loads } from "./Loads";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -41,6 +42,10 @@ export default function DrugTable() {
   const [drug1, setDrug1] = useState(null);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true); // New state variable for loading
+
+
+
+
   React.useEffect(() => {
     const fetchDrugData = async () => {
       try {
@@ -63,6 +68,12 @@ export default function DrugTable() {
     setDrug(null); // Clear the previous drug data before fetching new data
     fetchDrugData();
   }, [global.values?.code]);
+
+
+
+
+
+
   //all values of drug
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
@@ -86,13 +97,9 @@ export default function DrugTable() {
   }, []);
   console.log("our drug1 is", drug1);
   console.log("our drug is", drug);
-  const handleAlphabetSelection = (alphabet) => {
-    console.log("Selected alphabet:", alphabet);
-    // You can perform any additional actions here based on the selected alphabet
-    // For example, you can filter the data based on the selected alphabet.
-  };
 
-  function getTitleFromNestedChild(row) {
+
+function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
     } else if (row.child?.child?.child?.code) {
@@ -120,16 +127,7 @@ export default function DrugTable() {
       {/*  <Pagin onSelectAlphabet={handleAlphabetSelection} />*/}
       </Box>
       <Box sx={{ mt: "30px" }}>
-        {isLoading ? ( // Show loading indicator
-          <div
-            style={{
-              marginLeft: "60%",
-              marginTop: "30%",
-            }}
-          >
-         
-          </div>
-        ) : (
+        
           <TableContainer
             sx={{
               mt: "-230px",
@@ -380,9 +378,25 @@ export default function DrugTable() {
                       </StyledTableRow>
                     ))}
               </TableBody>
+              {isLoading && <Loads />}
+          {global.values?.code !== null && drug && drug.length === 0 && (
+            <Typography
+              marginLeft={30}
+              fontWeight={800}
+              variant="caption"
+              color={"#4185D2"}
+            >
+              <h3>No Drug codes found for the given search criteria.</h3>
+            </Typography>
+          )}
+          {!global.values?.code && drug && drug1.length === 0 && (
+            <Typography variant="caption" fontWeight={800} color={"#4185D2"}>
+              <h3>No Drug codes available in the data.</h3>
+            </Typography>
+          )}
             </Table>
           </TableContainer>
-        )}
+    
       </Box>
     </>
   );

@@ -21,6 +21,18 @@ console.log(global.index)
   console.log(word);
 
 
+  const handleChanges = (event, newValue) => {
+    if (word !== null) {
+      setFirst(newValue);
+    }
+    else{
+      setFirst(global.selectedCode);
+    }
+    
+  };
+
+
+
   
 
   useEffect(() => {
@@ -137,13 +149,14 @@ console.log(global.index)
               }}
               onClose={() => setOpen(false)}
               popupIcon={
-                <SearchIcon sx={{ "&:hover": { background: "none" } }} />
+                <SearchIcon sx={{
+                  transition: "transform 0s",
+                  transform: open ? "rotate(180deg)" : "none",
+                  "&:hover": { background: "none" },
+                }} />
               }
-              onChange={(event, newValue) => {
-                setFirst(newValue);
               
-                
-              }}
+             onChange={handleChanges}
               autoSelect
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>

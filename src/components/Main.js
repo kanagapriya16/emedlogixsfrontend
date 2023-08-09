@@ -62,20 +62,13 @@ export const Main = () => {
   const [showTable, setShowTable] = useState(false);
   const [showIndx, setShowIndex] = useState(false);
   const [showDrug, setShowdrug] = useState(false);
+
     
 
-  const handleIndexClick = (index) => {
-    
  
-  };
-  const handleTableClick = () => {
-  
-  };
-  const handleDrugClick = () => {
-    
-  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
+   
    
   };
   const [activeBtn, setActiveBtn] = useState(null);
@@ -142,7 +135,8 @@ export const Main = () => {
         
               }}
             >
-              {showIndx && <IndexTables1/>}
+             {/*{showIndx && <IndexTables1/>}*/}
+             {showIndx && <IndexTables1/>}
             </div>
             <button style={{
               
@@ -194,7 +188,7 @@ position:"absolute",
        
         
           </Box>
-
+         
           <Box
             classname="Tabularsearch"
             sx={{
@@ -203,6 +197,7 @@ position:"absolute",
               display: "flex",
               backgroundColor: "white",
               border: "0.5px solid black",
+
             }}
           >
             <Box
@@ -372,6 +367,7 @@ position:"absolute",
               </Box>
             </Stack>
           </Box>
+              
         </Stack>
       </Container>
      

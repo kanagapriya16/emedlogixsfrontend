@@ -6,11 +6,12 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 
 import { useState } from "react";
 import "../App.css";
 import { Pagin } from "./pagination";
+import { Loads } from "./Loads";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -60,6 +61,9 @@ export default function NeoplasmTable() {
     fetchBooks();
   }, [global.values?.code]);
   console.log("our neo is", neo);
+
+
+
   //All neoplasm values
   React.useEffect(() => {
     const fetchBooks = async () => {
@@ -74,6 +78,9 @@ export default function NeoplasmTable() {
       } catch (error) {
         console.error("Error:", error);
       }
+      finally {
+        setIsLoading(false); // Set isLoading to false when the API call is completed
+      }
     };
     fetchBooks();
   }, []);
@@ -84,6 +91,7 @@ export default function NeoplasmTable() {
   const [word, setWord] = useState("");
   const [isValueSelected, setIsValueSelected] = useState(false);
   const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(true); 
   function handleChange(e) {
     setWord(e.target.value);
   }
@@ -350,15 +358,31 @@ export default function NeoplasmTable() {
                         key={index}
                         sx={{
                           border: "1px solid grey",
-                        }}
+                      }}
                         align="center"
                       >
-                        {value}
+                        <a style={{ borderBottom: "1px solid blue" }}>{value}</a>
                       </StyledTableCell>
                     ))}
                   </StyledTableRow>
                 ))}
           </TableBody>
+          {isLoading && <Loads />}
+          {global.values?.code !== null && neo && neo.length === 0 && (
+          <Typography
+            marginLeft={30}
+            variant="caption"
+            color={"#4185D2"}
+            fontWeight={800}
+          >
+            <h3>No Neoplasm codes found for the given search criteria.</h3>
+          </Typography>
+        )}
+        {!global.values?.code && neo1 && neo1.length === 0 && (
+          <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
+           <h3>No Neoplasm codes available in the data.</h3>
+          </Typography>
+        )}
         </Table>
       </TableContainer>
     </>
