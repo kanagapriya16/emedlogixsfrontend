@@ -361,7 +361,17 @@ export default function NeoplasmTable() {
                       }}
                         align="center"
                       >
-                        <a style={{ borderBottom: "1px solid blue" }}>{value}</a>
+                       {value !== "-" ? (
+                            <a
+                              style={{
+                                borderBottom: "0.5px solid blue",
+                              }}
+                            >
+                              {value}
+                            </a>
+                          ) : (
+                            "-"
+                          )} 
                       </StyledTableCell>
                     ))}
                   </StyledTableRow>
