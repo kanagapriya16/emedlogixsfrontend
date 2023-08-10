@@ -1,5 +1,5 @@
 FROM node:18-alpine AS server-build
-WORKDIR /Server
+WORKDIR /emedlogixsfrontend
 COPY package*.json ./
 RUN npm install
 COPY  . .
