@@ -9,7 +9,7 @@ const proxy = httpProxy.createProxyServer();
 
 const REACT_APP_API_URL = 'http://localhost:8081'; // URL of your Spring Boot backend
 
-//const REACT_APP = 'http://localhost:4000';
+
 app.use(cors());
 
 // Serve the React frontend
