@@ -1,7 +1,7 @@
 FROM node:18-alpine
-WORKDIR /emedlogixsfrontend/Server
+WORKDIR /emedlogixsfrontend
 ENV PATH="./node_modules/.bin:$PATH"
-COPY  . .
+COPY . /emedlogixsfrontend/Server
 RUN npm run build
 EXPOSE 4000
 CMD [ "npm","start" ]
