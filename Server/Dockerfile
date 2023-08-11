@@ -1,7 +1,6 @@
 FROM node:18-alpine AS server-build
-WORKDIR /emedlogixsfrondend
-COPY Server/package*.json ./
-RUN npm install
+WORKDIR /emedlogixsfrondend/server
+COPY package*.json ./
 COPY  . .
 RUN npm run build
 EXPOSE 4000
