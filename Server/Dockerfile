@@ -1,6 +1,7 @@
 FROM node:18-alpine 
 WORKDIR /emedlogixsfrontend/Client
 ENV PATH="./node_modules/.bin:$PATH"
+RUN npm install
 COPY  . .
 RUN npm run build
 
