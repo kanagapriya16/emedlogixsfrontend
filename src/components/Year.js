@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Year.css";
+
 export const Year = () => {
   const options = [
     { value: "option1", label: "2024" },
@@ -12,8 +13,13 @@ export const Year = () => {
     { value: "option3", label: "2017" },
     { value: "option3", label: "2016" },
   ];
+
+  const currentYear = new Date().getFullYear();
+  const defaultOption = options.find((option) => option.label === currentYear.toString());
+ 
+
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState({ value: "", label: "Year" });
+  const [selectedOption, setSelectedOption] = useState(defaultOption || { value: "", label: "Year" });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
   const handleOptionClick = (option) => {

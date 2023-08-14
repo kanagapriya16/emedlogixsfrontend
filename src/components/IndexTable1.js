@@ -7,7 +7,7 @@ import { Alphabet } from "./Alphabet";
 import { Loads } from "./Loads";
 import Search from "./Search";
 import { Main } from "./Main";
-import { Main2 } from "./Main2";
+
 
 
 const renderChildRows = (row, depthLevel = 1) => {
@@ -256,8 +256,7 @@ return (
         </table>
       </div>
       )}
-      <div style={{marginTop:"-400px",marginLeft:"800px"}}  >  {clickedCode ? <Main2 /> : null} </div>
- 
+     
     </>
   );
 };

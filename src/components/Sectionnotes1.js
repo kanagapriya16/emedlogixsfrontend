@@ -38,7 +38,7 @@ const renderChildRows = (row, depthLevel = 1) => {
 
 const Sectionnotes1 = () => {
     const [index1, setIndex1] = useState(null);
-    const [search, setSearch] = useState("");
+  
 React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
@@ -60,6 +60,10 @@ React.useEffect(() => {
     fetchBooks();
   }, []);
   console.log("our index1 is", index1);
+  console.log(global.searches);
+  const search=global.searches;
+
+
   return (
     <>
     <div>   

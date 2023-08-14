@@ -23,6 +23,7 @@ import DrugTable from "./DrugTable";
 
 
 import NeoplasmTable from "./NeoplasmTable";
+
 import IndexTables1 from "./IndexTable1";
 
 
@@ -349,7 +350,7 @@ position:"absolute",
                       <CustomTabPanel
                         value={value}
                         index={0}>
-                        <Codenotes/>
+                        <Codenotes />
                       </CustomTabPanel>
                       <CustomTabPanel value={value} index={1}>
                         <Sectionnotes />
