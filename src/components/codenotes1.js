@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material';
 import React, { Fragment, useState } from 'react'
+import Search from "./Search";
 const renderChildRows = (row, depthLevel = 1) => {
   if (row.child) {
     const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
@@ -68,6 +69,7 @@ const Codenotes1 = () => {
 
     console.log(`Code clicked: ${codes}`);
     fetchCodeDetails(codes); 
+    <Search/>
   };
 
 
@@ -91,8 +93,7 @@ const Codenotes1 = () => {
   
   console.log(result1);
 
-  global.selectedCode = result1;
-  console.log(global.selectedCode);
+ 
  
   
   return (

@@ -9,12 +9,15 @@ const Codedet = () => {
   console.log("enter codedet page")
   console.log(global.index,"codedet index value")
   const [result, setResult] = useState(null);
+  const [result1, setResult1] = useState(null);
   const [isClosed, setIsClosed] = useState(false);
+  console.log(global.results);
+  console.log(global.codess)
   
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code && global.years) {
+        if (global.values && global.values.code && global.years  ) {
           const response = await fetch(`/codes/${global.values.code}/details/?version=${global.years}`);
           if (response.ok) {
             const data = await response.json();
@@ -31,6 +34,7 @@ const Codedet = () => {
   }, [global.values]);
 
 
+ 
 
     
   
@@ -46,13 +50,14 @@ const Codedet = () => {
  
 
   console.log("our result is", result);
+
   return (
  
  
  <div className="division">
       
  
-      {!isClosed && global.values && global.values.code && global.intableresult==null &&(
+      {!isClosed && global.values && global.values.code &&(
         <div>
           <div>
             <Button
@@ -86,51 +91,7 @@ const Codedet = () => {
                 <tr key={result.code}>
                   <td>{result.code}</td>
                   <td>{result.longDescription}</td>
-                  {/*<td>
-                    {result.billable === true ? (
-                      <Button
-                        variant="contained"
-                        sx={{
-                          width: "150px",
-                          height: "15px",
-                          color: "white",
-                          fontFamily: "sans-serif",
-                          ml: "20px",
-                          backgroundColor: "green",
-                          textTransform: "lowercase",
-                          fontWeight: "700px",
-                          textAlign: "center",
-                          "&:hover": {
-                            backgroundColor: "green",
-                          },
-                        }}
-                      >
-                        Billable Codes
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        disableElevation
-                        disableFocusRipple
-                        sx={{
-                          width: "150px",
-                          height: "15px",
-                          color: "white",
-                          fontFamily: "sans-serif",
-                          ml: "170px",
-                          backgroundColor: "orange",
-                          textTransform: "lowercase",
-                          fontWeight: "700px",
-                          textAlign: "center",
-                          "&:hover": {
-                            backgroundColor: "orange",
-                          },
-                        }}
-                      >
-                        NonBillable Codes
-                      </Button>
-                    )}
-                      </td>*/}
+                
                   <td>
   {result.billable === true ? (
     <Button
@@ -180,7 +141,8 @@ const Codedet = () => {
             </tbody>
           </table>
         </div>
-      )}
+    )}
+
 
 
 

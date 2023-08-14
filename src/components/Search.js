@@ -3,9 +3,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../App.css";
 import { Main } from "./Main";
-import IndexTables from "./IndexTables";
+
 import { Alphabet } from "./Alphabet";
 const Search = () => {
+
+console.log("enter into search")
+
 console.log(global.index)
 
   const [result, setResult] = useState([]);

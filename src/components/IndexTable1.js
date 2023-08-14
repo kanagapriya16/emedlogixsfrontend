@@ -5,6 +5,9 @@ import { Pagin } from "./pagination";
 import CircularWithValueLabel from "./circularper";
 import { Alphabet } from "./Alphabet";
 import { Loads } from "./Loads";
+import Search from "./Search";
+import { Main } from "./Main";
+import { Main2 } from "./Main2";
 
 
 const renderChildRows = (row, depthLevel = 1) => {
@@ -67,6 +70,7 @@ const IndexTables1 = () => {
           if (response.ok) {
             const data = await response.json();
             setIndex(data);
+           
           } else {
             console.error("Failed to fetch data");
           }
@@ -86,12 +90,11 @@ const IndexTables1 = () => {
   }, [global.values?.code]);
   console.log("our index is", index);
 
-
-  const handleClick = (event, codes) => {
-
+  const handleClick = async (event, codes) => {
     console.log(`Code clicked: ${codes}`);
-  
-    fetchCodeDetails(codes); 
+    await fetchCodeDetails(codes);
+   
+ 
   };
 
 
@@ -100,10 +103,11 @@ const IndexTables1 = () => {
    const fetchCodeDetails = async (codes) => {
     try {
       if (codes) {
-        const response = await fetch(`/codes/${codes}/details/?version=${global.years}`);
+        const response = await fetch(`/codes/${codes}/matches`);
         if (response.ok) {
           const data = await response.json();
           setResult1(data);
+          setClickedCode(codes); 
         } else {
           console.error("Failed to fetch data");
         }
@@ -114,8 +118,12 @@ const IndexTables1 = () => {
   };
   
   console.log(result1);
+global.results=result1;
+const codesFromResults = global.results.map(result => result.code);
 
-  
+
+console.log(codesFromResults);
+global.codess=codesFromResults[0];
 
 
 return (
@@ -248,6 +256,8 @@ return (
         </table>
       </div>
       )}
+      <div style={{marginTop:"-400px",marginLeft:"800px"}}  >  {clickedCode ? <Main2 /> : null} </div>
+ 
     </>
   );
 };
