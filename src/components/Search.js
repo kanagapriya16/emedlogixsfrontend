@@ -16,10 +16,11 @@ console.log(global.index)
   const [open, setOpen] = React.useState(false);
   const [first, setFirst] = useState("");
   const [word, setWord] = useState("");
-
+  const [isDescriptionFetched, setIsDescriptionFetched] = useState(false);
 
   function handleChange(e) {
     setWord(e.target.value);
+    setIsDescriptionFetched(false); 
   }
   console.log(word);
 
@@ -28,9 +29,7 @@ console.log(global.index)
     if (word !== null) {
       setFirst(newValue);
     }
-    else{
-      setFirst(global.selectedCode);
-    }
+    
     
   };
 
@@ -50,6 +49,7 @@ console.log(global.index)
           }
        else if (/^[a-zA-Z]{3}$/.test(word)) {
            response = await fetch(`/codes/${word}/description`);
+           setIsDescriptionFetched(true); 
          } 
         // else if (/^[a-zA-Z ]{3}$|^\[a-zA-Z]+(\s\[a-zA-Z]+)?$/.test(word)) {
            ///response = await fetch(`/codes/description?keywords=${word}`);
@@ -161,9 +161,13 @@ console.log(global.index)
               
              onChange={handleChanges}
               autoSelect
+
+              
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
-                  {result1.id} {result1.description}
+                  {isDescriptionFetched
+                    ? `${result1.description} ${result1.id}`
+                    : `${result1.id} ${result1.description}`}
                 </Box>
               )}
               renderInput={(params) => (

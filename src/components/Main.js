@@ -59,9 +59,10 @@ function a11yProps(index) {
 
 export const Main = () => {
   console.log("enter main")
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0); // Set initial value to 0
+
   const [showTable, setShowTable] = useState(false);
-  const [showIndx, setShowIndex] = useState(false);
+  const [showIndx, setShowIndex] = useState(true); // Show IndexTables1 by default
   const [showDrug, setShowdrug] = useState(false);
 
     
@@ -72,7 +73,7 @@ export const Main = () => {
    
    
   };
-  const [activeBtn, setActiveBtn] = useState(null);
+  const [activeBtn, setActiveBtn] = useState('btn1');
 
   const handleNavBtnClick = (btnId) => {
     setActiveBtn(btnId);
@@ -136,7 +137,7 @@ export const Main = () => {
         
               }}
             >
-             {/*{showIndx && <IndexTables1/>}*/}
+           
              {showIndx && <IndexTables1/>}
             </div>
             <button style={{
