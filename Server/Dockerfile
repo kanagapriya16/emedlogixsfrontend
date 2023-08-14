@@ -1,4 +1,4 @@
-FROM node:18-alpine AS ui-build
+FROM node:18-alpine 
 WORKDIR /emedlogixsfrontend/Client
 ENV PATH="./node_modules/.bin:$PATH"
 COPY  . .
