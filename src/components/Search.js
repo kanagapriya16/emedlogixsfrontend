@@ -47,7 +47,7 @@ console.log(global.index)
          if (regex.test(word)) {
             response = await fetch(`/codes/${word}/matches`);
           }
-       else if (/^[a-zA-Z]{3}$/.test(word)) {
+       else if (/^[a-zA-Z]{3}$/.test(word) || word.length > 3) {
            response = await fetch(`/codes/${word}/description`);
            setIsDescriptionFetched(true); 
          } 
