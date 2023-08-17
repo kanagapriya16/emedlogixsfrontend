@@ -5,8 +5,10 @@ const Codenotes = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code && global.years) {
-          const response = await fetch(`/codes/${global.values.code}/details/?version=${global.years}`);
+        if (global.values && global.values.code && global.years && global.selectedCodeDetails == null ) {
+          const response = await fetch(
+            `/codes/${global.values.code}/details/?version=${global.years}`
+          );
           if (response.ok) {
             const data = await response.json();
             setResults(data);
@@ -21,18 +23,19 @@ const Codenotes = () => {
     fetchBooks();
   }, [global.values]);
 
-
-
-  
-
+  useEffect(() => {
+    if (global.selectedCodeDetails) {
+      setResults(global.selectedCodeDetails); // Use the stored details
+    } else {
+      // Handle the case when no code is selected
+      setResults(null);
+    }
+  }, [global.selectedCodeDetails]);
 
   console.log("our result is", results);
 
-
-
   return (
     <div className="codenotes">
-        { global.values && global.values.code  &&(
       <div>
         <table>
           <thead>
@@ -47,11 +50,6 @@ const Codenotes = () => {
           </tbody>
         </table>
       </div>
-        )}
-
-
-
-
     </div>
   );
 };

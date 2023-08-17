@@ -3,22 +3,31 @@ import { Button } from "@mui/material";
 import "../App.css";
 import React, { useEffect, useState } from "react";
 
-
-
 const Codedet = () => {
-  console.log("enter codedet page")
-  console.log(global.index,"codedet index value")
+  console.log("enter codedet page");
+  console.log(global.index, "codedet index value");
   const [result, setResult] = useState(null);
   const [result1, setResult1] = useState(null);
   const [isClosed, setIsClosed] = useState(false);
   console.log(global.results);
-  console.log(global.codess)
-  
+  console.log(global.codess);
+
+  useEffect(() => {
+    if (global.selectedCodeDetails) {
+      setResult(global.selectedCodeDetails); // Use the stored details
+    } else {
+      // Handle the case when no code is selected
+      setResult(null);
+    }
+  }, [global.selectedCodeDetails]);
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code && global.years  ) {
-          const response = await fetch(`/codes/${global.values.code}/details/?version=${global.years}`);
+        if (global.values && global.values.code && global.years) {
+          const response = await fetch(
+            `/codes/${global.values.code}/details/?version=${global.years}`
+          );
           if (response.ok) {
             const data = await response.json();
             setResult(data);
@@ -33,31 +42,16 @@ const Codedet = () => {
     fetchBooks();
   }, [global.values]);
 
-
- 
-
-    
-  
-
-
-
-
-
   const handleClose = () => {
     setIsClosed(true);
     window.location.reload();
   };
- 
 
   console.log("our result is", result);
 
   return (
- 
- 
- <div className="division">
-      
- 
-      {!isClosed && global.values && global.values.code &&(
+    <div className="division">
+      {result && (
         <div>
           <div>
             <Button
@@ -72,7 +66,7 @@ const Codedet = () => {
                 marginLeft: "125px",
               }}
             >
-              {global.values.code}
+              {result.code}
               <Close
                 sx={{
                   width: "20px",
@@ -82,78 +76,64 @@ const Codedet = () => {
                 onClick={handleClose}
               />
             </Button>
-        
           </div>
-          <table style={{marginLeft:"230px"}}>
-            
+          <table style={{ marginLeft: "230px" }}>
             <tbody>
               {result && (
                 <tr key={result.code}>
                   <td>{result.code}</td>
                   <td>{result.longDescription}</td>
-                
+
                   <td>
-  {result.billable === true ? (
-    <Button
-      variant="contained"
-      sx={{
-        width: "150px",
-        height: "15px",
-        color: "white",
-        fontFamily: "sans-serif",
-        ml: "20px",
-        backgroundColor: "green",
-        textTransform: "lowercase",
-        fontWeight: "700px",
-        textAlign: "center",
-        "&:hover": {
-          backgroundColor: "green",
-        },
-      }}
-    >
-      Billable Codes
-    </Button>
-  ) : (
-    <Button
-      variant="contained"
-      disableElevation
-      disableFocusRipple
-      sx={{
-        color: "white",
-        width: "150px",
-        height: "15px",
-        fontFamily: "sans-serif",
-        backgroundColor: "orange",
-        textTransform: "lowercase",
-        fontWeight: "700px",
-        textAlign: "center",
-        "&:hover": {
-          backgroundColor: "orange",
-        },
-      }}
-    >
-      NonBillable Codes
-    </Button>
-  )}
-</td>    
+                    {result.billable === true ? (
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "150px",
+                          height: "15px",
+                          color: "white",
+                          fontFamily: "sans-serif",
+                          ml: "20px",
+                          backgroundColor: "green",
+                          textTransform: "lowercase",
+                          fontWeight: "700px",
+                          textAlign: "center",
+                          "&:hover": {
+                            backgroundColor: "green",
+                          },
+                        }}
+                      >
+                        Billable Codes
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        disableElevation
+                        disableFocusRipple
+                        sx={{
+                          color: "white",
+                          width: "150px",
+                          height: "15px",
+                          fontFamily: "sans-serif",
+                          backgroundColor: "orange",
+                          textTransform: "lowercase",
+                          fontWeight: "700px",
+                          textAlign: "center",
+                          "&:hover": {
+                            backgroundColor: "orange",
+                          },
+                        }}
+                      >
+                        NonBillable Codes
+                      </Button>
+                    )}
+                  </td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-    )}
-
-
-
-
-
-
-
-
-
-
-
-
+      )}
     </div>
   );
 };

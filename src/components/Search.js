@@ -3,71 +3,50 @@ import React, { Fragment, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../App.css";
 import { Main } from "./Main";
-
 import { Alphabet } from "./Alphabet";
 const Search = () => {
-
-console.log("enter into search")
-
-console.log(global.index)
-
+  console.log("enter into search");
+  console.log(global.index);
   const [result, setResult] = useState([]);
   const [result1, setResult1] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [first, setFirst] = useState("");
   const [word, setWord] = useState("");
   const [isDescriptionFetched, setIsDescriptionFetched] = useState(false);
-
   function handleChange(e) {
     setWord(e.target.value);
-    setIsDescriptionFetched(false); 
+    setIsDescriptionFetched(false);
   }
   console.log(word);
-
-
   const handleChanges = (event, newValue) => {
     if (word !== null) {
       setFirst(newValue);
     }
-    
-    
   };
-
-
-
-  
-
   useEffect(() => {
     global.inatbleresult = null;
+    global.selectedCodeDetails = null;
+    global.selectedSectionDetails = null;
+    global.selectedChapterDetails = null;
+
     const fetchBooks = async () => {
       try {
         if (word) {
           let response;
-         const regex = /^[a-zA-Z]$|^[a-zA-Z]+\d+$/;
-         if (regex.test(word)) {
+          const regex = /^[a-zA-Z]$|^[a-zA-Z]+\d+$/;
+          if (regex.test(word)|| word.length > 3) {
             response = await fetch(`/codes/${word}/matches`);
+          } else if (/^[a-zA-Z]{3}$/.test(word) || word.length > 3) {
+            response = await fetch(`/codes/${word}/description`);
+            setIsDescriptionFetched(true);
           }
-       else if (/^[a-zA-Z]{3}$/.test(word) || word.length > 3) {
-           response = await fetch(`/codes/${word}/description`);
-           setIsDescriptionFetched(true); 
-         } 
-        // else if (/^[a-zA-Z ]{3}$|^\[a-zA-Z]+(\s\[a-zA-Z]+)?$/.test(word)) {
-           ///response = await fetch(`/codes/description?keywords=${word}`);
-        // } 
-          
+          // else if (/^[a-zA-Z ]{3}$|^\[a-zA-Z]+(\s\[a-zA-Z]+)?$/.test(word)) {
+          ///response = await fetch(`/codes/description?keywords=${word}`);
+          // }
           else {
-        
-           console.error("Invalid input");
-         return;
-         }
-
-
-
-
-        
-
-
-
+            console.error("Invalid input");
+            return;
+          }
           if (response.ok) {
             const data = await response.json();
             setResult1(data);
@@ -83,33 +62,19 @@ console.log(global.index)
     };
     fetchBooks();
   }, [word]);
-
   console.log("our result is", result1);
-
   console.log(first);
-
-  
-
-
   global.values = first;
-
-
- 
-  
   console.log(global.values && global.values.code);
   console.log(word);
-  global.words=word;
-
-
-
-
+  global.words = word;
   return (
     <>
       <Box
         sx={{
           height: "80px",
           position: "static",
-          marginTop:"-5px"
+          marginTop: "-5px",
         }}
       >
         <Stack
@@ -121,7 +86,9 @@ console.log(global.index)
             <Autocomplete
               id="users"
               defaultValue={null}
-              getOptionLabel={(result1) => `${result1.id} ${result1.description}`}
+              getOptionLabel={(result1) =>
+                `${result1.id} ${result1.description}`
+              }
               options={result1}
               sx={{
                 width: "1450px",
@@ -152,17 +119,16 @@ console.log(global.index)
               }}
               onClose={() => setOpen(false)}
               popupIcon={
-                <SearchIcon sx={{
-                  transition: "transform 0s",
-                  transform: open ? "rotate(180deg)" : "none",
-                  "&:hover": { background: "none" },
-                }} />
+                <SearchIcon
+                  sx={{
+                    transition: "transform 0s",
+                    transform: open ? "rotate(180deg)" : "none",
+                    "&:hover": { background: "none" },
+                  }}
+                />
               }
-              
-             onChange={handleChanges}
+              onChange={handleChanges}
               autoSelect
-
-              
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
                   {isDescriptionFetched
@@ -182,8 +148,6 @@ console.log(global.index)
         </Stack>
       </Box>
       <Main />
-
-     
     </>
   );
 };
