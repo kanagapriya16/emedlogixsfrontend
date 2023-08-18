@@ -686,3 +686,4 @@ export const Alphabet = ({ setSelectedCode }) => {
     </div>
   );
 };
+
