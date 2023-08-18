@@ -43,3 +43,21 @@
       display: block;
       -webkit-transform: translate(-0%,-0%);
     }
+
+
+
+
+
+
+
+
+.nav-btn.active {
+
+  background-color: "#90B2D8";
+  color: whitesmoke;
+  
+  font-weight: bold;
+} 
+button:hover{
+ 
+} 
