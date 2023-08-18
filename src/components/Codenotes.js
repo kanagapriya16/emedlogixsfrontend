@@ -25,9 +25,9 @@ const Codenotes = () => {
 
   useEffect(() => {
     if (global.selectedCodeDetails) {
-      setResults(global.selectedCodeDetails); // Use the stored details
+      setResults(global.selectedCodeDetails); 
     } else {
-      // Handle the case when no code is selected
+    
       setResults(null);
     }
   }, [global.selectedCodeDetails]);
