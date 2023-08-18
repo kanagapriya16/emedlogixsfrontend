@@ -255,4 +255,3 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   );
 };
 export default IndexTables1;
-

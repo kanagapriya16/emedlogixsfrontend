@@ -170,4 +170,3 @@ const Sectionnotes1 = ({ onCodeClick }) => {
   );
 };
 export default Sectionnotes1;
-

@@ -218,5 +218,3 @@ const Codenotes1 = ({ onCodeClick }) => {
   );
 };
 export default Codenotes1;
-
-

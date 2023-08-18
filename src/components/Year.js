@@ -66,6 +66,3 @@ export const Year = () => {
     </div>
   );
 };
-
-
-
