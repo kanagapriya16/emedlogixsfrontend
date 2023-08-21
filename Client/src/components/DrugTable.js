@@ -7,10 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, TextField } from "@mui/material";
-import { Pagin } from "./pagination";
+
 import { useState } from "react";
 import "../App.css";
 import CircularWithValueLabel from "./circularper";
+import { Pagin } from "./pagination";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -34,22 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     height: 1,
   },
 }));
-function getTitleFromNestedChild(row) {
-  if (row.child?.child?.child?.child?.code) {
-    return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`
-  }
-  else if (row.child?.child?.child?.code) {
-    return ` ${row.child.title} - ${row.child.child.title} - ${row.child.child.child.title} `;
-  } else if (row.child?.child?.code) {
-    return ` ${row.child.title} - ${row.child.child.title} `;
-  } else if (row.child?.code) {
-    return ` ${row.child.title} `;
-  } else {
-    return row.title;
-  }
-}
-
-export default function NeoplasmTable() {
+export default function DrugTable() {
   console.log("neo enter");
   const [drug, setDrug] = useState(null);
   const [drug1, setDrug1] = useState(null);
@@ -71,11 +57,9 @@ export default function NeoplasmTable() {
         }
       } catch (error) {
         console.error("Error:", error);
-      } finally {
-        setIsLoading(false); // Set isLoading to false when the API call is completed
-      }
+      } 
     };
-    setIsLoading(true); // Set isLoading to true before making the API call
+    // Set isLoading to true before making the API call
     setDrug(null); // Clear the previous drug data before fetching new data
     fetchDrugData();
   }, [global.values?.code]);
@@ -102,6 +86,26 @@ export default function NeoplasmTable() {
   }, []);
   console.log("our drug1 is", drug1);
   console.log("our drug is", drug);
+  const handleAlphabetSelection = (alphabet) => {
+    console.log("Selected alphabet:", alphabet);
+    // You can perform any additional actions here based on the selected alphabet
+    // For example, you can filter the data based on the selected alphabet.
+  };
+
+  function getTitleFromNestedChild(row) {
+    if (row.child?.child?.child?.child?.code) {
+      return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
+    } else if (row.child?.child?.child?.code) {
+      return `${row.child.title} - ${row.child.child.title} - ${row.child.child.child.title}`;
+    } else if (row.child?.child?.code) {
+      return `${row.child.title} - ${row.child.child.title}`;
+    } else if (row.child?.code) {
+      return `${row.child.title}`;
+    } else {
+      return row.title;
+    }
+  }
+
   return (
     <>
       <Box
@@ -113,7 +117,7 @@ export default function NeoplasmTable() {
           mt: "140px",
         }}
       >
-        <Pagin />
+      {/*  <Pagin onSelectAlphabet={handleAlphabetSelection} />*/}
       </Box>
       <Box sx={{ mt: "30px" }}>
         {isLoading ? ( // Show loading indicator
@@ -123,12 +127,12 @@ export default function NeoplasmTable() {
               marginTop: "30%",
             }}
           >
-            <CircularWithValueLabel />
+         
           </div>
         ) : (
           <TableContainer
             sx={{
-              mt: "-0.5px",
+              mt: "-230px",
               display: "flex",
               position: "absolute",
               width: "910px",
@@ -255,7 +259,8 @@ export default function NeoplasmTable() {
                     })
                     .map((row) => {
                       // Check if the parent or child code array has a value of null
-                      const hasValidParentCode = row.code && row.code[0] !== "null";
+                      const hasValidParentCode =
+                        row.code && row.code[0] !== "null";
                       const hasValidChildCode =
                         row.child &&
                         row.child.code &&
@@ -279,29 +284,40 @@ export default function NeoplasmTable() {
                         row.child.child.child.child.code &&
                         row.child.child.child.child.code[0] !== "null";
                       // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
-                      if (!(hasValidParentCode || hasValidChildCode || hasValidChildChildCode || hasValidChildChildChildCode || hasValidChildChildChildChildCode)) {
+                      if (
+                        !(
+                          hasValidParentCode ||
+                          hasValidChildCode ||
+                          hasValidChildChildCode ||
+                          hasValidChildChildChildCode ||
+                          hasValidChildChildChildChildCode
+                        )
+                      ) {
                         return null;
                       }
                       // Concatenate the values of the code array into a single string
-                      const codeDetails = (hasValidChildChildChildChildCode
-                        ? row.child.child.child.child.code
-                        : hasValidChildChildChildCode
+                      const codeDetails = (
+                        hasValidChildChildChildChildCode
+                          ? row.child.child.child.child.code
+                          : hasValidChildChildChildCode
                           ? row.child.child.child.code
                           : hasValidChildChildCode
-                            ? row.child.child.code
-                            : hasValidChildCode
-                              ? row.child.code
-                              : row.code
+                          ? row.child.child.code
+                          : hasValidChildCode
+                          ? row.child.code
+                          : row.code
                       ).join(", ");
                       // Split the codeDetails into chunks of six elements
-                      const chunkedCodeDetails = codeDetails.split(", ").reduce((acc, code) => {
-                        if (!acc.length || acc[acc.length - 1].length === 6) {
-                          acc.push([code]);
-                        } else {
-                          acc[acc.length - 1].push(code);
-                        }
-                        return acc;
-                      }, []);
+                      const chunkedCodeDetails = codeDetails
+                        .split(", ")
+                        .reduce((acc, code) => {
+                          if (!acc.length || acc[acc.length - 1].length === 6) {
+                            acc.push([code]);
+                          } else {
+                            acc[acc.length - 1].push(code);
+                          }
+                          return acc;
+                        }, []);
                       return chunkedCodeDetails.map((chunk, index) => (
                         <StyledTableRow key={`${row.id}_${index}`}>
                           <StyledTableCell component="th" scope="row">
@@ -334,16 +350,19 @@ export default function NeoplasmTable() {
                         <StyledTableCell component="th" scope="row">
                           {row.title}
                         </StyledTableCell>
-                        {row.code.map((value) => (
+                        {row.code.map((value, index) => (
                           <StyledTableCell
-                            key={row.id}
+                            key={index}
                             sx={{
                               border: "1px solid grey",
-                              height: "auto",
                             }}
                             align="center"
                           >
+                            <a style={{
+                              borderBottom:"0.5px solid blue"
+                            }}>
                             {value}
+                              </a>
                           </StyledTableCell>
                         ))}
                       </StyledTableRow>
@@ -356,3 +375,12 @@ export default function NeoplasmTable() {
     </>
   );
 }
+ 
+
+
+
+
+
+
+
+
