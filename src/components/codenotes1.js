@@ -76,7 +76,7 @@ const Codenotes1 = ({ onCodeClick }) => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
-        const response = await fetch(`codes/filterby/index?filterBy=a`);
+        const response = await fetch(`codes/alldetails/index/title?filterBy=a`);
         if (response.ok) {
           const data = await response.json();
           setIndex1(data);
