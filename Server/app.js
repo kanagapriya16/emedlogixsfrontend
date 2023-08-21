@@ -12,7 +12,7 @@ const REACT_APP_API_URL = 'http://localhost:8081'; // URL of your Spring Boot ba
 app.use(cors());
 
 // Serve the React frontend
-app.use(express.static(path.join(__dirname, '../../emedlogixsfrontend/client/build')));
+app.use(express.static(path.join(__dirname, '')));
 
 app.all('/data', (req, res) => {
   proxy.web(req, res, { target: REACT_APP });
@@ -23,7 +23,7 @@ app.all('/codes/*', (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log('Express server is running ',`${PORT}`);
