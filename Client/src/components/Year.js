@@ -1,38 +1,50 @@
 import React, { useState } from "react";
 import "../styles/Year.css";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { IconButton } from "@mui/material";
 export const Year = () => {
-  const options = [
-    { value: "option1", label: "2024" },
-    { value: "option1", label: "2023" },
-    { value: "option2", label: "2022" },
-    { value: "option3", label: "2021" },
-    { value: "option3", label: "2020" },
-    { value: "option3", label: "2019" },
-    { value: "option3", label: "2018" },
-    { value: "option3", label: "2017" },
-    { value: "option3", label: "2016" },
-  ];
+  const date = new Date();
+  const currentYear = date.getFullYear();
+  const currentMonth = date.getMonth() + 1; // Month is zero-based
+  let displayYear;
+  if (currentMonth >= 10) {
+    displayYear = currentYear + 1;
+  } else {
+    displayYear = currentYear;
+  }
+  const options = [];
+  for (let year = 2016; year <= 2024; year++) {
+    options.push({
+      value: `option${year}`,
+      label: String(year),
+    });
+  }
+  const defaultOption = options.find(
+    (option) => option.label === String(displayYear)
+  );
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState({ value: "", label: "Year" });
-
+  const [selectedOption, setSelectedOption] = useState(
+    defaultOption || { value: "", label: "Year" }
+  );
   const toggleDropdown = () => setIsOpen(!isOpen);
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
   };
-
   global.years = selectedOption.label;
   console.log(global.years);
-
   return (
     <div>
+      {" "}
       <div className="dropdown">
-        <button
-          className="dropdown__toggle"
-          onMouseEnter={() => setIsOpen(true)}
-          onClick={toggleDropdown}
-        >
-          {selectedOption.label}
+        <button className="dropdown__toggle" onClick={toggleDropdown}>
+          {selectedOption.label}{" "}
+          <ArrowDropDownIcon
+            sx={{
+              marginTop: "-5px",
+              position: "absolute",
+            }}
+          />
         </button>
         {isOpen && (
           <ul className="dropdown__menu">

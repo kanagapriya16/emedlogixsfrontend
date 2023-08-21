@@ -6,11 +6,11 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, TextField } from "@mui/material";
-import { Pagin } from "./pagination";
+import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import "../App.css";
-import CircularWithValueLabel from "./circularper";
+import { Loads } from "./Loads";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -34,27 +34,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     height: 1,
   },
 }));
-function getTitleFromNestedChild(row) {
-  if (row.child?.child?.child?.child?.code) {
-    return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`
-  }
-  else if (row.child?.child?.child?.code) {
-    return ` ${row.child.title} - ${row.child.child.title} - ${row.child.child.child.title} `;
-  } else if (row.child?.child?.code) {
-    return ` ${row.child.title} - ${row.child.child.title} `;
-  } else if (row.child?.code) {
-    return ` ${row.child.title} `;
-  } else {
-    return row.title;
-  }
-}
-
-export default function NeoplasmTable() {
+export default function DrugTable({ setResults1, setSelectedCode }) {
   console.log("neo enter");
   const [drug, setDrug] = useState(null);
   const [drug1, setDrug1] = useState(null);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true); // New state variable for loading
+  const [clickedCode, setClickedCode] = useState(null); // Define setClickedCode
+  const [result1, setResult1] = useState([]); // Define result1 state
+  const [fetchedData, setFetchedData] = useState(null); // Define fetchedData state
+
   React.useEffect(() => {
     const fetchDrugData = async () => {
       try {
@@ -71,14 +60,13 @@ export default function NeoplasmTable() {
         }
       } catch (error) {
         console.error("Error:", error);
-      } finally {
-        setIsLoading(false); // Set isLoading to false when the API call is completed
       }
     };
-    setIsLoading(true); // Set isLoading to true before making the API call
+    // Set isLoading to true before making the API call
     setDrug(null); // Clear the previous drug data before fetching new data
     fetchDrugData();
   }, [global.values?.code]);
+
   //all values of drug
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
@@ -102,6 +90,52 @@ export default function NeoplasmTable() {
   }, []);
   console.log("our drug1 is", drug1);
   console.log("our drug is", drug);
+
+  function getTitleFromNestedChild(row) {
+    if (row.child?.child?.child?.child?.code) {
+      return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
+    } else if (row.child?.child?.child?.code) {
+      return `${row.child.title} - ${row.child.child.title} - ${row.child.child.child.title}`;
+    } else if (row.child?.child?.code) {
+      return `${row.child.title} - ${row.child.child.title}`;
+    } else if (row.child?.code) {
+      return `${row.child.title}`;
+    } else {
+      return row.title;
+    }
+  }
+
+  const handleCodeClick = async (code) => {
+    setClickedCode(code);
+    await fetchCodeDetails(code);
+    setResult1(fetchedData); // Update result1 state with the fetched code details
+    setSelectedCode(code);
+    global.selectedCodeDetails = fetchedData;
+    global.selectedSectionDetails=fetchedData;
+    global.selectedChapterDetails=fetchedData;
+
+    global.intable = null;
+    global.selectedCode = code;
+  };
+  const fetchCodeDetails = async (code) => {
+    try {
+      if (code) {
+        const response = await fetch(
+          `/codes/${code}/details/?version=${global.years}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setFetchedData(data); // Store the fetched data in the state
+          setResult1(data);
+        } else {
+          console.error("Failed to fetch data");
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       <Box
@@ -112,189 +146,189 @@ export default function NeoplasmTable() {
           ml: "1px",
           mt: "140px",
         }}
-      >
-        <Pagin />
-      </Box>
+      ></Box>
       <Box sx={{ mt: "30px" }}>
-        {isLoading ? ( // Show loading indicator
-          <div
-            style={{
-              marginLeft: "60%",
-              marginTop: "30%",
-            }}
-          >
-            <CircularWithValueLabel />
-          </div>
-        ) : (
-          <TableContainer
-            sx={{
-              mt: "-0.5px",
-              display: "flex",
-              position: "absolute",
-              width: "910px",
-              ml: "-115px",
-              height: "440px",
-              overflowY: "scroll",
-            }}
-          >
-            <Table sx={{ height: "5px" }}>
-              <TableHead sx={{ height: "5px", minHeight: "10px" }}>
-                <TableRow>
-                  <div>
-                    <div className="table">
-                      <Box
-                        sx={{
-                          width: "100px",
-                          height: "20%",
-                          marginTop: "5%",
-                        }}
-                      >
-                        <Box sx={{ width: "120px", height: "22%" }}>
-                          <TextField
-                            sx={{
-                              width: "130px",
-                              "& input": {
-                                height: "10px",
-                                bgcolor: "background.paper",
-                                marginTop: "-5%",
-                                color: (theme) =>
-                                  theme.palette.getContrastText(
-                                    theme.palette.background.paper
-                                  ),
-                              },
-                            }}
-                            placeholder="Use Filter"
-                            onChange={(e) => setSearch(e.target.value)}
-                          />
-                        </Box>
+        <TableContainer
+          sx={{
+            mt: "-230px",
+            display: "flex",
+            position: "absolute",
+            width: "910px",
+            ml: "-115px",
+            height: "440px",
+            overflowY: "scroll",
+          }}
+        >
+          <Table sx={{ height: "5px" }}>
+            <TableHead sx={{ height: "5px", minHeight: "10px" }}>
+              <TableRow>
+                <div>
+                  <div className="table">
+                    <Box
+                      sx={{
+                        width: "100px",
+                        height: "20%",
+                        marginTop: "5%",
+                      }}
+                    >
+                      <Box sx={{ width: "120px", height: "22%" }}>
+                        <TextField
+                          sx={{
+                            width: "130px",
+                            "& input": {
+                              height: "10px",
+                              bgcolor: "background.paper",
+                              marginTop: "-5%",
+                              color: (theme) =>
+                                theme.palette.getContrastText(
+                                  theme.palette.background.paper
+                                ),
+                            },
+                          }}
+                          placeholder="Use Filter"
+                          onChange={(e) => setSearch(e.target.value)}
+                        />
                       </Box>
-                    </div>
+                    </Box>
                   </div>
-                </TableRow>
-              </TableHead>
-              <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
-                <TableRow
+                </div>
+              </TableRow>
+            </TableHead>
+            <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
+              <TableRow
+                sx={{
+                  border: "1px solid grey",
+                  height: "20px",
+                }}
+              >
+                <StyledTableCell
                   sx={{
                     border: "1px solid grey",
                     height: "20px",
                   }}
+                  align="center"
                 >
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    D-Index
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    Accidental, UnIntentional Poisoning
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    Intentional,Selfharm Poisoning
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    Assault Poisoning
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    Undetermined Poisoning
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    Adverse Effect
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={{
-                      border: "1px solid grey",
-                      height: "20px",
-                    }}
-                    align="center"
-                  >
-                    UnderDosing
-                  </StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {global.values?.code !== null &&
-                  drug
-                    ?.filter((item) => {
-                      return (
-                        search.toLowerCase() === "" ||
-                        item.title.toLowerCase().includes(search)
-                      );
-                    })
-                    .map((row) => {
-                      // Check if the parent or child code array has a value of null
-                      const hasValidParentCode = row.code && row.code[0] !== "null";
-                      const hasValidChildCode =
-                        row.child &&
-                        row.child.code &&
-                        row.child.code[0] !== "null";
-                      const hasValidChildChildCode =
-                        row.child &&
-                        row.child.child &&
-                        row.child.child.code &&
-                        row.child.child.code[0] !== "null";
-                      const hasValidChildChildChildCode =
-                        row.child &&
-                        row.child.child &&
-                        row.child.child.child &&
-                        row.child.child.child.code &&
-                        row.child.child.child.code[0] !== "null";
-                      const hasValidChildChildChildChildCode =
-                        row.child &&
-                        row.child.child &&
-                        row.child.child.child &&
-                        row.child.child.child.child &&
-                        row.child.child.child.child.code &&
-                        row.child.child.child.child.code[0] !== "null";
-                      // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
-                      if (!(hasValidParentCode || hasValidChildCode || hasValidChildChildCode || hasValidChildChildChildCode || hasValidChildChildChildChildCode)) {
-                        return null;
-                      }
-                      // Concatenate the values of the code array into a single string
-                      const codeDetails = (hasValidChildChildChildChildCode
+                  D-Index
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    border: "1px solid grey",
+                    height: "20px",
+                  }}
+                  align="center"
+                >
+                  Accidental, UnIntentional Poisoning
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    border: "1px solid grey",
+                    height: "20px",
+                  }}
+                  align="center"
+                >
+                  Intentional,Selfharm Poisoning
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    border: "1px solid grey",
+                    height: "20px",
+                  }}
+                  align="center"
+                >
+                  Assault Poisoning
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    border: "1px solid grey",
+                    height: "20px",
+                  }}
+                  align="center"
+                >
+                  Undetermined Poisoning
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    border: "1px solid grey",
+                    height: "20px",
+                  }}
+                  align="center"
+                >
+                  Adverse Effect
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    border: "1px solid grey",
+                    height: "20px",
+                  }}
+                  align="center"
+                >
+                  UnderDosing
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {global.values?.code !== null &&
+                drug
+                  ?.filter((item) => {
+                    return (
+                      search.toLowerCase() === "" ||
+                      item.title.toLowerCase().includes(search)
+                    );
+                  })
+                  .map((row) => {
+                    // Check if the parent or child code array has a value of null
+                    const hasValidParentCode =
+                      row.code && row.code[0] !== "null";
+                    const hasValidChildCode =
+                      row.child &&
+                      row.child.code &&
+                      row.child.code[0] !== "null";
+                    const hasValidChildChildCode =
+                      row.child &&
+                      row.child.child &&
+                      row.child.child.code &&
+                      row.child.child.code[0] !== "null";
+                    const hasValidChildChildChildCode =
+                      row.child &&
+                      row.child.child &&
+                      row.child.child.child &&
+                      row.child.child.child.code &&
+                      row.child.child.child.code[0] !== "null";
+                    const hasValidChildChildChildChildCode =
+                      row.child &&
+                      row.child.child &&
+                      row.child.child.child &&
+                      row.child.child.child.child &&
+                      row.child.child.child.child.code &&
+                      row.child.child.child.child.code[0] !== "null";
+                    // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
+                    if (
+                      !(
+                        hasValidParentCode ||
+                        hasValidChildCode ||
+                        hasValidChildChildCode ||
+                        hasValidChildChildChildCode ||
+                        hasValidChildChildChildChildCode
+                      )
+                    ) {
+                      return null;
+                    }
+                    // Concatenate the values of the code array into a single string
+                    const codeDetails = (
+                      hasValidChildChildChildChildCode
                         ? row.child.child.child.child.code
                         : hasValidChildChildChildCode
-                          ? row.child.child.child.code
-                          : hasValidChildChildCode
-                            ? row.child.child.code
-                            : hasValidChildCode
-                              ? row.child.code
-                              : row.code
-                      ).join(", ");
-                      // Split the codeDetails into chunks of six elements
-                      const chunkedCodeDetails = codeDetails.split(", ").reduce((acc, code) => {
+                        ? row.child.child.child.code
+                        : hasValidChildChildCode
+                        ? row.child.child.code
+                        : hasValidChildCode
+                        ? row.child.code
+                        : row.code
+                    ).join(", ");
+                    // Split the codeDetails into chunks of six elements
+                    const chunkedCodeDetails = codeDetails
+                      .split(", ")
+                      .reduce((acc, code) => {
                         if (!acc.length || acc[acc.length - 1].length === 6) {
                           acc.push([code]);
                         } else {
@@ -302,57 +336,100 @@ export default function NeoplasmTable() {
                         }
                         return acc;
                       }, []);
-                      return chunkedCodeDetails.map((chunk, index) => (
-                        <StyledTableRow key={`${row.id}_${index}`}>
-                          <StyledTableCell component="th" scope="row">
-                            {getTitleFromNestedChild(row)}
-                          </StyledTableCell>
-                          {Array.from({ length: 6 }).map((_, colIndex) => (
-                            <StyledTableCell
-                              key={`${row.id}_${index}_${colIndex}`}
-                              sx={{
-                                border: "1px solid grey",
-                              }}
-                              align="center"
-                            >
-                              {/* Display the code details for each column */}
-                              {chunk[colIndex] || "-"}
-                            </StyledTableCell>
-                          ))}
-                        </StyledTableRow>
-                      ));
-                    })}
-                {!global.values?.code &&
-                  drug1
-                    ?.filter((item) => {
-                      return search.toLowerCase() === ""
-                        ? item
-                        : item.title.toLowerCase().includes(search);
-                    })
-                    .map((row) => (
-                      <StyledTableRow key={row.id}>
+                    return chunkedCodeDetails.map((chunk, index) => (
+                      <StyledTableRow key={`${row.id}_${index}`}>
                         <StyledTableCell component="th" scope="row">
-                          {row.title}
+                          {getTitleFromNestedChild(row)}
                         </StyledTableCell>
-                        {row.code.map((value) => (
+                        {Array.from({ length: 6 }).map((_, colIndex) => (
                           <StyledTableCell
-                            key={row.id}
+                            key={`${row.id}_${index}_${colIndex}`}
                             sx={{
                               border: "1px solid grey",
-                              height: "auto",
                             }}
                             align="center"
                           >
-                            {value}
+                            {/* Display the code details for each column */}
+                            {chunk[colIndex] !== "--" ? (
+                              <a
+                                style={{ borderBottom: "0.5px solid blue" }}
+                                onClick={() => handleCodeClick(chunk[colIndex])}
+                              >
+                                {chunk[colIndex]}
+                              </a>
+                            ) : (
+                              chunk[colIndex] // Render the value as it is (in this case, "-")
+                            )}
                           </StyledTableCell>
                         ))}
                       </StyledTableRow>
-                    ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
+                    ));
+                  })}
+              {!global.values?.code &&
+                drug1
+                  ?.filter((item) => {
+                    return search.toLowerCase() === ""
+                      ? item
+                      : item.title.toLowerCase().includes(search);
+                  })
+                  .map((row) => (
+                    <StyledTableRow key={row.id}>
+                      <StyledTableCell component="th" scope="row">
+                        {row.title}
+                      </StyledTableCell>
+                      {row.code.map((value, index) => (
+                        <StyledTableCell
+                          key={index}
+                          sx={{
+                            border: "1px solid grey",
+                          }}
+                          align="center"
+                        >
+                          {value !== "--" ? (
+                            <a
+                              style={{
+                                borderBottom: "0.5px solid blue",
+                              }}
+                              onClick={() => handleCodeClick(value)}
+                            >
+                              {value}
+                            </a>
+                          ) : (
+                            "--"
+                          )}
+                        </StyledTableCell>
+                      ))}
+                    </StyledTableRow>
+                  ))}
+            </TableBody>
+            {isLoading && <Loads />}
+            {global.values?.code !== null && drug && drug.length === 0 && (
+              <Typography
+                marginLeft={30}
+                fontWeight={800}
+                variant="caption"
+                color={"#4185D2"}
+              >
+                <h3>No Drug codes found for the given search criteria.</h3>
+              </Typography>
+            )}
+            {!global.values?.code && drug && drug1.length === 0 && (
+              <Typography variant="caption" fontWeight={800} color={"#4185D2"}>
+                <h3>No Drug codes available in the data.</h3>
+              </Typography>
+            )}
+          </Table>
+        </TableContainer>
       </Box>
     </>
   );
 }
+ 
+
+
+
+
+
+
+
+

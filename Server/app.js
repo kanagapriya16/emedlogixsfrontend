@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 const proxy = httpProxy.createProxyServer();
 
-const REACT_APP_API_URL = 'http://192.168.1.16:8081'; // URL of your Spring Boot backend
+const REACT_APP_API_URL = 'http://localhost:8081'; // URL of your Spring Boot backend
 
 
 app.use(cors());
