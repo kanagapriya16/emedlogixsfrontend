@@ -57,12 +57,9 @@ const Sectionnotes1 = ({ onCodeClick }) => {
         console.error("Error:", error);
       }
     };
-    // Clear the previous index data before fetching new data
-
-    fetchBooks();
+ fetchBooks();
   }, []);
-  console.log("our index1 is", index1);
-  console.log(global.searches);
+ 
   const search = global.searches;
   const handleCodeClick = async (code) => {
     setClickedCode(code);
@@ -72,8 +69,6 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     global.selectedCodeDetails = fetchedData;
     global.intable = null;
     global.selectedCode = code;
-
-    // global.values = null;
   };
 
   const fetchCodeDetails = async (code) => {
@@ -84,7 +79,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); // Store the fetched data in the state
+          setFetchedData(data); 
         } else {
           console.error("Failed to fetch data");
         }
@@ -115,7 +110,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
                           margin: 0,
                         }}
                       >
-                        {row.nemod !== null && row.nemod !== "null" ? ( // Check if nemod has a value
+                        {row.nemod !== null && row.nemod !== "null" ? ( 
                           <li>
                             {row.title} {row.nemod}
                           </li>

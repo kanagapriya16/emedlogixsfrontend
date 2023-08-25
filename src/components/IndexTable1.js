@@ -1,14 +1,10 @@
-
-
 import React, { Fragment, useState } from "react";
 import "../styles/Pagination.css";
 import { Box, TextField, Typography } from "@mui/material";
 import { Alphabet } from "./Alphabet";
-
-
 const renderChildRows = (row, depthLevel = 1) => {
   if (row.child && row.child.code !== null) {
-    const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
+    const paddingLeftValue = 20 + depthLevel * 20; 
     return (
       <>
         <tr key={row.child.id}>
@@ -28,9 +24,7 @@ const renderChildRows = (row, depthLevel = 1) => {
                       style={{ color: "blue", borderBottom: "1px solid blue" }}
                     >
                       {row.child.code}
-                      {/* {row.child.code !== null &&
-                      row.child.code !== "null" &&
-                      ` ${row.child.code}`}*/}
+                      
                     </a>
                   )}
                 </li>
@@ -75,7 +69,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
       }
     };
 
-    // Clear the previous index data before fetching new data
+    
     setIndex(null);
     if (global.values && global.values.code !== null) {
       fetchBooks();
@@ -87,16 +81,16 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     setClickedCode(code);
 
     await fetchCodeDetails(code);
-    setResults1(fetchedData); // Update result1 state with the fetched code details
+    setResults1(fetchedData); 
     global.selectedCodeDetails = fetchedData;
     global.selectedSectionDetails=fetchedData;
     global.selectedChapterDetails=fetchedData;
 
     global.selectedCode = code;
-    // global.values = null;
+   
   };
 
-  // Function to fetch code details when a row.code is clicked
+
   const fetchCodeDetails = async (code) => {
     try {
       if (code) {
@@ -105,7 +99,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); // Store the fetched data in the state
+          setFetchedData(data); 
           setResult1(data);
         } else {
           console.error("Failed to fetch data");
@@ -184,7 +178,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
                               margin: 0,
                             }}
                           >
-                            {row.nemod ? ( // Check if nemod has a value
+                            {row.nemod ? ( 
                               <li>
                                 {row.title}{" "}
                                 {row.nemod !== null &&

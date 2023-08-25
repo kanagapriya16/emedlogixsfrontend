@@ -1,10 +1,8 @@
 import React from "react";
 import "../styles/Header.css";
-import Search from "./Search";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-
 import { Year } from "./Year";
 import Search1 from "./Search1";
 

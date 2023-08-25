@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import "../styles/Sectionnotes.css";
 const Sectionnotes = () => {
@@ -32,32 +30,15 @@ const globalValuesCode =global.values.code;
     fetchBooks();
   }, [globalValuesCode, global.years]);
 
-  
-
- 
-
-
   useEffect(() => {
     if (global.selectedSectionDetails) {
-      setResults(global.selectedSectionDetails); // Use the stored details
+      setResults(global.selectedSectionDetails); 
     } else {
-      // Handle the case when no code is selected
+      
       setResults(null);
     }
   }, [global.selectedSectionDetails]);
-
-
-
-  console.log(globalValuesCode);
-  console.log("our result is", results);
-
-
-
-
-  
-
-
-  return (
+ return (
     
     <div className="section">
       <div>

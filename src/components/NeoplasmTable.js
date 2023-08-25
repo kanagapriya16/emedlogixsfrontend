@@ -28,7 +28,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
     height: 1,
   },
-  // hide last border
+  
   "&:last-child td, &:last-child th": {
     height: 1,
   },
@@ -36,9 +36,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   const [neo, setNeo] = useState(null);
   const [neo1, setNeo1] = useState(null);
-  const [clickedCode, setClickedCode] = useState(null); // Define setClickedCode
-  const [result1, setResult1] = useState([]); // Define result1 state
-  const [fetchedData, setFetchedData] = useState(null); // Define fetchedData state
+  const [clickedCode, setClickedCode] = useState(null); 
+  const [result1, setResult1] = useState([]); 
+  const [fetchedData, setFetchedData] = useState(null); 
   React.useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -61,7 +61,6 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     fetchBooks();
   }, [global.values?.code]);
   console.log("our neo is", neo);
-  //All neoplasm values
   React.useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -75,7 +74,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setIsLoading(false); // Set isLoading to false when the API call is completed
+        setIsLoading(false); 
       }
     };
     setNeo1(null);
@@ -88,15 +87,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   function handleChange(e) {
     setWord(e.target.value);
   }
-  /* function getTitleFromNestedChild(row) {
-    if (row.child?.child?.code) {
-      return ` ${row.child.title} - ${row.child.child.title} `;
-    } else if (row.child?.code) {
-      return ` ${row.child.title} `;
-    } else {
-      return row.title;
-    }
-  }*/ function getTitleFromNestedChild(row) {
+ function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
     } else if (row.child?.child?.child?.code) {
@@ -108,16 +99,15 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     } else {
       return row.title;
     }
-  } // Function to fetch code details when a row.code is clicked
+  } 
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     await fetchCodeDetails(code);
-    setResult1(fetchedData); // Update result1 state with the fetched code details
+    setResult1(fetchedData); 
     setSelectedCode(code);
     global.selectedCodeDetails = fetchedData;
     global.selectedSectionDetails=fetchedData;
     global.selectedChapterDetails=fetchedData;
-
     global.intable = null;
     global.selectedCode = code;
   };
@@ -129,7 +119,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); // Store the fetched data in the state
+          setFetchedData(data); 
           setResult1(data);
         } else {
           console.error("Failed to fetch data");
@@ -279,7 +269,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   );
                 })
                 .map((row) => {
-                  // Check if the parent or child code array has a value of null
+                
                   const hasValidParentCode = row.code && row.code[0] !== "null";
                   const hasValidChildCode =
                     row.child && row.child.code && row.child.code[0] !== "null";
@@ -301,7 +291,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                     row.child.child.child.child &&
                     row.child.child.child.child.code &&
                     row.child.child.child.child.code[0] !== "null";
-                  // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
+                
                   if (
                     !(
                       hasValidParentCode ||
@@ -313,7 +303,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   ) {
                     return null;
                   }
-                  // Concatenate the values of the code array into a single string
+               
                   const codeDetails = (
                     hasValidChildChildChildChildCode
                       ? row.child.child.child.child.code
@@ -325,7 +315,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                       ? row.child.code
                       : row.code
                   ).join(", ");
-                  // Split the codeDetails into chunks of six elements
+                 
                   const chunkedCodeDetails = codeDetails
                     .split(", ")
                     .reduce((acc, code) => {

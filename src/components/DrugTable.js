@@ -1,5 +1,3 @@
-
-
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -42,10 +40,10 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
   const [drug, setDrug] = useState(null);
   const [drug1, setDrug1] = useState(null);
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // New state variable for loading
-  const [clickedCode, setClickedCode] = useState(null); // Define setClickedCode
-  const [result1, setResult1] = useState([]); // Define result1 state
-  const [fetchedData, setFetchedData] = useState(null); // Define fetchedData state
+  const [isLoading, setIsLoading] = useState(true); 
+  const [clickedCode, setClickedCode] = useState(null); 
+  const [result1, setResult1] = useState([]); 
+  const [fetchedData, setFetchedData] = useState(null); 
 
   React.useEffect(() => {
     const fetchDrugData = async () => {
@@ -65,12 +63,11 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
         console.error("Error:", error);
       }
     };
-    // Set isLoading to true before making the API call
-    setDrug(null); // Clear the previous drug data before fetching new data
+
+    setDrug(null); 
     fetchDrugData();
   }, [global.values?.code]);
 
-  //all values of drug
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
       try {
@@ -84,11 +81,11 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setIsLoading(false); // Set isLoading to false when the API call is completed
+        setIsLoading(false); 
       }
     };
-    setIsLoading(true); // Set isLoading to true before making the API call
-    setDrug1(null); // Clear the previous drug1 data before fetching new data
+    setIsLoading(true);
+    setDrug1(null); 
     fetchAllDetailsDrugData();
   }, []);
   console.log("our drug1 is", drug1);
@@ -111,8 +108,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     await fetchCodeDetails(code);
-    setResult1(fetchedData); // Update result1 state with the fetched code details
-    setSelectedCode(code);
+    setResult1(fetchedData); 
     global.selectedCodeDetails = fetchedData;
     global.selectedSectionDetails = fetchedData;
     global.selectedChapterDetails = fetchedData;
@@ -128,7 +124,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); // Store the fetched data in the state
+          setFetchedData(data); 
           setResult1(data);
         } else {
           console.error("Failed to fetch data");
@@ -283,7 +279,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                       );
                     })
                     .map((row) => {
-                      // Check if the parent or child code array has a value of null
+                
                       const hasValidParentCode =
                         row.code && row.code[0] !== "null";
                       const hasValidChildCode =
@@ -308,7 +304,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                         row.child.child.child.child &&
                         row.child.child.child.child.code &&
                         row.child.child.child.child.code[0] !== "null";
-                      // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
+                  
                       if (
                         !(
                           hasValidParentCode ||
@@ -320,7 +316,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                       ) {
                         return null;
                       }
-                      // Concatenate the values of the code array into a single string
+             
                       const codeDetails = (
                         hasValidChildChildChildChildCode
                           ? row.child.child.child.child.code
@@ -332,7 +328,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                           ? row.child.code
                           : row.code
                       ).join(", ");
-                      // Split the codeDetails into chunks of six elements
+               
                       const chunkedCodeDetails = codeDetails
                         .split(", ")
                         .reduce((acc, code) => {
@@ -356,7 +352,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                               }}
                               align="center"
                             >
-                              {/* Display the code details for each column */}
+                        
                               {chunk[colIndex] !== "--" ? (
                                 <a
                                   style={{ borderBottom: "0.5px solid blue" }}
@@ -367,7 +363,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                                   {chunk[colIndex]}
                                 </a>
                               ) : (
-                                chunk[colIndex] // Render the value as it is (in this case, "-")
+                                chunk[colIndex] 
                               )}
                             </StyledTableCell>
                           ))}

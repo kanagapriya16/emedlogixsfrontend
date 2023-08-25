@@ -38,11 +38,11 @@ function a11yProps(index) {
 }
 export const Main = () => {
   console.log("enter main");
-  const [value, setValue] = useState(0); // Set initial value to 0
+  const [value, setValue] = useState(0); 
   const [showTable, setShowTable] = useState(false);
-  const [showIndx, setShowIndex] = useState(true); // Show IndexTables1 by default
+  const [showIndx, setShowIndex] = useState(true); 
   const [showDrug, setShowdrug] = useState(false);
-  const [results1, setResults1] = useState([]); // Define result1 state here
+  const [results1, setResults1] = useState([]);
   const [selectedCode, setSelectedCode] = useState(null);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -67,12 +67,11 @@ export const Main = () => {
     setShowTable(false);
   };
   const handleRefresh = () => {
-    // Reset or refresh the relevant state here
-    // For example, you can reset the value state to 0
+
     setValue(0);
     setResults1([]);
     setSelectedCode(null);
-    // Optionally, you can perform any other actions needed to refresh the component's data
+   
   };
   useEffect(() => {
     if (selectedCode !== null) {

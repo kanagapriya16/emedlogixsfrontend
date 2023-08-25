@@ -1,7 +1,6 @@
 import { Box, Stack, Tab, Tabs, TextField } from "@mui/material";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
 import "../App.css";
 import "../styles/Main.css";
 import Codenotes1 from "./codenotes1";

@@ -31,7 +31,7 @@ const Chapternotes = () => {
 
 
   useEffect(() => {
-    setResults(global.selectedChapterDetails); // Use the stored details
+    setResults(global.selectedChapterDetails); 
   }, [global.selectedChapterDetails]);
 
   console.log("our result is", results);

@@ -14,9 +14,8 @@ const Codedet = () => {
 
   useEffect(() => {
     if (global.selectedCodeDetails) {
-      setResult(global.selectedCodeDetails); // Use the stored details
-    } else {
-      // Handle the case when no code is selected
+      setResult(global.selectedCodeDetails); 
+      } else {
       setResult(null);
     }
   }, [global.selectedCodeDetails]);

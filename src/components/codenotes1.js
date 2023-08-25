@@ -87,7 +87,7 @@ const Codenotes1 = ({ onCodeClick }) => {
         console.error("Error:", error);
       }
     };
-    // Clear the previous index data before fetching new data
+   
     setIndex1(null);
     fetchBooks();
   }, []);
@@ -96,7 +96,7 @@ const Codenotes1 = ({ onCodeClick }) => {
   const search = global.searches;
   const handleCodeClick = async (code) => {
     setClickedCode(code);
-    fetchCodeDetails(code); // Call the function to fetch code details
+    fetchCodeDetails(code); 
     global.intable = null;
     await fetchCodeDetails(code);
     onCodeClick(code);
@@ -113,7 +113,7 @@ const Codenotes1 = ({ onCodeClick }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); // Store the fetched data in the state
+          setFetchedData(data);
         } else {
           console.error("Failed to fetch data");
         }
@@ -122,7 +122,7 @@ const Codenotes1 = ({ onCodeClick }) => {
       console.error("Error:", error);
     }
   };
-  // Filter out duplicate rows based on the "code" and "title"
+
   const filteredIndexRows = removeDuplicates(index1 || []);
   return (
     <>
@@ -137,7 +137,7 @@ const Codenotes1 = ({ onCodeClick }) => {
               })
               .map((row) => (
                 <Fragment key={row.id}>
-                  {row.ismainterm && ( // Check if ismainterm is true
+                  {row.ismainterm && ( 
                     <tr>
                       <td>
                         <ul
