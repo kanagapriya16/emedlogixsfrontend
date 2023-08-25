@@ -45,7 +45,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     const fetchBooks = async () => {
       try {
         const response = await fetch(
-          `codes/filterby/index?filterBy=${global.clickedTab}`
+          `codes/alldetails/index/title?filterBy=${global.clickedTab}`
         );
         if (response.ok) {
           const data = await response.json();

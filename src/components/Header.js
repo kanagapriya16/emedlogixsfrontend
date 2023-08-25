@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
 import { Year } from "./Year";
+import Search1 from "./Search1";
 
 export const Header = () => {
   return (
@@ -29,7 +30,7 @@ export const Header = () => {
       </Box>
       <Year />
 
-      <Search />
+      <Search1/>
 
     </div>
   );
