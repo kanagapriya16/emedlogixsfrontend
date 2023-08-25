@@ -42,8 +42,8 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true); 
   const [clickedCode, setClickedCode] = useState(null); 
-  const [result1, setResult1] = useState([]); 
-  const [fetchedData, setFetchedData] = useState(null); 
+  const [result1, setResult1] = useState([]);
+  const [fetchedData, setFetchedData] = useState(null);
 
   React.useEffect(() => {
     const fetchDrugData = async () => {
@@ -63,11 +63,12 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
         console.error("Error:", error);
       }
     };
-
+  
     setDrug(null); 
     fetchDrugData();
   }, [global.values?.code]);
 
+  //all values of drug
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
       try {
@@ -81,17 +82,14 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
-    setIsLoading(true);
+    setIsLoading(true); 
     setDrug1(null); 
     fetchAllDetailsDrugData();
   }, []);
-  console.log("our drug1 is", drug1);
-  console.log("our drug is", drug);
-
-  function getTitleFromNestedChild(row) {
+function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
     } else if (row.child?.child?.child?.code) {
@@ -109,6 +107,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
     setClickedCode(code);
     await fetchCodeDetails(code);
     setResult1(fetchedData); 
+    setSelectedCode(code);
     global.selectedCodeDetails = fetchedData;
     global.selectedSectionDetails = fetchedData;
     global.selectedChapterDetails = fetchedData;
@@ -279,7 +278,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                       );
                     })
                     .map((row) => {
-                
+                     
                       const hasValidParentCode =
                         row.code && row.code[0] !== "null";
                       const hasValidChildCode =
@@ -304,7 +303,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                         row.child.child.child.child &&
                         row.child.child.child.child.code &&
                         row.child.child.child.child.code[0] !== "null";
-                  
+                    
                       if (
                         !(
                           hasValidParentCode ||
@@ -316,7 +315,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                       ) {
                         return null;
                       }
-             
+                 
                       const codeDetails = (
                         hasValidChildChildChildChildCode
                           ? row.child.child.child.child.code
@@ -328,7 +327,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                           ? row.child.code
                           : row.code
                       ).join(", ");
-               
+            
                       const chunkedCodeDetails = codeDetails
                         .split(", ")
                         .reduce((acc, code) => {
@@ -352,7 +351,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                               }}
                               align="center"
                             >
-                        
+                           
                               {chunk[colIndex] !== "--" ? (
                                 <a
                                   style={{ borderBottom: "0.5px solid blue" }}

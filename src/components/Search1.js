@@ -1,11 +1,13 @@
 import {
   Autocomplete,
   Box,
+  InputAdornment,
 TextField,
 } from "@mui/material";
 import React, {  useEffect, useState } from "react";
 import "../App.css";
 import { Main } from "./Main";
+import SearchIcon from "@mui/icons-material/Search";
 const Search1 = () => {
   const [result, setResult] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -105,7 +107,7 @@ if (setIsDescriptionFetched) {
             sx={{
               "& input": {
                 height: "5px",
-                width: "89vw",
+                width: "86vw",
               },
             }}
             onChange={handleChange}
@@ -126,6 +128,13 @@ if (setIsDescriptionFetched) {
             }}
             inputProps={{
               autoComplete: "off", 
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon/>
+                </InputAdornment>
+              ),
             }}
           />
           <Autocomplete
