@@ -52,7 +52,7 @@ const globalValuesCode =global.values.code;
               ))
             ) : (
               <tr>
-                <td>No Section notes</td>
+                <td>No Code notes</td>
               </tr>
             )}
           </tbody>

@@ -321,10 +321,11 @@ export const Main = () => {
                       >
                         {" "}
                         <CustomTabPanel value={value} index={0}>
-                          <Codenotes />
+                         
+                          <Sectionnotes />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                          <Sectionnotes />
+                         <Codenotes/>
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
                           <Chapternotes />

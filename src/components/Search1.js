@@ -8,6 +8,7 @@ import React, {  useEffect, useState } from "react";
 import "../App.css";
 import { Main } from "./Main";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 const Search1 = () => {
   const [result, setResult] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -17,6 +18,9 @@ const Search1 = () => {
   const [isDescriptionFetched, setIsDescriptionFetched] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+
+
+
 const handleChange = (event) => {
     const newValue = event.target.value;
     setWord(newValue);
@@ -25,7 +29,15 @@ const handleChange = (event) => {
     } else {
       setOpen(true);
     }
+    setSelectedItem(null);
+    setIsValueSelected(false);
   };
+  const handleClearInput = () => {
+    setWord(""); // Clear the input value
+    setSelectedItem(null);
+    setIsValueSelected(false);
+  };
+
   console.log(word);
   useEffect(() => {
     global.inatbleresult = null;
@@ -132,8 +144,11 @@ if (setIsDescriptionFetched) {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
+                   <CloseIcon onClick={handleClearInput} style={{ cursor: 'pointer' }}/>
                   <SearchIcon/>
+           
                 </InputAdornment>
+                
               ),
             }}
           />
@@ -189,6 +204,13 @@ if (setIsDescriptionFetched) {
                   },
                 }}
                 {...params}
+                onKeyDown={(event) => {
+                  if (event.key === "Backspace") {
+          
+                    setSelectedItem(null);
+                    setIsValueSelected(false);
+                  }
+                }}
                 placeholder="Search for code"
               />
             )}
