@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import "../../App.css";
 const renderChildRows = (row, depthLevel = 1) => {
   if (row.child) {
     const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
@@ -33,7 +34,7 @@ const renderChildRows = (row, depthLevel = 1) => {
   return null;
 };
 
-const Sectionnotes1 = ({ onCodeClick }) => {
+const Sectionnotes1m = ({ onCodeClick }) => {
   const [index1, setIndex1] = useState(null);
 
   const [fetchedData, setFetchedData] = useState(null);
@@ -55,9 +56,9 @@ const Sectionnotes1 = ({ onCodeClick }) => {
         console.error("Error:", error);
       }
     };
- fetchBooks();
+    fetchBooks();
   }, []);
- 
+
   const search = global.searches;
   const handleCodeClick = async (code) => {
     setClickedCode(code);
@@ -77,7 +78,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); 
+          setFetchedData(data);
         } else {
           console.error("Failed to fetch data");
         }
@@ -108,7 +109,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
                           margin: 0,
                         }}
                       >
-                        {row.nemod !== null && row.nemod !== "null" ? ( 
+                        {row.nemod !== null && row.nemod !== "null" ? (
                           <li>
                             {row.title} {row.nemod}
                           </li>
@@ -164,4 +165,4 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     </>
   );
 };
-export default Sectionnotes1;
+export default Sectionnotes1m;

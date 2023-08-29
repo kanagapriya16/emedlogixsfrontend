@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Sectionnotes.css";
 const Sectionnotes = () => {
-
-
   const [results, setResults] = useState(null);
-
-
-const globalValuesCode =global.values.code;
-
-  
+  const globalValuesCode = global.values.code;
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (globalValuesCode && global.years && global.selectedSectionDetails == null) {
+        if (
+          globalValuesCode &&
+          global.years &&
+          global.selectedSectionDetails == null
+        ) {
           const response = await fetch(
             `/codes/${globalValuesCode}/details/?version=${global.years}`
           );
@@ -29,18 +27,23 @@ const globalValuesCode =global.values.code;
     };
     fetchBooks();
   }, [globalValuesCode, global.years]);
-
   useEffect(() => {
     if (global.selectedSectionDetails) {
-      setResults(global.selectedSectionDetails); 
+      setResults(global.selectedSectionDetails);
     } else {
-      
       setResults(null);
     }
   }, [global.selectedSectionDetails]);
- return (
-    
-    <div className="section">
+  return (
+    <div
+      style={{
+        height: "40vh",
+        width: "auto",
+        marginLeft: "-0%",
+        marginTop: "-20px",
+        fontFamily: "Verdana ",
+      }}
+    >
       <div>
         <table>
           <tbody className="chapter">

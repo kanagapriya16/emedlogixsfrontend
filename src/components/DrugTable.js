@@ -16,12 +16,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     backgroundColor: "#90B2D8",
-    padding: "0px 12px 0px 0px",
+    
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: 1,
     border: "1px solid grey",
+   
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -40,8 +41,8 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
   const [drug, setDrug] = useState(null);
   const [drug1, setDrug1] = useState(null);
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(true); 
-  const [clickedCode, setClickedCode] = useState(null); 
+  const [isLoading, setIsLoading] = useState(true);
+  const [clickedCode, setClickedCode] = useState(null);
   const [result1, setResult1] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
 
@@ -63,8 +64,8 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
         console.error("Error:", error);
       }
     };
-  
-    setDrug(null); 
+
+    setDrug(null);
     fetchDrugData();
   }, [global.values?.code]);
 
@@ -85,11 +86,11 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
         setIsLoading(false);
       }
     };
-    setIsLoading(true); 
-    setDrug1(null); 
+    setIsLoading(true);
+    setDrug1(null);
     fetchAllDetailsDrugData();
   }, []);
-function getTitleFromNestedChild(row) {
+  function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
     } else if (row.child?.child?.child?.code) {
@@ -106,7 +107,7 @@ function getTitleFromNestedChild(row) {
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     await fetchCodeDetails(code);
-    setResult1(fetchedData); 
+    setResult1(fetchedData);
     setSelectedCode(code);
     global.selectedCodeDetails = fetchedData;
     global.selectedSectionDetails = fetchedData;
@@ -123,7 +124,7 @@ function getTitleFromNestedChild(row) {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); 
+          setFetchedData(data);
           setResult1(data);
         } else {
           console.error("Failed to fetch data");
@@ -138,27 +139,28 @@ function getTitleFromNestedChild(row) {
     <>
       <Box
         sx={{
-          width: "51.6vw",
-          marginTop: "-4%",
+          width: "50vw",
+          marginTop: "-10%",
         }}
       >
         <div
           style={{
-            height: "60vh",
+            height: "65vh",
+            marginLeft: "1%",
           }}
         >
           {" "}
           <TableContainer
             sx={{
-              height: "60vh",
-              //overflowY: "auto",
-              overflowX: "auto",
+              height: "65vh",
+              overflowY: "auto",
             }}
           >
             <Table
               sx={{
-                ml: "-0.3%",
-                width: "52vw",
+                ml: "0%",
+                width: "50vw",
+                mt: "-14px",
               }}
             >
               <TableHead sx={{ height: "5px", minHeight: "10px" }}>
@@ -172,7 +174,7 @@ function getTitleFromNestedChild(row) {
                           marginTop: "5%",
                         }}
                       >
-                        <Box sx={{ width: "120px", height: "22%", ml: "5px" }}>
+                        <Box sx={{ width: "120px", height: "22%", ml: "2px" }}>
                           <TextField
                             sx={{
                               width: "130px",
@@ -278,7 +280,6 @@ function getTitleFromNestedChild(row) {
                       );
                     })
                     .map((row) => {
-                     
                       const hasValidParentCode =
                         row.code && row.code[0] !== "null";
                       const hasValidChildCode =
@@ -303,7 +304,7 @@ function getTitleFromNestedChild(row) {
                         row.child.child.child.child &&
                         row.child.child.child.child.code &&
                         row.child.child.child.child.code[0] !== "null";
-                    
+
                       if (
                         !(
                           hasValidParentCode ||
@@ -315,7 +316,7 @@ function getTitleFromNestedChild(row) {
                       ) {
                         return null;
                       }
-                 
+
                       const codeDetails = (
                         hasValidChildChildChildChildCode
                           ? row.child.child.child.child.code
@@ -327,7 +328,7 @@ function getTitleFromNestedChild(row) {
                           ? row.child.code
                           : row.code
                       ).join(", ");
-            
+
                       const chunkedCodeDetails = codeDetails
                         .split(", ")
                         .reduce((acc, code) => {
@@ -351,7 +352,6 @@ function getTitleFromNestedChild(row) {
                               }}
                               align="center"
                             >
-                           
                               {chunk[colIndex] !== "--" ? (
                                 <a
                                   style={{ borderBottom: "0.5px solid blue" }}
@@ -362,7 +362,7 @@ function getTitleFromNestedChild(row) {
                                   {chunk[colIndex]}
                                 </a>
                               ) : (
-                                chunk[colIndex] 
+                                chunk[colIndex]
                               )}
                             </StyledTableCell>
                           ))}

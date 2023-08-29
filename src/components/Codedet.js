@@ -1,8 +1,7 @@
 import { Close } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import "../App.css";
+import "../../src/App.css";
 import React, { useEffect, useState } from "react";
-
 const Codedet = () => {
   console.log("enter codedet page");
   console.log(global.index, "codedet index value");
@@ -11,15 +10,13 @@ const Codedet = () => {
   const [isClosed, setIsClosed] = useState(false);
   console.log(global.results);
   console.log(global.codess);
-
   useEffect(() => {
     if (global.selectedCodeDetails) {
-      setResult(global.selectedCodeDetails); 
-      } else {
+      setResult(global.selectedCodeDetails);
+    } else {
       setResult(null);
     }
   }, [global.selectedCodeDetails]);
-
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -40,14 +37,11 @@ const Codedet = () => {
     };
     fetchBooks();
   }, [global.values]);
-
   const handleClose = () => {
     setIsClosed(true);
     window.location.reload();
   };
-
   console.log("our result is", result);
-
   return (
     <div className="division">
       {result && (
@@ -60,7 +54,7 @@ const Codedet = () => {
                 border: "0.5px solid green",
                 textAlign: "center",
                 height: "20px",
-                width: "80px",
+                width: "auto",
                 backgroundColor: "#ADD8E6",
                 marginLeft: "125px",
               }}
@@ -82,17 +76,15 @@ const Codedet = () => {
                 <tr key={result.code}>
                   <td>{result.code}</td>
                   <td>{result.longDescription}</td>
-
                   <td>
                     {result.billable === true ? (
                       <Button
                         variant="contained"
                         sx={{
                           width: "150px",
-                          height: "15px",
+                          height: "2vh",
                           color: "white",
                           fontFamily: "sans-serif",
-                          ml: "20px",
                           backgroundColor: "green",
                           textTransform: "lowercase",
                           fontWeight: "700px",
@@ -112,7 +104,7 @@ const Codedet = () => {
                         sx={{
                           color: "white",
                           width: "150px",
-                          height: "15px",
+                          height: "2vh",
                           fontFamily: "sans-serif",
                           backgroundColor: "orange",
                           textTransform: "lowercase",

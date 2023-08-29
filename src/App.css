@@ -1,11 +1,10 @@
-table {  
+table {
   overflow: hidden;
   margin-left: 120px;
   margin-top: 20px;
 }
 th,
 td {
-
   align-items: left;
   text-align: left;
   padding: 5px;
@@ -14,11 +13,7 @@ td {
   font-size: small;
   font-family: "Verdana", sans-serif;
   border: none;
-
-  
 }
-
-
 .tab-head {
   margin-top: 0;
   padding-top: 6px;
@@ -30,7 +25,6 @@ td {
   padding-bottom: 5px;
 }
 .Table-box {
-
   height: 400px;
   width: 60%;
   float: right;
@@ -58,7 +52,6 @@ td {
 }
 .bill:active {
   transform: scale(0.9);
-  
 }
 .disease {
   font-size: small;
@@ -87,12 +80,10 @@ td {
   display: none;
 }
 .division{
-
-  margin-left: -310px;
+  margin-left: -120px;
 }
 .codenotes{
   margin-left: -150px;
-
 }
 .section{
   margin-left: -150px;
@@ -105,13 +96,10 @@ td {
 }
 .stylerow{
   color:aquamarine
-
 }
 .drugs{
   border: 1px solid gray;
 }
 .drugs:nth-child(even){
-  
-    background-color: #dddddd;
-  
+    background-color: #DDDDDD;
 }

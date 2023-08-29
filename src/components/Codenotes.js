@@ -1,11 +1,17 @@
-/*import React, { useEffect, useState } from "react";
+
+/*
+import React, { useEffect, useState } from "react";
 const Codenotes = () => {
   const [results, setResults] = useState(null);
-
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code && global.years && global.selectedCodeDetails == null ) {
+        if (
+          global.values &&
+          global.values.code &&
+          global.years &&
+          global.selectedCodeDetails == null
+        ) {
           const response = await fetch(
             `/codes/${global.values.code}/details/?version=${global.years}`
           );
@@ -22,20 +28,22 @@ const Codenotes = () => {
     };
     fetchBooks();
   }, [global.values]);
-
   useEffect(() => {
     if (global.selectedCodeDetails) {
-      setResults(global.selectedCodeDetails); 
+      setResults(global.selectedCodeDetails);
     } else {
-    
       setResults(null);
     }
   }, [global.selectedCodeDetails]);
-
   console.log("our result is", results);
-
   return (
-    <div className="codenotes">
+    <div
+      style={{
+        height: "10vh",
+        width: "30vw",
+        marginLeft: "-6%",
+      }}
+    >
       <div>
         <table>
           <thead>
@@ -53,16 +61,20 @@ const Codenotes = () => {
     </div>
   );
 };
-export default Codenotes;*/
+export default Codenotes;
+*/
 import React, { useEffect, useState } from "react";
-
 const Codenotes = () => {
   const [results, setResults] = useState(null);
-
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code && global.years && global.selectedChapterDetails == null) {
+        if (
+          global.values &&
+          global.values.code &&
+          global.years &&
+          global.selectedChapterDetails == null
+        ) {
           const response = await fetch(
             `/codes/${global.values.code}/details/?version=${global.years}`
           );
@@ -77,19 +89,15 @@ const Codenotes = () => {
         console.error("Error:", error);
       }
     };
-
     if (global.values && global.values.code) {
       fetchBooks();
     } else {
       setResults(null);
     }
   }, [global.values]);
-
-
   useEffect(() => {
-    setResults(global.selectedChapterDetails); 
+    setResults(global.selectedChapterDetails);
   }, [global.selectedChapterDetails]);
-
   console.log("our result is", results);
   const shouldDisplayClassification = (classification, index) => {
     if (index === 0) {
@@ -101,12 +109,14 @@ const Codenotes = () => {
     return !previousClassifications.includes(classification);
   };
   return (
-    <div>
-      <div
-        style={{
-          marginTop: "50px",
-        }}
-      >
+    <div
+      style={{
+        height: "60vh",
+        width: "30vw",
+        marginLeft: "80px",
+      }}
+    >
+      <div style={{ height: "60vh", width: "30vw" }}>
         {results && results.chapter && results.chapter.description ? (
           <div key={results.code}>
             <div style={{ marginLeft: "17px" }}>
@@ -116,11 +126,8 @@ const Codenotes = () => {
         ) : (
           <div>No Section notes</div>
         )}
-
-        
       </div>
     </div>
   );
 };
-
 export default Codenotes;
