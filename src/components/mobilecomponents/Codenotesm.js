@@ -54,6 +54,8 @@ const Codenotesm = () => {
         height: "60vh",
         width: "auto",
         marginLeft: "50px",
+        fontFamily:"Verdana",
+        fontSize:"13px"
       }}
     >
       <div style={{ height: "60vh", width: "auto" }}>

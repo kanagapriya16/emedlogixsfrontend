@@ -2,42 +2,7 @@ import React, { Fragment, useState } from "react";
 import "../styles/Pagination.css";
 import { Box, TextField, Typography } from "@mui/material";
 import { Alphabet } from "./Alphabet";
-const renderChildRows = (row, depthLevel = 1) => {
-  if (row.child && row.child.code !== null) {
-    const paddingLeftValue = 20 + depthLevel * 20;
-    return (
-      <>
-        <tr key={row.child.id}>
-          <td style={{ paddingLeft: `${paddingLeftValue}px` }}>
-            <ul
-              style={{
-                listStyleType: "circle",
-                paddingLeft: "20px",
-                margin: 0,
-              }}
-            >
-              {row.child.title && (
-                <li>
-                  {row.child.title}{" "}
-                  {row.child.code !== null && row.child.code !== "null" && (
-                    <a
-                      style={{ color: "blue", borderBottom: "1px solid blue" }}
-                    >
-                      {row.child.code}
-                    </a>
-                  )}
-                </li>
-              )}
-            </ul>
-          </td>
-        </tr>
-        {renderChildRows(row.child, depthLevel + 1)}
-      </>
-    );
-  }
-  return null;
-};
-
+   
 const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(null);
@@ -48,7 +13,10 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   const [fetchedData, setFetchedData] = useState(null);
   const [activeBtnIndex, setActiveBtnIndex] = useState(0);
 
-  React.useEffect(() => {
+
+ 
+
+ React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
@@ -75,17 +43,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   }, [global.values?.code]);
   console.log("our index is", index);
 
-  const handleCodeClick = async (code) => {
-    setClickedCode(code);
-
-    await fetchCodeDetails(code);
-    setResults1(fetchedData);
-    global.selectedCodeDetails = fetchedData;
-    global.selectedSectionDetails = fetchedData;
-    global.selectedChapterDetails = fetchedData;
-
-    global.selectedCode = code;
-  };
+ 
 
   const fetchCodeDetails = async (code) => {
     try {
@@ -107,6 +65,55 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   };
 
   console.log(result1);
+  const handleCodeClick = async (code) => {
+    setClickedCode(code);
+
+    await fetchCodeDetails(code);
+    setResults1(fetchedData);
+    global.selectedCodeDetails = fetchedData;
+    global.selectedSectionDetails = fetchedData;
+    global.selectedChapterDetails = fetchedData;
+
+    global.selectedCode = code;
+  };
+
+
+const renderChildRows = (row, depthLevel = 1) => {
+    if (row.child && row.child.code !== null) {
+      const paddingLeftValue = 20 + depthLevel * 20;
+      return (
+        <>
+          <tr key={row.child.id}>
+            <td style={{ paddingLeft: `${paddingLeftValue}px` }}>
+              <ul
+                style={{
+                  listStyleType: "circle",
+                  paddingLeft: "20px",
+                  margin: 0,
+                }}
+              >
+                {row.child.title && (
+                  <li>
+                    {row.child.title}{" "}
+                    {row.child.code !== null && row.child.code !== "null" && (
+                      <a
+                        //style={{ color: "blue", borderBottom: "1px solid blue" }}
+                       onClick={() => handleCodeClick(row.code)}
+                      >
+                        {row.child.code}
+                      </a>
+                    )}
+                  </li>
+                )}
+              </ul>
+            </td>
+          </tr>
+          {renderChildRows(row.child, depthLevel + 1)}
+        </>
+      );
+    }
+    return null;
+  };
 
   return (
     <>

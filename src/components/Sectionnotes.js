@@ -39,9 +39,10 @@ const Sectionnotes = () => {
       style={{
         height: "40vh",
         width: "auto",
-        marginLeft: "-0%",
+        marginLeft: "-14%",
         marginTop: "-20px",
         fontFamily: "Verdana ",
+       
       }}
     >
       <div>

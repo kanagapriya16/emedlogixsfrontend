@@ -32,13 +32,12 @@ const Search1 = () => {
     setIsValueSelected(false);
   };
   const handleClearInput = () => {
-    setWord(""); // Clear the input value
-    setSelectedItem(null); // Clear selected item
+    setWord(""); 
+    setSelectedItem(null); 
     setIsValueSelected(false);
-    // Clear selected item
+
     setIsValueSelected(null);
-    // Reset value selected flag
-    // Reset other relevant states to null
+
   };
   console.log(word);
   useEffect(() => {
@@ -141,11 +140,17 @@ const Search1 = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
-                    <CloseIcon
-                      onClick={handleClearInput}
-                      style={{ cursor: "pointer" }}
-                    />
-                    <SearchIcon />
+                    {word || selectedItem ? ( // Show close icon when there's input or a selected item
+                      <CloseIcon
+                        sx={{
+                          fontSize: "20px",
+                        }}
+                        onClick={handleClearInput}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <SearchIcon />
+                    )}
                   </InputAdornment>
                 ),
               }}
@@ -186,7 +191,7 @@ const Search1 = () => {
               }}
               onClose={() => {
                 setOpen(false);
-                // Clear selectedItem when closing
+          
               }}
               onChange={(event, newValue) => {
                 setSelectedItem(newValue);
@@ -271,11 +276,17 @@ const Search1 = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
-                    <CloseIcon
-                      onClick={handleClearInput}
-                      style={{ cursor: "pointer" }}
-                    />
-                    <SearchIcon />
+                    {word || selectedItem ? ( // Show close icon when there's input or a selected item
+                      <CloseIcon
+                        sx={{
+                          fontSize: "20px",
+                        }}
+                        onClick={handleClearInput}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <SearchIcon />
+                    )}
                   </InputAdornment>
                 ),
               }}
@@ -319,7 +330,7 @@ const Search1 = () => {
               }}
               onClose={() => {
                 setOpen(false);
-                // Clear selectedItem when closing
+              
               }}
               onChange={(event, newValue) => {
                 setSelectedItem(newValue);

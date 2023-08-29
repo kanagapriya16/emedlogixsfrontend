@@ -119,6 +119,14 @@ export const Main = () => {
                     variant="subtitle1"
                     fontFamily={"sans-serif"}
                     color={" #4185D2"}
+                  >
+                    Tabular Search
+                  </Typography>
+                  <Typography
+                    mt={3}
+                    variant="subtitle1"
+                    fontFamily={"sans-serif"}
+                    color={" #4185D2"}
                     fontWeight={600}
                     sx={{
                       borderBottom: "0.3px solid grey",
@@ -126,6 +134,7 @@ export const Main = () => {
                   >
                     Code details
                   </Typography>
+                  
                   <Box>{<Codedet />}</Box>
                   <div
                     style={{
@@ -452,17 +461,25 @@ export const Main = () => {
                       width: "44vw",
                     }}
                   >
-                    <Typography
-                      variant="subtitle1"
-                      fontFamily={"sans-serif"}
-                      color={" #4185D2"}
-                      fontWeight={600}
-                      sx={{
-                        borderBottom: "0.3px solid grey",
-                      }}
-                    >
-                      Code details
-                    </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    fontFamily={"sans-serif"}
+                    color={" #4185D2"}
+                  >
+                    Tabular Search
+                  </Typography>
+                  <Typography
+                    mt={3}
+                    variant="subtitle1"
+                    fontFamily={"sans-serif"}
+                    color={" #4185D2"}
+                    fontWeight={600}
+                    sx={{
+                      borderBottom: "0.3px solid grey",
+                    }}
+                  >
+                    Code details
+                  </Typography>
 
                     <Box>{<Codedet />}</Box>
                     <div

@@ -56,6 +56,8 @@ const Chapternotes = () => {
         height: "50vh",
         marginLeft: "10%",
         width: "auto",
+        fontFamily:"Verdana",
+        fontSize:"13px"
       }}
     >
       {results && results.chapter && results.chapter.description ? (

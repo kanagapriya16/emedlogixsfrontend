@@ -114,6 +114,8 @@ const Codenotes = () => {
         height: "60vh",
         width: "30vw",
         marginLeft: "80px",
+        fontFamily:"Verdana",
+        fontSize:"13px"
       }}
     >
       <div style={{ height: "60vh", width: "30vw" }}>
