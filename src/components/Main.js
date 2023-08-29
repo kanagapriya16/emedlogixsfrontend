@@ -97,240 +97,259 @@ export const Main = () => {
     <>
       {matches ? (
         //mobileScrenn//
-
-        <Stack direction={"column"} gap={"30px"} ml={2}>
-          <div
-            style={{
-              display: "flex",
-              height: "88vh",
-              width: "97vw",
-              backgroundColor: " white",
-              border: "0.5px solid grey",
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  height: "3vh",
-                  width: "97vw",
-                }}
-              >
-                <Typography
-                  variant="subtitle1"
-                  fontFamily={"sans-serif"}
-                  color={" #4185D2"}
-                  fontWeight={600}
-                  sx={{
-                    borderBottom: "0.3px solid grey",
-                  }}
-                >
-                  Code details
-                </Typography>
-
-                <Box>{<Codedet />}</Box>
+        <Container>
+          <Stack direction={"column"} gap={"30px"} ml={-1.4} mt={-3}>
+            <div
+              style={{
+                display: "flex",
+                height: "88vh",
+                width: "97vw",
+                backgroundColor: " white",
+                border: "0.5px solid grey",
+              }}
+            >
+              <div>
                 <div
                   style={{
-                    height: "50vh",
+                    height: "3vh",
                     width: "97vw",
-                    marginTop: "20px",
                   }}
                 >
-                  <Box sx={{ width: "100vw" }}>
-                    <Box
-                      sx={{
-                        marginTop: "1%",
-                        background:
-                          "linear-gradient(to right, #E9F8FF,#90B2D8 , #C1E3FF)",
-                        width: "97vw",
-                        height: "3.5vh",
-                        color: "black",
-                        display: "flex",
-                        ml: "0px",
-                      }}
-                    >
-                      <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="basic tabs example"
-                        className="tabs"
-                        sx={{ marginLeft: "0px" }}
-                        TabIndicatorProps={{
-                          style: {
-                            backgroundColor: "#4185D2",
-                            width: "50px",
-                            marginLeft: "38px",
-                            marginBottom: "20px",
-                            fontWeight: "800px",
-                          },
+                  <Typography
+                    variant="subtitle1"
+                    fontFamily={"sans-serif"}
+                    color={" #4185D2"}
+                    fontWeight={600}
+                    sx={{
+                      borderBottom: "0.3px solid grey",
+                    }}
+                  >
+                    Code details
+                  </Typography>
+                  <Box>{<Codedet />}</Box>
+                  <div
+                    style={{
+                      height: "50vh",
+                      width: "97vw",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <Box sx={{ width: "100vw" }}>
+                      <Box
+                        sx={{
+                          marginTop: "1%",
+                          background:
+                            "linear-gradient(to right, #E9F8FF,#90B2D8 , #C1E3FF)",
+                          width: "97vw",
+                          height: "3.5vh",
+                          color: "black",
+                          display: "flex",
+                          ml: "0px",
                         }}
                       >
-                        <Tab
-                          disableFocusRipple
-                          disableRipple
-                          disableTouchRipple
-                          sx={{
-                            cursor: "pointer",
-                            variant: "subtitle1",
-                            fontWeight: "700px",
-
-                            textTransform: "none",
-                            width: "35%",
-                            marginTop: "-3%",
-                            color: "#4185D2",
+                        <Tabs
+                          value={value}
+                          onChange={handleChange}
+                          aria-label="basic tabs example"
+                          className="tabs"
+                          sx={{ marginLeft: "0px" }}
+                          TabIndicatorProps={{
+                            style: {
+                              backgroundColor: "#4185D2",
+                              width: "50px",
+                              marginLeft: "50px",
+                              marginBottom: "20px",
+                              fontWeight: "800px",
+                            },
                           }}
-                          label="  Code notes"
-                          {...a11yProps(0)}
-                        />
-                        <Tab
-                          disableFocusRipple
-                          disableRipple
-                          disableTouchRipple
-                          sx={{
-                            cursor: "pointer",
-                            variant: "subtitle1",
-                            fontWeight: "700px",
-
-                            textTransform: "none",
-                            width: "35%",
-                            marginTop: "-3%",
-                            color: "#4185D2",
-                          }}
-                          variant="subtitle1"
-                          fontWeight={"700"}
-                          label="Section notes"
-                          {...a11yProps(1)}
-                        />
-                        <Tab
-                          disableFocusRipple
-                          disableRipple
-                          disableTouchRipple
-                          sx={{
-                            cursor: "pointer",
-                            variant: "subtitle1",
-                            fontWeight: "700px",
-                            color: "#4185D2",
-                            textTransform: "none",
-                            width: "40%",
-                            marginTop: "-3%",
-                          }}
-                          variant="subtitle1"
-                          fontWeight={"700"}
-                          label="Chapter notes"
-                          {...a11yProps(2)}
-                        />
-                      </Tabs>
+                        >
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+                              textTransform: "none",
+                              width: "35%",
+                              marginTop: "-3%",
+                              color: "#4185D2",
+                            }}
+                            label="  Code notes"
+                            {...a11yProps(0)}
+                          />
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+                              textTransform: "none",
+                              width: "35%",
+                              marginTop: "-3%",
+                              marginLeft: "-10%",
+                              color: "#4185D2",
+                            }}
+                            variant="subtitle1"
+                            fontWeight={"700"}
+                            label="Section notes"
+                            {...a11yProps(1)}
+                          />
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+                              color: "#4185D2",
+                              textTransform: "none",
+                              width: "40%",
+                              marginLeft: "-10%",
+                              marginTop: "-3%",
+                            }}
+                            variant="subtitle1"
+                            fontWeight={"700"}
+                            label="Chapter notes"
+                            {...a11yProps(2)}
+                          />
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+                              color: "#4185D2",
+                              textTransform: "none",
+                              width: "40%",
+                              marginTop: "-3%",
+                              marginLeft: "-10%",
+                            }}
+                            variant="subtitle1"
+                            fontWeight={"700"}
+                            label="Chapter guidlines"
+                            {...a11yProps(2)}
+                          />
+                        </Tabs>
+                      </Box>
+                      <div
+                        style={{
+                          display: "flex",
+                          marginLeft: "-38%",
+                          textAlign: "left",
+                          overflowY: "auto",
+                          paddingLeft: "30%",
+                          marginTop: "3%",
+                          overflowX: "hidden",
+                          width: "100vw",
+                        }}
+                      >
+                        <CustomTabPanel value={value} index={0}>
+                          <Sectionnotesm />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                          <Codenotesm />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2}>
+                          <Chapternotesm />
+                        </CustomTabPanel>
+                        <CustomTabPanel
+                          value={value}
+                          index={3}
+                        ></CustomTabPanel>
+                      </div>
                     </Box>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        marginLeft: "-38%",
-                        textAlign: "left",
-                        overflowY: "auto",
-                        paddingLeft: "30%",
-                        marginTop: "3%",
-                        overflowX: "hidden",
-                        width: "100vw",
-                      }}
-                    >
-                      <CustomTabPanel value={value} index={0}>
-                        <Sectionnotesm />
-                      </CustomTabPanel>
-                      <CustomTabPanel value={value} index={1}>
-                        <Codenotesm />
-                      </CustomTabPanel>
-                      <CustomTabPanel value={value} index={2}>
-                        <Chapternotesm />
-                      </CustomTabPanel>
-                    </div>
-                  </Box>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div
-            style={{
-              height: "88vh",
-
-              width: "90vw",
-
-              border: "0.5px solid grey",
-            }}
-          >
-            {" "}
-            <button
-              style={{
-                width: "100px",
-                height: "30px",
-              }}
-              className={`nav-btn ${activeBtn === "btn1" ? "active" : ""}`}
-              onClick={() => handleNavBtnClick("btn1")}
-            >
-              Index
-            </button>
             <div
               style={{
-                position: "absolute",
-                marginTop: "0px",
+                height: "88vh",
+                width: "97vw",
+                border: "0.5px solid grey",
               }}
             >
-              {showIndx && (
-                <IndexTables1m
-                  setResults1={setResults1}
-                  setSelectedCode={setSelectedCode}
-                />
-              )}
+              {" "}
+              <button
+                style={{
+                  width: "100px",
+                  height: "30px",
+                }}
+                className={`nav-btn ${activeBtn === "btn1" ? "active" : ""}`}
+                onClick={() => handleNavBtnClick("btn1")}
+              >
+                Index
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "0px",
+                }}
+              >
+                {showIndx && (
+                  <IndexTables1m
+                    setResults1={setResults1}
+                    setSelectedCode={setSelectedCode}
+                  />
+                )}
+              </div>
+              <button
+                style={{
+                  marginLeft: "5px",
+                  width: "100px",
+                  height: "30px",
+                }}
+                className={`nav-btn ${activeBtn === "btn2" ? "active" : ""}`}
+                onClick={() => handleNavBtnClick2("btn2")}
+              >
+                Neoplasm
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                }}
+              >
+                {showTable && (
+                  <NeoplasmTablem
+                    setResults1={setResults1}
+                    setSelectedCode={setSelectedCode}
+                  />
+                )}
+              </div>
+              <button
+                style={{
+                  marginLeft: "5px",
+                  width: "100px",
+                  height: "30px",
+                }}
+                className={`nav-btn ${activeBtn === "btn3" ? "active" : ""}`}
+                onClick={() => handleNavBtnClick3("btn3")}
+              >
+                Drug
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "100px",
+                }}
+              >
+                {showDrug && (
+                  <DrugTablem
+                    setResults1={setResults1}
+                    setSelectedCode={setSelectedCode}
+                  />
+                )}
+              </div>
             </div>
-            <button
-              style={{
-                marginLeft: "5px",
-                width: "100px",
-                height: "30px",
-              }}
-              className={`nav-btn ${activeBtn === "btn2" ? "active" : ""}`}
-              onClick={() => handleNavBtnClick2("btn2")}
-            >
-              Neoplasm
-            </button>
-            <div
-              style={{
-                position: "absolute",
-              }}
-            >
-              {showTable && (
-                <NeoplasmTablem
-                  setResults1={setResults1}
-                  setSelectedCode={setSelectedCode}
-                />
-              )}
-            </div>
-            <button
-              style={{
-                marginLeft: "5px",
-                width: "100px",
-                height: "30px",
-              }}
-              className={`nav-btn ${activeBtn === "btn3" ? "active" : ""}`}
-              onClick={() => handleNavBtnClick3("btn3")}
-            >
-              Drug
-            </button>
-            <div
-              style={{
-                position: "absolute",
-                marginTop: "100px",
-              }}
-            >
-              {showDrug && (
-                <DrugTablem
-                  setResults1={setResults1}
-                  setSelectedCode={setSelectedCode}
-                />
-              )}
-            </div>
-          </div>
-        </Stack>
+          </Stack>
+        </Container>
       ) : (
         //normalScreen//
         <div>
