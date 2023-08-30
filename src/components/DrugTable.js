@@ -115,6 +115,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
 
     global.intable = null;
     global.selectedCode = code;
+    global.isCodeClicked = true;
   };
   const fetchCodeDetails = async (code) => {
     try {

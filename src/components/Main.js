@@ -50,7 +50,7 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-export const Main = () => {
+export const Main = ({ refreshMain }) => {
   console.log("enter main");
   const [value, setValue] = useState(0);
   const [showTable, setShowTable] = useState(false);
@@ -58,6 +58,12 @@ export const Main = () => {
   const [showDrug, setShowdrug] = useState(false);
   const [results1, setResults1] = useState([]);
   const [selectedCode, setSelectedCode] = useState(null);
+
+  useEffect(() => {
+    if (refreshMain) {
+      handleRefresh();
+    }
+  }, [refreshMain]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

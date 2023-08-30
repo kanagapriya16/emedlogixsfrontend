@@ -36,7 +36,12 @@ const Chapternotes = () => {
   }, [global.values]);
 
   useEffect(() => {
-    setResults(global.selectedChapterDetails);
+    if (global.selectedCodeDetails && global.isCodeClicked ){
+    setResults(global.selectedChapterDetails);}
+    else {
+      // Handle the case when no code is selected
+      setResults(null);
+    }
   }, [global.selectedChapterDetails]);
 
   console.log("our result is", results);

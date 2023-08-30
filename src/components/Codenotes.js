@@ -1,16 +1,17 @@
-
-/*
 import React, { useEffect, useState } from "react";
 const Codenotes = () => {
   const [results, setResults] = useState(null);
+  const [showNoNotesMessage, setShowNoNotesMessage] = useState(false);
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         if (
           global.values &&
           global.values.code &&
-          global.years &&
-          global.selectedCodeDetails == null
+          global.years 
+          &&
+          !global.isCodeClicked 
+        
         ) {
           const response = await fetch(
             `/codes/${global.values.code}/details/?version=${global.years}`
@@ -20,104 +21,57 @@ const Codenotes = () => {
             setResults(data);
           } else {
             console.error("Failed to fetch data");
+            setShowNoNotesMessage(true); 
           }
         }
       } catch (error) {
         console.error("Error:", error);
+        setShowNoNotesMessage(true); 
       }
     };
     fetchBooks();
-  }, [global.values]);
-  useEffect(() => {
-    if (global.selectedCodeDetails) {
-      setResults(global.selectedCodeDetails);
+    if (results === null) {
+      setShowNoNotesMessage(true);
     } else {
-      setResults(null);
+      setShowNoNotesMessage(false);
+    }
+  }, [global.values]);
+
+  useEffect(() => {
+    if (global.selectedCodeDetails && global.isCodeClicked ) {
+      setResults(global.selectedCodeDetails); 
+    } else {
+    setResults(null);
+    }
+    if (results === null) {
+      setShowNoNotesMessage(true);
+    } else {
+      setShowNoNotesMessage(false);
     }
   }, [global.selectedCodeDetails]);
-  console.log("our result is", results);
-  return (
-    <div
-      style={{
-        height: "10vh",
-        width: "30vw",
-        marginLeft: "-6%",
-      }}
-    >
-      <div>
-        <table>
-          <thead>
-            <tr></tr>
-          </thead>
-          <tbody>
-            {results && results.code && (
-              <tr key={results.code}>
-                <td>{results.longDescription}</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
-export default Codenotes;
-*/
-import React, { useEffect, useState } from "react";
-const Codenotes = () => {
-  const [results, setResults] = useState(null);
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        if (
-          global.values &&
-          global.values.code &&
-          global.years &&
-          global.selectedChapterDetails == null
-        ) {
-          const response = await fetch(
-            `/codes/${global.values.code}/details/?version=${global.years}`
-          );
-          if (response.ok) {
-            const data = await response.json();
-            setResults(data);
-          } else {
-            console.error("Failed to fetch data");
-          }
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
+    const noNotesTimer = setTimeout(() => {
+      setShowNoNotesMessage(true); // Show "No Section notes" message after a certain time
+    }, 5000); // Adjust the time in milliseconds as needed
+
+    return () => {
+      clearTimeout(noNotesTimer); // Clear the timer if the component unmounts
     };
-    if (global.values && global.values.code) {
-      fetchBooks();
-    } else {
-      setResults(null);
-    }
-  }, [global.values]);
-  useEffect(() => {
-    setResults(global.selectedChapterDetails);
-  }, [global.selectedChapterDetails]);
+  }, []);
+
   console.log("our result is", results);
-  const shouldDisplayClassification = (classification, index) => {
-    if (index === 0) {
-      return true;
-    }
-    const previousClassifications = results.chapter.notes
-      .slice(0, index)
-      .map((note) => note.classification);
-    return !previousClassifications.includes(classification);
-  };
   return (
+
     <div
       style={{
         height: "60vh",
         width: "30vw",
-        marginLeft: "80px",
+        marginLeft: "100px",
         fontFamily:"Verdana",
         fontSize:"13px"
       }}
     >
+     
       <div style={{ height: "60vh", width: "30vw" }}>
         {results && results.chapter && results.chapter.description ? (
           <div key={results.code}>
@@ -125,9 +79,9 @@ const Codenotes = () => {
               {results.chapter.description}
             </div>
           </div>
-        ) : (
+        )  : showNoNotesMessage ? (
           <div>No Section notes</div>
-        )}
+        ) :null}
       </div>
     </div>
   );

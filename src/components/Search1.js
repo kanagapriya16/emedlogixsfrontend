@@ -20,6 +20,9 @@ const Search1 = () => {
   const [isValueSelected, setIsValueSelected] = useState(false);
   const [isDescriptionFetched, setIsDescriptionFetched] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [refreshMain, setRefreshMain] = useState(false);
+
+
   const handleChange = (event) => {
     const newValue = event.target.value;
     setWord(newValue);
@@ -30,6 +33,9 @@ const Search1 = () => {
     }
     setSelectedItem(null);
     setIsValueSelected(false);
+    setRefreshMain(!refreshMain);
+    global.isCodeClicked = false;
+   
   };
   const handleClearInput = () => {
     setWord(""); 
@@ -79,7 +85,9 @@ const Search1 = () => {
   console.log(first);
   global.values = first;
   global.words = word;
-  const options = [...result];
+
+  
+
   if (setIsDescriptionFetched) {
     window.sortOptions = (options, typedValue) => {
       const typedValueLower = typedValue.toLowerCase();
@@ -373,7 +381,7 @@ const Search1 = () => {
           </Box>
         </Box>
       )}
-      <Main isValueSelected={isValueSelected} />
+      <Main isValueSelected={isValueSelected} refreshMain={refreshMain}/>
     </>
   );
 };

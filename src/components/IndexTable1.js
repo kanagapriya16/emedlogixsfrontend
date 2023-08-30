@@ -66,6 +66,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
 
   console.log(result1);
   const handleCodeClick = async (code) => {
+    global.isCodeClicked = true;
     setClickedCode(code);
 
     await fetchCodeDetails(code);
@@ -75,6 +76,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     global.selectedChapterDetails = fetchedData;
 
     global.selectedCode = code;
+    
   };
 
 
