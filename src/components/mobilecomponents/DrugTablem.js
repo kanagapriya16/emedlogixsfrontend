@@ -114,6 +114,7 @@ function getTitleFromNestedChild(row) {
 
     global.intable = null;
     global.selectedCode = code;
+    global.isCodeClicked = true;
   };
   const fetchCodeDetails = async (code) => {
     try {

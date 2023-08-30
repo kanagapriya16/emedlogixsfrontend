@@ -49,15 +49,7 @@ const Codenotes = () => {
       setShowNoNotesMessage(false);
     }
   }, [global.selectedCodeDetails]);
-  useEffect(() => {
-    const noNotesTimer = setTimeout(() => {
-      setShowNoNotesMessage(true); // Show "No Section notes" message after a certain time
-    }, 5000); // Adjust the time in milliseconds as needed
-
-    return () => {
-      clearTimeout(noNotesTimer); // Clear the timer if the component unmounts
-    };
-  }, []);
+  
 
   console.log("our result is", results);
   return (

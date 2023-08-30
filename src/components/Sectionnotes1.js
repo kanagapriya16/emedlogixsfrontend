@@ -59,6 +59,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
   console.log("our index1 is", index1);
   console.log(global.searches);
   const search = global.searches;
+  
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     global.intable = null;

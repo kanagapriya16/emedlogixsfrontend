@@ -109,6 +109,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
     global.selectedChapterDetails = fetchedData;
     global.intable = null;
     global.selectedCode = code;
+    global.isCodeClicked = true;
   };
   const fetchCodeDetails = async (code) => {
     try {

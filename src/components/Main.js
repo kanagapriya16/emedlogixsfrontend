@@ -24,6 +24,7 @@ import DrugTablem from "./mobilecomponents/DrugTablem";
 import Codenotesm from "./mobilecomponents/Codenotesm";
 import Sectionnotesm from "../components/mobilecomponents/Sectionnotesm";
 import Chapternotesm from "./mobilecomponents/Chapternotesm";
+import Codedetm from "./mobilecomponents/Codedetm";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -141,7 +142,7 @@ export const Main = ({ refreshMain }) => {
                     Code details
                   </Typography>
                   
-                  <Box>{<Codedet />}</Box>
+                  <Box>{<Codedetm />}</Box>
                   <div
                     style={{
                       height: "50vh",

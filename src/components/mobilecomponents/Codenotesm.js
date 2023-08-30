@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const Codenotesm = () => {
   const [results, setResults] = useState(null);
+   const [showNoNotesMessage, setShowNoNotesMessage] = useState(false);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -10,7 +11,7 @@ const Codenotesm = () => {
           global.values &&
           global.values.code &&
           global.years &&
-          global.selectedChapterDetails == null
+          !global.isCodeClicked 
         ) {
           const response = await fetch(
             `/codes/${global.values.code}/details/?version=${global.years}`
@@ -29,14 +30,28 @@ const Codenotesm = () => {
 
     if (global.values && global.values.code) {
       fetchBooks();
+      if (results === null) {
+        setShowNoNotesMessage(true);
+      } else {
+        setShowNoNotesMessage(false);
+      }
     } else {
       setResults(null);
     }
   }, [global.values]);
 
   useEffect(() => {
-    setResults(global.selectedChapterDetails);
-  }, [global.selectedChapterDetails]);
+    if (global.selectedCodeDetails && global.isCodeClicked ) {
+      setResults(global.selectedCodeDetails); 
+    } else {
+    setResults(null);
+    }
+    if (results === null) {
+      setShowNoNotesMessage(true);
+    } else {
+      setShowNoNotesMessage(false);
+    }
+  }, [global.selectedCodeDetails]);
 
   console.log("our result is", results);
   const shouldDisplayClassification = (classification, index) => {
@@ -65,9 +80,9 @@ const Codenotesm = () => {
               {results.chapter.description}
             </div>
           </div>
-        ) : (
+        )  : showNoNotesMessage ? (
           <div>No Section notes</div>
-        )}
+        ) :null}
       </div>
     </div>
   );

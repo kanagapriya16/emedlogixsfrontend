@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 const Sectionnotesm = () => {
   const [results, setResults] = useState(null);
+  const [showNoNotesMessage, setShowNoNotesMessage] = useState(false);
   const globalValuesCode = global.values.code;
   useEffect(() => {
     const fetchBooks = async () => {
@@ -8,7 +9,7 @@ const Sectionnotesm = () => {
         if (
           globalValuesCode &&
           global.years &&
-          global.selectedSectionDetails == null
+          !global.isCodeClicked 
         ) {
           const response = await fetch(
             `/codes/${globalValuesCode}/details/?version=${global.years}`
@@ -25,12 +26,23 @@ const Sectionnotesm = () => {
       }
     };
     fetchBooks();
+    if (results === null) {
+      setShowNoNotesMessage(true);
+    } else {
+      setShowNoNotesMessage(false);
+    }
   }, [globalValuesCode, global.years]);
+
   useEffect(() => {
-    if (global.selectedSectionDetails) {
+    if (global.selectedCodeDetails && global.isCodeClicked ) {
       setResults(global.selectedSectionDetails);
     } else {
       setResults(null);
+    }
+    if (results === null) {
+      setShowNoNotesMessage(true);
+    } else {
+      setShowNoNotesMessage(false);
     }
   }, [global.selectedSectionDetails]);
   return (

@@ -99,7 +99,7 @@ const renderChildRows = (row, depthLevel = 1) => {
                     {row.child.title}{" "}
                     {row.child.code !== null && row.child.code !== "null" && (
                       <a
-                        //style={{ color: "blue", borderBottom: "1px solid blue" }}
+                        style={{ color: "blue", borderBottom: "1px solid blue" }}
                        onClick={() => handleCodeClick(row.code)}
                       >
                         {row.child.code}

@@ -68,6 +68,7 @@ const Sectionnotes1m = ({ onCodeClick }) => {
     global.selectedCodeDetails = fetchedData;
     global.intable = null;
     global.selectedCode = code;
+    global.isCodeClicked = true;
   };
 
   const fetchCodeDetails = async (code) => {

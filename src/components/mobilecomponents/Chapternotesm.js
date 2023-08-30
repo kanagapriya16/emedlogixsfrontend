@@ -35,8 +35,14 @@ const Chapternotesm = () => {
   }, [global.values]);
 
   useEffect(() => {
-    setResults(global.selectedChapterDetails);
-  }, [global.selectedChapterDetails]);
+    if (global.selectedCodeDetails && global.isCodeClicked ){
+      setResults(global.selectedChapterDetails);}
+      else {
+        // Handle the case when no code is selected
+        setResults(null);
+      }
+    }, [global.selectedChapterDetails]);
+  
 
  console.log("our result is", results);
   const shouldDisplayClassification = (classification, index) => {

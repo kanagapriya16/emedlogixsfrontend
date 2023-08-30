@@ -103,6 +103,7 @@ const Codenotes1m = ({ onCodeClick }) => {
     global.selectedCodeDetails = fetchedData;
     global.intable = null;
     global.selectedCode = code;
+    global.isCodeClicked = true;
     // global.values = null;
   };
   const fetchCodeDetails = async (code) => {
