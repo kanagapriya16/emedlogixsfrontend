@@ -43,7 +43,7 @@ const renderChildRows = (row, depthLevel = 1) => {
   }
   return null;
 };
-const Codenotes1m = ({ onCodeClick }) => {
+const Codenotes1t = ({ onCodeClick }) => {
   const [index1, setIndex1] = useState(null);
   const [fetchedData, setFetchedData] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
@@ -52,7 +52,7 @@ const Codenotes1m = ({ onCodeClick }) => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
-        if (global.values && global.values.code !== null) {
+        if (global.values && global.values.code !== null ) {
           const response = await fetch(`/codes/${global.values.code}/index`);
           if (response.ok) {
             const data = await response.json();
@@ -72,6 +72,8 @@ const Codenotes1m = ({ onCodeClick }) => {
       fetchBooks();
     }
   }, [global.values?.code]);
+
+
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
@@ -87,28 +89,13 @@ const Codenotes1m = ({ onCodeClick }) => {
         console.error("Error:", error);
       }
     };
-   
+    // Clear the previous index data before fetching new data
     setIndex1(null);
     fetchBooks();
   }, []);
   console.log("our index1 is", index1);
   console.log(global.searches);
   const search = global.searches;
-  const handleCodeClick = async (code) => {
-    setClickedCode(code);
-    fetchCodeDetails(code); 
-    global.intable = null;
-    await fetchCodeDetails(code);
-    onCodeClick(code);
-    global.selectedCodeDetails = fetchedData;
-    global.intable = null;
-    global.selectedCode = code;
-    global.isCodeClicked = true;
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1500);
-    // global.values = null;
-  };
   const fetchCodeDetails = async (code) => {
     try {
       if (code) {
@@ -117,7 +104,7 @@ const Codenotes1m = ({ onCodeClick }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data);
+          setFetchedData(data); // Store the fetched data in the state
         } else {
           console.error("Failed to fetch data");
         }
@@ -126,8 +113,21 @@ const Codenotes1m = ({ onCodeClick }) => {
       console.error("Error:", error);
     }
   };
-
+  // Filter out duplicate rows based on the "code" and "title"
   const filteredIndexRows = removeDuplicates(index1 || []);
+  
+  const handleCodeClick = async (code) => {
+    setClickedCode(code);
+    fetchCodeDetails(code); // Call the function to fetch code details
+    global.intable = null;
+    await fetchCodeDetails(code);
+    onCodeClick(code);
+    global.selectedCodeDetails = fetchedData;
+    global.intable = null;
+    global.selectedCode = code;
+    global.isCodeClicked = true;
+    // global.values = null;
+  };
   return (
     <>
       <div>
@@ -141,7 +141,7 @@ const Codenotes1m = ({ onCodeClick }) => {
               })
               .map((row) => (
                 <Fragment key={row.id}>
-                  {row.ismainterm && ( 
+                  {row.ismainterm && ( // Check if ismainterm is true
                     <tr>
                       <td>
                         <ul
@@ -207,4 +207,4 @@ const Codenotes1m = ({ onCodeClick }) => {
     </>
   );
 };
-export default Codenotes1m;
+export default Codenotes1t;

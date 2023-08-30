@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import "../../App.css";
 const renderChildRows = (row, depthLevel = 1) => {
   if (row.child) {
     const paddingLeftValue = 20 + depthLevel * 20; // Increase padding for deeper levels
@@ -33,10 +32,8 @@ const renderChildRows = (row, depthLevel = 1) => {
   }
   return null;
 };
-
-const Sectionnotes1m = ({ onCodeClick }) => {
+const Sectionnotes1t = ({ onCodeClick }) => {
   const [index1, setIndex1] = useState(null);
-
   const [fetchedData, setFetchedData] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
   React.useEffect(() => {
@@ -56,10 +53,13 @@ const Sectionnotes1m = ({ onCodeClick }) => {
         console.error("Error:", error);
       }
     };
+    // Clear the previous index data before fetching new data
     fetchBooks();
   }, []);
-
+  console.log("our index1 is", index1);
+  console.log(global.searches);
   const search = global.searches;
+  
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     global.intable = null;
@@ -69,11 +69,8 @@ const Sectionnotes1m = ({ onCodeClick }) => {
     global.intable = null;
     global.selectedCode = code;
     global.isCodeClicked = true;
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1500);
+    // global.values = null;
   };
-
   const fetchCodeDetails = async (code) => {
     try {
       if (code) {
@@ -82,7 +79,7 @@ const Sectionnotes1m = ({ onCodeClick }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data);
+          setFetchedData(data); // Store the fetched data in the state
         } else {
           console.error("Failed to fetch data");
         }
@@ -113,7 +110,7 @@ const Sectionnotes1m = ({ onCodeClick }) => {
                           margin: 0,
                         }}
                       >
-                        {row.nemod !== null && row.nemod !== "null" ? (
+                        {row.nemod !== null && row.nemod !== "null" ? ( // Check if nemod has a value
                           <li>
                             {row.title} {row.nemod}
                           </li>
@@ -122,7 +119,6 @@ const Sectionnotes1m = ({ onCodeClick }) => {
                         )}
                       </ul>
                     </td>
-
                     {row.seealso !== null && row.seealso !== "null" && (
                       <td>
                         <a
@@ -169,4 +165,4 @@ const Sectionnotes1m = ({ onCodeClick }) => {
     </>
   );
 };
-export default Sectionnotes1m;
+export default Sectionnotes1t;

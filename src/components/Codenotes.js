@@ -57,14 +57,14 @@ const Codenotes = () => {
     <div
       style={{
         height: "60vh",
-        width: "30vw",
-        marginLeft: "100px",
+        width: "44vw",
+      
         fontFamily:"Verdana",
         fontSize:"13px"
       }}
     >
      
-      <div style={{ height: "60vh", width: "30vw" }}>
+      
         {results && results.chapter && results.chapter.description ? (
           <div key={results.code}>
             <div style={{ marginLeft: "17px" }}>
@@ -72,10 +72,12 @@ const Codenotes = () => {
             </div>
           </div>
         )  : showNoNotesMessage ? (
-          <div>No Section notes</div>
+          <div style={{
+            marginLeft:"40px"
+          }}>No Section notes</div>
         ) :null}
       </div>
-    </div>
+    
   );
 };
 export default Codenotes;

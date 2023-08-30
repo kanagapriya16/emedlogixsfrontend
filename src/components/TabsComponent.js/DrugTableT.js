@@ -8,20 +8,22 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import"../../App.css";
-import { Loadsm } from "./Loadsm";
+import { Loads } from "../Loads";
+
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     backgroundColor: "#90B2D8",
-    padding: "0px 12px 0px 0px",
+    
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: 1,
     border: "1px solid grey",
+   
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -35,13 +37,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     height: 1,
   },
 }));
-export default function DrugTablem({ setResults1, setSelectedCode }) {
+export default function DrugTablet({ setResults1, setSelectedCode }) {
   console.log("neo enter");
   const [drug, setDrug] = useState(null);
   const [drug1, setDrug1] = useState(null);
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(true); 
-  const [clickedCode, setClickedCode] = useState(null); 
+  const [isLoading, setIsLoading] = useState(true);
+  const [clickedCode, setClickedCode] = useState(null);
   const [result1, setResult1] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
 
@@ -63,8 +65,8 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
         console.error("Error:", error);
       }
     };
-  
-    setDrug(null); 
+
+    setDrug(null);
     fetchDrugData();
   }, [global.values?.code]);
 
@@ -85,11 +87,11 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
         setIsLoading(false);
       }
     };
-    setIsLoading(true); 
-    setDrug1(null); 
+    setIsLoading(true);
+    setDrug1(null);
     fetchAllDetailsDrugData();
   }, []);
-function getTitleFromNestedChild(row) {
+  function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
     } else if (row.child?.child?.child?.code) {
@@ -106,7 +108,7 @@ function getTitleFromNestedChild(row) {
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     await fetchCodeDetails(code);
-    setResult1(fetchedData); 
+    setResult1(fetchedData);
     setSelectedCode(code);
     global.selectedCodeDetails = fetchedData;
     global.selectedSectionDetails = fetchedData;
@@ -115,9 +117,6 @@ function getTitleFromNestedChild(row) {
     global.intable = null;
     global.selectedCode = code;
     global.isCodeClicked = true;
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1500);
   };
   const fetchCodeDetails = async (code) => {
     try {
@@ -127,7 +126,7 @@ function getTitleFromNestedChild(row) {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); 
+          setFetchedData(data);
           setResult1(data);
         } else {
           console.error("Failed to fetch data");
@@ -140,44 +139,35 @@ function getTitleFromNestedChild(row) {
 
   return (
     <>
-      <Box
-        sx={{
-          width: "97vw",
-          marginTop: "-40px",
-        }}
-      >
-        <div
-          style={{
-            height: "65vh",
-            marginLeft:"1%",
-          }}
-        >
+ 
           {" "}
           <TableContainer
-            sx={{
-              height: "65vh",
-              overflowY: "auto",
-              overflowX: "auto",
+             sx={{
+              position: "absolute",
+              height: "66vh",
+              width: "50vw",
+              ml: "0%",
+              mt: "-80px",
             }}
           >
             <Table
               sx={{
-                ml: "-0.3%",
-                width: "52vw",
+                ml: "1%",
+                width: "50vw",
+                mt: "-8px",
               }}
             >
               <TableHead sx={{ height: "5px", minHeight: "10px" }}>
                 <TableRow>
-                  <div>
-                    <div className="table">
+                  
                       <Box
                         sx={{
                           width: "100px",
                           height: "20%",
-                       marginTop: "5%",
+                          marginTop: "5%",
                         }}
                       >
-                        <Box sx={{ width: "120px", height: "22%", ml: "5px" }}>
+                        <Box sx={{ width: "120px", height: "22%", ml: "2px" }}>
                           <TextField
                             sx={{
                               width: "130px",
@@ -196,8 +186,8 @@ function getTitleFromNestedChild(row) {
                           />
                         </Box>
                       </Box>
-                    </div>
-                  </div>
+                  
+                  
                 </TableRow>
               </TableHead>
               <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
@@ -283,7 +273,6 @@ function getTitleFromNestedChild(row) {
                       );
                     })
                     .map((row) => {
-                     
                       const hasValidParentCode =
                         row.code && row.code[0] !== "null";
                       const hasValidChildCode =
@@ -308,7 +297,7 @@ function getTitleFromNestedChild(row) {
                         row.child.child.child.child &&
                         row.child.child.child.child.code &&
                         row.child.child.child.child.code[0] !== "null";
-                    
+
                       if (
                         !(
                           hasValidParentCode ||
@@ -320,7 +309,7 @@ function getTitleFromNestedChild(row) {
                       ) {
                         return null;
                       }
-                 
+
                       const codeDetails = (
                         hasValidChildChildChildChildCode
                           ? row.child.child.child.child.code
@@ -332,7 +321,7 @@ function getTitleFromNestedChild(row) {
                           ? row.child.code
                           : row.code
                       ).join(", ");
-            
+
                       const chunkedCodeDetails = codeDetails
                         .split(", ")
                         .reduce((acc, code) => {
@@ -356,7 +345,6 @@ function getTitleFromNestedChild(row) {
                               }}
                               align="center"
                             >
-                           
                               {chunk[colIndex] !== "--" ? (
                                 <a
                                   style={{ borderBottom: "0.5px solid blue" }}
@@ -367,7 +355,7 @@ function getTitleFromNestedChild(row) {
                                   {chunk[colIndex]}
                                 </a>
                               ) : (
-                                chunk[colIndex] 
+                                chunk[colIndex]
                               )}
                             </StyledTableCell>
                           ))}
@@ -411,7 +399,7 @@ function getTitleFromNestedChild(row) {
                       </StyledTableRow>
                     ))}
               </TableBody>
-              {isLoading && <Loadsm />}
+              {isLoading && <Loads />}
               {global.values?.code !== null && drug && drug.length === 0 && (
                 <Typography
                   marginLeft={30}
@@ -433,9 +421,14 @@ function getTitleFromNestedChild(row) {
               )}
             </Table>
           </TableContainer>
-        </div>
-      </Box>
+        
+    
     </>
   );
 }
+
+
+
+
+
 

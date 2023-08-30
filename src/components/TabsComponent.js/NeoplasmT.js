@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -8,19 +9,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import "../../App.css";
-import { Loadsm } from "./Loadsm";
+import { Loads } from "../Loads";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     backgroundColor: "#90B2D8",
+   
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: 1,
     border: "1px solid grey",
+   
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -28,11 +30,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
     height: 1,
   },
+
   "&:last-child td, &:last-child th": {
     height: 1,
   },
 }));
-export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
+export default function NeoplasmTablet({ setResults1, setSelectedCode }) {
   const [neo, setNeo] = useState(null);
   const [neo1, setNeo1] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
@@ -110,9 +113,6 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
     global.intable = null;
     global.selectedCode = code;
     global.isCodeClicked = true;
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1500);
   };
   const fetchCodeDetails = async (code) => {
     try {
@@ -137,50 +137,48 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
       <TableContainer
         sx={{
           position: "absolute",
-          width: "97vw",
+          height: "66vh",
+          width: "50vw",
           ml: "0%",
-          height: "68vh",
+
           mt: "30px",
         }}
       >
         <Table
           sx={{
-            height: "5px",
-            ml: "-0.1%",
-            mt: "1px",
-            width: "90vw",
+            ml: "1%",
+            width: "50vw",
+            mt: "-8px",
           }}
         >
-          <TableHead sx={{ height: "5%", minHeight: "10px" }}>
+          <TableHead>
             <TableRow>
-              <div>
-                <Box
-                  sx={{
-                    width: "100px",
-                    height: "20%",
-                    marginTop: "5%",
-                  }}
-                >
-                  <Box sx={{ width: "120px", height: "22%" }}>
-                    <TextField
-                      sx={{
-                        width: "130px",
-                        "& input": {
-                          height: "10px",
-                          bgcolor: "background.paper",
-                          marginTop: "-5%",
-                          color: (theme) =>
-                            theme.palette.getContrastText(
-                              theme.palette.background.paper
-                            ),
-                        },
-                      }}
-                      placeholder="Use Filter"
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                  </Box>
+              <Box
+                sx={{
+                  width: "100px",
+                  height: "20%",
+                  marginTop: "5%",
+                }}
+              >
+                <Box sx={{ width: "120px", height: "22%" }}>
+                  <TextField
+                    sx={{
+                      width: "130px",
+                      "& input": {
+                        height: "10px",
+                        bgcolor: "background.paper",
+
+                        color: (theme) =>
+                          theme.palette.getContrastText(
+                            theme.palette.background.paper
+                          ),
+                      },
+                    }}
+                    placeholder="Use Filter"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
                 </Box>
-              </div>
+              </Box>
             </TableRow>
           </TableHead>
           <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
@@ -287,6 +285,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
                     row.child.child.child.child &&
                     row.child.child.child.child.code &&
                     row.child.child.child.child.code[0] !== "null";
+
                   if (
                     !(
                       hasValidParentCode ||
@@ -298,6 +297,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
                   ) {
                     return null;
                   }
+
                   const codeDetails = (
                     hasValidChildChildChildChildCode
                       ? row.child.child.child.child.code
@@ -309,6 +309,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
                       ? row.child.code
                       : row.code
                   ).join(", ");
+
                   const chunkedCodeDetails = codeDetails
                     .split(", ")
                     .reduce((acc, code) => {
@@ -382,7 +383,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
                   </StyledTableRow>
                 ))}
           </TableBody>
-          {isLoading && <Loadsm />}
+          {isLoading && <Loads />}
           {global.values?.code !== null && neo && neo.length === 0 && (
             <Typography
               marginLeft={30}
@@ -395,7 +396,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
           )}
           {!global.values?.code && neo1 && neo1.length === 0 && (
             <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
-              <h3>No Neoplasm codes available in the data.</h3>
+              No Neoplasm codes available in the data.
             </Typography>
           )}
         </Table>

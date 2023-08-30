@@ -59,8 +59,8 @@ const Chapternotes = () => {
       style={{
         marginTop: "1%",
         height: "50vh",
-        marginLeft: "10%",
-        width: "auto",
+        
+        width: "44vw",
         fontFamily:"Verdana",
         fontSize:"13px"
       }}
@@ -96,8 +96,9 @@ const Chapternotes = () => {
       ) : (
         <div
           style={{
-            marginLeft: "50%",
-            width: "200px",
+            marginLeft: "40px",
+          fontFamily:"Verdana",
+          
           }}
         >
           No chapter notes

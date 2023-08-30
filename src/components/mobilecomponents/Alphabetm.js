@@ -116,7 +116,7 @@ export const Alphabetm = ({ setSelectedCode }) => {
         <Box
           sx={{
             height: "30px",
-            width: "90vw",
+            width: "97vw",
             background: "linear-gradient(to right, #E9F8FF,#90B2D8 , #C1E3FF)",
 
             color: "black",
@@ -595,7 +595,7 @@ export const Alphabetm = ({ setSelectedCode }) => {
                 className="tabpanels"
                 style={{
                   height: "60vh",
-                  width: "90vw",
+                  width: "97vw",
                   overflowY: "scroll",
 
                   backgroundColor: "#C7E1ED",
