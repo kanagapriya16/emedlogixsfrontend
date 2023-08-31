@@ -138,36 +138,27 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
 
   return (
     <>
-      <Box
-        sx={{
-          width: "50vw",
-          marginTop: "-10%",
-        }}
-      >
-        <div
-          style={{
-            height: "65vh",
-            marginLeft: "1%",
-          }}
-        >
+ 
           {" "}
           <TableContainer
-            sx={{
-              height: "65vh",
-              overflowY: "auto",
+             sx={{
+              position: "absolute",
+              height: "66vh",
+              width: "50vw",
+              ml: "0%",
+              mt: "-80px",
             }}
           >
             <Table
               sx={{
-                ml: "0%",
+                ml: "1%",
                 width: "50vw",
-                mt: "-14px",
+                mt: "-8px",
               }}
             >
               <TableHead sx={{ height: "5px", minHeight: "10px" }}>
                 <TableRow>
-                  <div>
-                    <div className="table">
+                  
                       <Box
                         sx={{
                           width: "100px",
@@ -194,8 +185,8 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                           />
                         </Box>
                       </Box>
-                    </div>
-                  </div>
+                  
+                  
                 </TableRow>
               </TableHead>
               <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
@@ -429,8 +420,8 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
               )}
             </Table>
           </TableContainer>
-        </div>
-      </Box>
+        
+    
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import"../../styles/Loads.css"
+import "../../components/Loadsm.css";
 export const Loadsm = () => {
   return (
     <div class="spinner">

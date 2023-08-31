@@ -110,7 +110,7 @@ const Search1 = () => {
           sx={{
             height: "80px",
             marginTop: "29px",
-            ml: "130px",
+            ml: "98px",
           }}
         >
           <Box
@@ -122,7 +122,7 @@ const Search1 = () => {
               sx={{
                 "& input": {
                   height: "5px",
-                  width: "52vw",
+                  width: "50vw",
                 },
               }}
               onChange={handleChange}

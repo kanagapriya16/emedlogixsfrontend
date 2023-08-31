@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react";
-import "../styles/Pagination.css";
+
 import { Box, TextField, Typography } from "@mui/material";
-import { Alphabet } from "./Alphabet";
+import { Alphabet } from "../Alphabet";
+import { Alphabett } from "./Alphapett";
+
    
-const IndexTables1 = ({ setResults1, setSelectedCode }) => {
+const IndexTables1t = ({ setResults1, setSelectedCode }) => {
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
@@ -129,7 +131,7 @@ const renderChildRows = (row, depthLevel = 1) => {
         }}
       >
         {!global.values || !global.values.code ? (
-          <Alphabet
+          <Alphabett
             setSelectedCode={setSelectedCode}
             selectedCodeDetails={results2}
           />
@@ -259,4 +261,4 @@ const renderChildRows = (row, depthLevel = 1) => {
     </>
   );
 };
-export default IndexTables1;
+export default IndexTables1t;

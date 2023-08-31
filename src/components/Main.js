@@ -25,6 +25,9 @@ import Codenotesm from "./mobilecomponents/Codenotesm";
 import Sectionnotesm from "../components/mobilecomponents/Sectionnotesm";
 import Chapternotesm from "./mobilecomponents/Chapternotesm";
 import Codedetm from "./mobilecomponents/Codedetm";
+import IndexTables1t from "./TabsComponent.js/IndexTablet";
+import NeoplasmTablet from "./TabsComponent.js/NeoplasmT";
+import DrugTablet from "./TabsComponent.js/DrugTableT";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -99,6 +102,8 @@ export const Main = ({ refreshMain }) => {
   }, [selectedCode]);
 
   const matches = useMediaQuery("(max-width:768px)");
+  const matches1 = useMediaQuery("(min-width: 769px) and (max-width: 1150px)");
+  const matches2 = useMediaQuery("(min-width: 1151px)");
 
   return (
     <>
@@ -166,16 +171,19 @@ export const Main = ({ refreshMain }) => {
                         <Tabs
                           value={value}
                           onChange={handleChange}
+                          variant="scrollable"
+                          scrollButtons="auto"
                           aria-label="basic tabs example"
                           className="tabs"
-                          sx={{ marginLeft: "0px" }}
+                          sx={{ marginLeft: "10px" }}
                           TabIndicatorProps={{
                             style: {
                               backgroundColor: "#4185D2",
                               width: "50px",
-                              marginLeft: "50px",
+                              marginTop: "-10px",
                               marginBottom: "20px",
                               fontWeight: "800px",
+                              marginLeft: "35px",
                             },
                           }}
                         >
@@ -187,9 +195,10 @@ export const Main = ({ refreshMain }) => {
                               cursor: "pointer",
                               variant: "subtitle1",
                               fontWeight: "700px",
+
                               textTransform: "none",
-                              width: "35%",
-                              marginTop: "-3%",
+                              width: "120px",
+                              marginTop: "-10px",
                               color: "#4185D2",
                             }}
                             label="  Code notes"
@@ -203,10 +212,11 @@ export const Main = ({ refreshMain }) => {
                               cursor: "pointer",
                               variant: "subtitle1",
                               fontWeight: "700px",
+
                               textTransform: "none",
-                              width: "35%",
-                              marginTop: "-3%",
-                              marginLeft: "-10%",
+                              width: "140px",
+                              marginTop: "-10px",
+                              marginLeft: "-30px",
                               color: "#4185D2",
                             }}
                             variant="subtitle1"
@@ -224,9 +234,9 @@ export const Main = ({ refreshMain }) => {
                               fontWeight: "700px",
                               color: "#4185D2",
                               textTransform: "none",
-                              width: "40%",
-                              marginLeft: "-10%",
-                              marginTop: "-3%",
+                              width: "140px",
+                              marginTop: "-10px",
+                              marginLeft: "-30px",
                             }}
                             variant="subtitle1"
                             fontWeight={"700"}
@@ -243,9 +253,9 @@ export const Main = ({ refreshMain }) => {
                               fontWeight: "700px",
                               color: "#4185D2",
                               textTransform: "none",
-                              width: "40%",
-                              marginTop: "-3%",
-                              marginLeft: "-10%",
+                              width: "200px",
+                              marginTop: "-10px",
+                              marginLeft: "-30px",
                             }}
                             variant="subtitle1"
                             fontWeight={"700"}
@@ -257,12 +267,12 @@ export const Main = ({ refreshMain }) => {
                       <div
                         style={{
                           display: "flex",
-                          marginLeft: "-38%",
+                          marginLeft: "-130px",
                           textAlign: "left",
                           overflowY: "auto",
-                          paddingLeft: "30%",
-                          marginTop: "3%",
-                          overflowX: "hidden",
+                          paddingLeft: "110px",
+                          marginTop: "5px",
+
                           width: "100vw",
                         }}
                       >
@@ -366,8 +376,271 @@ export const Main = ({ refreshMain }) => {
             </div>
           </Stack>
         </Container>
-      ) : (
-        //normalScreen//
+      ) : matches1 ? (
+        // Screen Width Range 769px to 1150px
+        <div>
+        <Container maxWidth="0.5%">
+          <Stack direction={"row"} gap={"0.5%"} mt={"0%"} ml={1}>
+            <div
+              style={{
+                height: "88vh",
+
+                width: "49vw",
+
+                border: "0.5px solid grey",
+              }}
+            >
+              {" "}
+              <button
+                style={{
+                  width: "100px",
+                  height: "30px",
+                }}
+                className={`nav-btn ${activeBtn === "btn1" ? "active" : ""}`}
+                onClick={() => handleNavBtnClick("btn1")}
+              >
+                Index
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "0px",
+                }}
+              >
+                {showIndx && (
+                  <IndexTables1t
+                    setResults1={setResults1}
+                    setSelectedCode={setSelectedCode}
+                  />
+                )}
+              </div>
+              <button
+                style={{
+                  marginLeft: "5px",
+                  width: "100px",
+                  height: "30px",
+                }}
+                className={`nav-btn ${activeBtn === "btn2" ? "active" : ""}`}
+                onClick={() => handleNavBtnClick2("btn2")}
+              >
+                Neoplasm
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                }}
+              >
+                {showTable && (
+                  <NeoplasmTablet
+                    setResults1={setResults1}
+                    setSelectedCode={setSelectedCode}
+                  />
+                )}
+              </div>
+              <button
+                style={{
+                  marginLeft: "5px",
+                  width: "100px",
+                  height: "30px",
+                }}
+                className={`nav-btn ${activeBtn === "btn3" ? "active" : ""}`}
+                onClick={() => handleNavBtnClick3("btn3")}
+              >
+                Drug
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "100px",
+                }}
+              >
+                {showDrug && (
+                  <DrugTablet
+                    setResults1={setResults1}
+                    setSelectedCode={setSelectedCode}
+                  />
+                )}
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                height: "88vh",
+                width: "44vw",
+                backgroundColor: " white",
+                border: "0.5px solid grey",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    height: "3vh",
+                    width: "44vw",
+                  }}
+                >
+                <Typography
+                  variant="subtitle1"
+                  fontFamily={"sans-serif"}
+                  color={" #4185D2"}
+                >
+                  Tabular Search
+                </Typography>
+                <Typography
+                  mt={3}
+                  variant="subtitle1"
+                  fontFamily={"sans-serif"}
+                  color={" #4185D2"}
+                  fontWeight={600}
+                  sx={{
+                    borderBottom: "0.3px solid grey",
+                  }}
+                >
+                  Code details
+                </Typography>
+
+                  <Box>{<Codedet />}</Box>
+             
+                    <Box sx={{ width: "44vw" }}>
+                      <Box
+                        sx={{
+                          marginTop: "10px",
+                          background:
+                            "linear-gradient(to right, #E9F8FF,#90B2D8 , #C1E3FF)",
+                          width: "44vw",
+                          height: "30px",
+                          color: "black",
+                          display: "flex",
+                          ml: "0px",
+                        }}
+                      >
+                        <Tabs
+                          value={value}
+                          onChange={handleChange}
+                          aria-label="basic tabs example"
+                          className="tabs"
+                          sx={{ marginLeft: "0px" }}
+                          TabIndicatorProps={{
+                            style: {
+                              backgroundColor: "#4185D2",
+                            width: "50px",
+                            marginLeft: "38px",
+                            marginBottom: "20px",
+                            fontWeight: "800px",
+                            },
+                          }}
+                        >
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                            variant: "subtitle1",
+                            fontWeight: "700px",
+
+                            textTransform: "none",
+                            width: "150px",
+                            marginTop: "-10px",
+                            color: "#4185D2",
+                            }}
+                            label="  Code notes"
+                            {...a11yProps(0)}
+                          />
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+
+                              textTransform: "none",
+                              width: "150px",
+                              marginTop: "-10px",
+                              color: "#4185D2",
+                            }}
+                            variant="subtitle1"
+                            fontWeight={"700"}
+                            label="Section notes"
+                            {...a11yProps(1)}
+                          />
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                            variant: "subtitle1",
+                            fontWeight: "700px",
+                            color: "#4185D2",
+                            textTransform: "none",
+                            width: "150px",
+                            marginTop: "-10px",
+                            }}
+                            variant="subtitle1"
+                            fontWeight={"700"}
+                            label="Chapter notes"
+                            {...a11yProps(2)}
+                          />
+                          <Tab
+                            disableFocusRipple
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                              cursor: "pointer",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+                              color: "#4185D2",
+                              textTransform: "none",
+                              width: "150px",
+                              marginTop: "-10px",
+                              marginLeft: "-0px",
+                            }}
+                            variant="subtitle1"
+                            fontWeight={"700"}
+                            label="Chapter guidlines"
+                            {...a11yProps(3)}
+                          />
+                        </Tabs>
+                      </Box>
+
+                      <div
+                        style={{
+                          display: "flex",
+
+                          textAlign: "left",
+
+                          marginTop: "20px",
+                          overflowX: "hidden",
+                          width: "44vw",
+                        }}
+                      >
+                        {" "}
+                        <CustomTabPanel value={value} index={0}>
+                          <Sectionnotes />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                          <Codenotes />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2}>
+                          <Chapternotes />
+                        </CustomTabPanel>
+                        <CustomTabPanel
+                          value={value}
+                          index={3}
+                        ></CustomTabPanel>
+                      </div>
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            
+          </Stack>
+        </Container>
+      </div>
+      ): matches2 ? (
+        // Screen Width 1151px and above
         <div>
           <Container maxWidth="0.5%">
             <Stack direction={"row"} gap={"0.5%"} mt={"0%"} ml={1}>
@@ -489,21 +762,15 @@ export const Main = ({ refreshMain }) => {
                   </Typography>
 
                     <Box>{<Codedet />}</Box>
-                    <div
-                      style={{
-                        height: "50vh",
-                        width: "44vw",
-                        marginTop: "20px",
-                      }}
-                    >
+               
                       <Box sx={{ width: "44vw" }}>
                         <Box
                           sx={{
-                            marginTop: "1%",
+                            marginTop: "10px",
                             background:
                               "linear-gradient(to right, #E9F8FF,#90B2D8 , #C1E3FF)",
                             width: "44vw",
-                            height: "3.5vh",
+                            height: "30px",
                             color: "black",
                             display: "flex",
                             ml: "0px",
@@ -518,10 +785,10 @@ export const Main = ({ refreshMain }) => {
                             TabIndicatorProps={{
                               style: {
                                 backgroundColor: "#4185D2",
-                                width: "50px",
-                                marginLeft: "38px",
-                                marginBottom: "20px",
-                                fontWeight: "800px",
+                              width: "50px",
+                              marginLeft: "38px",
+                              marginBottom: "20px",
+                              fontWeight: "800px",
                               },
                             }}
                           >
@@ -531,13 +798,13 @@ export const Main = ({ refreshMain }) => {
                               disableTouchRipple
                               sx={{
                                 cursor: "pointer",
-                                variant: "subtitle1",
-                                fontWeight: "700px",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
 
-                                textTransform: "none",
-                                width: "25%",
-                                marginTop: "-2%",
-                                color: "#4185D2",
+                              textTransform: "none",
+                              width: "150px",
+                              marginTop: "-10px",
+                              color: "#4185D2",
                               }}
                               label="  Code notes"
                               {...a11yProps(0)}
@@ -550,10 +817,10 @@ export const Main = ({ refreshMain }) => {
                                 cursor: "pointer",
                                 variant: "subtitle1",
                                 fontWeight: "700px",
-
+  
                                 textTransform: "none",
-                                width: "25%",
-                                marginTop: "-2%",
+                                width: "150px",
+                                marginTop: "-10px",
                                 color: "#4185D2",
                               }}
                               variant="subtitle1"
@@ -567,12 +834,12 @@ export const Main = ({ refreshMain }) => {
                               disableTouchRipple
                               sx={{
                                 cursor: "pointer",
-                                variant: "subtitle1",
-                                fontWeight: "700px",
-                                color: "#4185D2",
-                                textTransform: "none",
-                                width: "25%",
-                                marginTop: "-2%",
+                              variant: "subtitle1",
+                              fontWeight: "700px",
+                              color: "#4185D2",
+                              textTransform: "none",
+                              width: "150px",
+                              marginTop: "-10px",
                               }}
                               variant="subtitle1"
                               fontWeight={"700"}
@@ -589,9 +856,9 @@ export const Main = ({ refreshMain }) => {
                                 fontWeight: "700px",
                                 color: "#4185D2",
                                 textTransform: "none",
-                                width: "30%",
-                                marginTop: "-2%",
-                                marginLeft: "-2%",
+                                width: "150px",
+                                marginTop: "-10px",
+                                marginLeft: "-0px",
                               }}
                               variant="subtitle1"
                               fontWeight={"700"}
@@ -604,12 +871,12 @@ export const Main = ({ refreshMain }) => {
                         <div
                           style={{
                             display: "flex",
-                            marginLeft: "-38%",
+
                             textAlign: "left",
-                            paddingLeft: "30%",
-                            marginTop: "3%",
+  
+                            marginTop: "20px",
                             overflowX: "hidden",
-                            width: "47.5vw",
+                            width: "44vw",
                           }}
                         >
                           {" "}
@@ -631,11 +898,30 @@ export const Main = ({ refreshMain }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              
             </Stack>
           </Container>
         </div>
-      )}
+      ) : 
+      
+      
+      
+      
+      
+      null
+      }
+    
+      
+      
+      
+      
+      
+    
+
+
+      
     </>
+    //TabsScreen//
+    
   );
 };
