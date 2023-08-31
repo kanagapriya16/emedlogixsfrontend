@@ -68,16 +68,14 @@ const Sectionnotes = () => {
     
       style={{
         height: "40vh",
-        width: "43vw",
-      
+        width: "auto",
+        marginLeft: "-10%",
         marginTop: "-20px",
         fontFamily: "Verdana ",
        
       }}
     >
-     <div style={{
-      marginLeft:"-100px"
-     }}>
+     <div>
         {results && results.section && results.section.notes ? (
           <table>
             <tbody className="chapter">

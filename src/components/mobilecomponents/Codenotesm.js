@@ -81,9 +81,7 @@ const Codenotesm = () => {
             </div>
           </div>
         )  : showNoNotesMessage ? (
-          <div style={{
-            width:"auto"
-          }}>No Section notes</div>
+          <div>No Section notes</div>
         ) :null}
       </div>
     </div>

@@ -50,8 +50,8 @@ const Sectionnotesm = () => {
       style={{
         height: "50vh",
         width: "auto",
-        marginLeft: "-90px",
-      
+        marginLeft: "-20%",
+        marginTop:"-20px",
         
       }}
     >
