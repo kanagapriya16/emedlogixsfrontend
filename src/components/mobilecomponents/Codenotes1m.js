@@ -104,6 +104,9 @@ const Codenotes1m = ({ onCodeClick }) => {
     global.intable = null;
     global.selectedCode = code;
     global.isCodeClicked = true;
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1500);
     // global.values = null;
   };
   const fetchCodeDetails = async (code) => {

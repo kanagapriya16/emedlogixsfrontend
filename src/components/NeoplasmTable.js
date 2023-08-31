@@ -139,7 +139,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
           position: "absolute",
           height: "66vh",
           width: "50vw",
-          ml: "0%",
+        
 
           mt: "30px",
         }}

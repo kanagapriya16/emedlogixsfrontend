@@ -9,11 +9,11 @@
 .dropdown__toggle {
   width: 80px;
   height: 32px;
-  background-color: #e9f8ff;
+  background-color: #E9F8FF;
   font-family: Arial, Helvetica, sans-serif;
   color: #053559;
   margin-left: 10px;
-  border: 0.5px solid #4185d2;
+  border: 0.5px solid #4185D2;
   margin-top: -5px;
   padding-right: 20px;
 }
@@ -52,6 +52,41 @@
 button {
   width: 80px;
   height: 35px;
-  border: 0.5px solid #4185d2;
-  background-color: #e9f8ff;
+  border: 0.5px solid #4185D2;
+  background-color: #E9F8FF;
 }
+@media (max-width: 768px) {
+  .dropdown {
+    color: #fff;
+    cursor: pointer;
+    height: 20px;
+    margin-top: 37px;
+    margin-left: 0px;
+    width: 80px;
+    text-align: center;
+    text-decoration: none;
+    z-index: 1;
+    transform: perspective(1000px);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

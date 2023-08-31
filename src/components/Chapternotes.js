@@ -59,15 +59,16 @@ const Chapternotes = () => {
       style={{
         marginTop: "1%",
         height: "50vh",
-        marginLeft: "10%",
-        width: "auto",
+     
+        width: "44vw",
         fontFamily:"Verdana",
         fontSize:"13px"
       }}
     >
       {results && results.chapter && results.chapter.description ? (
         <div key={results.code}>
-          <div style={{ marginLeft: "17px" }}>
+          <div style={{ marginLeft: "17px" ,
+        fontSize:"13px",fontFamily:"Verdana"}}>
             {results.chapter.description}
           </div>
         </div>
@@ -96,8 +97,9 @@ const Chapternotes = () => {
       ) : (
         <div
           style={{
-            marginLeft: "50%",
-            width: "200px",
+            marginLeft: "40px",
+            fontSize:"13px",
+            fontFamily:"Verdana",
           }}
         >
           No chapter notes

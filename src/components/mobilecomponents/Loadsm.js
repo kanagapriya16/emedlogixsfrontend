@@ -1,6 +1,6 @@
 import React from "react";
 
-import"../../styles/Loads.css"
+import"../../components/mobilecomponents/Loadsm.css";
 export const Loadsm = () => {
   return (
     <div class="spinner">

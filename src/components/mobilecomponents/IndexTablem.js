@@ -75,6 +75,9 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
     global.selectedChapterDetails = fetchedData;
 
     global.selectedCode = code;
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1500);
     
   };
 
@@ -154,7 +157,7 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
       {global.values && global.values.code && (
         <div
           style={{
-            width: "90vw",
+            width: "97vw",
 
             height: "65vh",
             backgroundColor: "#C7E1ED",

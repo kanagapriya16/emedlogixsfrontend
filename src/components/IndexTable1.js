@@ -137,7 +137,7 @@ const renderChildRows = (row, depthLevel = 1) => {
       </Box>
 
     {global.values && global.values.code && (
-        <div style={{ marginTop: "0px" }}>
+        <div >
           <TextField
             sx={{
               width: "120px",
@@ -154,7 +154,7 @@ const renderChildRows = (row, depthLevel = 1) => {
       )}
 
       {global.values && global.values.code && (
-        <div style={{}}>
+        <div >
           <div
             style={{
               overflowY: "auto",

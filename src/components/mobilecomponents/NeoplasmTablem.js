@@ -110,6 +110,9 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
     global.intable = null;
     global.selectedCode = code;
     global.isCodeClicked = true;
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1500);
   };
   const fetchCodeDetails = async (code) => {
     try {
@@ -134,7 +137,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
       <TableContainer
         sx={{
           position: "absolute",
-          width: "90vw",
+          width: "97vw",
           ml: "0%",
           height: "68vh",
           mt: "30px",

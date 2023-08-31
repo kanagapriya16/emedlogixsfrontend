@@ -34,8 +34,8 @@ const Sectionnotesm = () => {
   }, [globalValuesCode, global.years]);
 
   useEffect(() => {
-    if (global.selectedCodeDetails && global.isCodeClicked ) {
-      setResults(global.selectedSectionDetails);
+    if (global.isCodeClicked ) {
+      setResults(global.selectedCodeDetails);
     } else {
       setResults(null);
     }
@@ -44,14 +44,16 @@ const Sectionnotesm = () => {
     } else {
       setShowNoNotesMessage(false);
     }
-  }, [global.selectedSectionDetails]);
+  }, [global.selectedCodeDetails]);
   return (
     <div
       style={{
         height: "50vh",
         width: "auto",
-        marginLeft: "-20%",
+        marginLeft: "-90px",
         marginTop:"-20px",
+        fontSize:"13px",
+        fontFamily:"Verdana",
         
       }}
     >

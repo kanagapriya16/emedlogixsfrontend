@@ -41,7 +41,7 @@ const Codenotesm = () => {
   }, [global.values]);
 
   useEffect(() => {
-    if (global.selectedCodeDetails && global.isCodeClicked ) {
+    if (global.isCodeClicked ) {
       setResults(global.selectedCodeDetails); 
     } else {
     setResults(null);
@@ -73,7 +73,7 @@ const Codenotesm = () => {
         fontSize:"13px"
       }}
     >
-      <div style={{ height: "60vh", width: "auto" }}>
+      <div style={{ height: "60vh", width: "auto",marginTop:"20px" }}>
         {results && results.chapter && results.chapter.description ? (
           <div key={results.code}>
             <div style={{ marginLeft: "17px" ,width:"auto" }}>
@@ -81,7 +81,9 @@ const Codenotesm = () => {
             </div>
           </div>
         )  : showNoNotesMessage ? (
-          <div>No Section notes</div>
+          <div style={{
+            width:"auto",
+          }}>No Section notes</div>
         ) :null}
       </div>
     </div>

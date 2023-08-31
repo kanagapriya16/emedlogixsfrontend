@@ -50,8 +50,8 @@ const Sectionnotes = () => {
 
 
   useEffect(() => {
-    if (global.selectedCodeDetails && global.isCodeClicked ) {
-      setResults(global.selectedSectionDetails);
+    if (global.isCodeClicked ) {
+      setResults(global.selectedCodeDetails);
     } else {
       setResults(null);
     }
@@ -60,7 +60,7 @@ const Sectionnotes = () => {
     } else {
       setShowNoNotesMessage(false);
     }
-  }, [global.selectedSectionDetails]);
+  }, [global.selectedCodeDetails]);
 
 
   return (
@@ -68,14 +68,16 @@ const Sectionnotes = () => {
     
       style={{
         height: "40vh",
-        width: "auto",
-        marginLeft: "-10%",
+        width: "43vw",
+      
         marginTop: "-20px",
         fontFamily: "Verdana ",
        
       }}
     >
-     <div>
+     <div style={{
+      marginLeft:"-100px"
+     }}>
         {results && results.section && results.section.notes ? (
           <table>
             <tbody className="chapter">
