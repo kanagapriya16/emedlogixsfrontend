@@ -154,7 +154,7 @@ const renderChildRows = (row, depthLevel = 1) => {
       )}
 
       {global.values && global.values.code && (
-        <div >
+        <div style={{}}>
           <div
             style={{
               overflowY: "auto",

@@ -95,7 +95,7 @@ const Chapternotesm = () => {
       ) : (
         <div
           style={{
-            marginLeft: "10%",
+            marginLeft: "50%",
             width: "200px",
           }}
         >

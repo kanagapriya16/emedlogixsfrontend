@@ -115,9 +115,6 @@ function getTitleFromNestedChild(row) {
     global.intable = null;
     global.selectedCode = code;
     global.isCodeClicked = true;
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1500);
   };
   const fetchCodeDetails = async (code) => {
     try {
@@ -142,8 +139,8 @@ function getTitleFromNestedChild(row) {
     <>
       <Box
         sx={{
-          width: "97vw",
-          marginTop: "-40px",
+          width: "90vw",
+          marginTop: "-20%",
         }}
       >
         <div

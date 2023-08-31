@@ -154,7 +154,7 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
       {global.values && global.values.code && (
         <div
           style={{
-            width: "97vw",
+            width: "90vw",
 
             height: "65vh",
             backgroundColor: "#C7E1ED",
