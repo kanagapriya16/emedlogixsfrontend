@@ -697,9 +697,3 @@ export const Alphabet = ({ setSelectedCode }) => {
     </div>
   );
 };
-<<<<<<< HEAD:Client/src/components/Alphabet.js
-
-
-export default CustomTabPanel;
-=======
->>>>>>> upstream/main:src/components/Alphabet.js

@@ -166,9 +166,4 @@ const Sectionnotes1 = ({ onCodeClick }) => {
   );
 };
 export default Sectionnotes1;
-<<<<<<< HEAD:Client/src/components/Sectionnotes1.js
 
-
-
-=======
->>>>>>> upstream/main:src/components/Sectionnotes1.js
