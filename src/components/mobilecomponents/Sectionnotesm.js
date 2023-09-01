@@ -1,78 +1,77 @@
+
+
 import React, { useEffect, useState } from "react";
 const Sectionnotesm = () => {
   const [results, setResults] = useState(null);
-  const [showNoNotesMessage, setShowNoNotesMessage] = useState(false);
   const globalValuesCode = global.values.code;
+  const Code = global.values?.code?.replace(/-/g, "") || '';
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        if (
-          globalValuesCode &&
-          global.years &&
-          !global.isCodeClicked 
-        ) {
+        if (globalValuesCode && global.years && !global.isCodeClicked) {
           const response = await fetch(
-            `/codes/${globalValuesCode}/details/?version=${global.years}`
+            `/codes/${Code}/details/?version=${global.years}`
           );
           if (response.ok) {
             const data = await response.json();
             setResults(data);
           } else {
             console.error("Failed to fetch data");
+            setResults(null);
           }
         }
       } catch (error) {
         console.error("Error:", error);
+        setResults(null);
       }
     };
     fetchBooks();
-    if (results === null) {
-      setShowNoNotesMessage(true);
-    } else {
-      setShowNoNotesMessage(false);
-    }
-  }, [globalValuesCode, global.years]);
+  }, [global.values]);
 
   useEffect(() => {
-    if (global.isCodeClicked ) {
+    if (global.isCodeClicked) {
       setResults(global.selectedCodeDetails);
     } else {
       setResults(null);
     }
-    if (results === null) {
-      setShowNoNotesMessage(true);
-    } else {
-      setShowNoNotesMessage(false);
-    }
   }, [global.selectedCodeDetails]);
+
+  console.log("our result is", results);
   return (
     <div
       style={{
-        height: "50vh",
-        width: "auto",
-        marginLeft: "-90px",
-        marginTop:"-20px",
-        fontSize:"13px",
-        fontFamily:"Verdana",
-        
+        height: "40vh",
+        width: "43vw",
+        marginTop: "-20px",
+        fontFamily: "Verdana ",
       }}
     >
-      <div>
-        <table>
-          <tbody className="chapter">
-            {results && results.section && results.section.notes ? (
-              results.section.notes.map((note, index) => (
-                <tr key={index}>
-                  <td>{note.notes}</td>
+      <div
+        style={{
+          marginLeft: "-100px",
+        }}
+      >
+        {results ? (
+          results.section && results.section.notes ? (
+            <table>
+              <tbody className="chapter">
+                {results.section.notes.map((note, index) => (
+                  <tr key={index}>
+                    <td>{note.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <table>
+              <tbody className="chapter">
+                <tr>
+                  <td>No Code notes</td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td>No Code notes</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          )
+        ) : null}
         {globalValuesCode === "H548" && results?.section?.visualImpairment ? (
           <table className="table1" cellSpacing={0}>
             <thead>

@@ -232,7 +232,7 @@ const Search1 = () => {
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title}{""}{result1.seealso !== 'null' ? `seealso:${result1.seealso}` : ''}{result1.see !== 'null' ? `see:${result1.see}` : ''}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.title}{" "}{result1.seealso !== 'null' ? `seealso:${result1.seealso}` : ''}{" "}{result1.see !== 'null' ? `see:${result1.see}` : ''}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>
@@ -365,7 +365,7 @@ const Search1 = () => {
            
                <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title}{""}{result1.seealso !== 'null' ? `seealso:${result1.seealso}` : ''}{result1.see !== 'null' ? `see:${result1.see}` : ''}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.title}{" "}{result1.seealso !== 'null' ? `seealso:${result1.seealso}` : ''}{" "}{result1.see !== 'null' ? `see:${result1.see}` : ''}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>

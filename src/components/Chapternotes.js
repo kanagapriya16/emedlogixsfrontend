@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 const Chapternotes = () => {
   const [results, setResults] = useState(null);
+  const Code = global.values?.code?.replace(/-/g, "") || '';
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -14,7 +15,7 @@ const Chapternotes = () => {
           global.selectedChapterDetails == null
         ) {
           const response = await fetch(
-            `/codes/${global.values.code}/details/?version=${global.years}`
+            `/codes/${Code}/details/?version=${global.years}`
           );
           if (response.ok) {
             const data = await response.json();

@@ -9,7 +9,7 @@ const Codedetm = () => {
   const [result1, setResult1] = useState(null);
   const [isClosed, setIsClosed] = useState(false);
   console.log(global.results);
-  console.log(global.codess);
+  console.log(global.values.code);
   useEffect(() => {
     if (global.selectedCodeDetails) {
       setResult(global.selectedCodeDetails);
@@ -17,12 +17,13 @@ const Codedetm = () => {
       setResult(null);
     }
   }, [global.selectedCodeDetails]);
+  const Code = global.values?.code?.replace(/-/g, "") || '';
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code && global.years) {
           const response = await fetch(
-            `/codes/${global.values.code}/details/?version=${global.years}`
+            `/codes/${Code}/details/?version=${global.years}`
           );
           if (response.ok) {
             const data = await response.json();
