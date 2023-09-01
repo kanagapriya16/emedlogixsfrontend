@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react";
-import "../styles/Pagination.css";
+
 import { Box, TextField, Typography } from "@mui/material";
-import { Alphabet } from "./Alphabet";
-   
-const IndexTables1 = ({ setResults1, setSelectedCode }) => {
+
+import { Alphabetm } from "./Alphabetm";
+
+
+const IndexTables1m = ({ setResults1, setSelectedCode }) => {
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
@@ -13,10 +15,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   const [fetchedData, setFetchedData] = useState(null);
   const [activeBtnIndex, setActiveBtnIndex] = useState(0);
 
-
- 
-
- React.useEffect(() => {
+  React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
@@ -43,7 +42,6 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   }, [global.values?.code]);
   console.log("our index is", index);
 
- 
 
   const fetchCodeDetails = async (code) => {
     try {
@@ -65,6 +63,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   };
 
   console.log(result1);
+ 
   const handleCodeClick = async (code) => {
     global.isCodeClicked = true;
     setClickedCode(code);
@@ -76,11 +75,14 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     global.selectedChapterDetails = fetchedData;
 
     global.selectedCode = code;
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1500);
     
   };
 
 
-const renderChildRows = (row, depthLevel = 1) => {
+  const renderChildRows = (row, depthLevel = 1) => {
     if (row.child && row.child.code !== null) {
       const paddingLeftValue = 20 + depthLevel * 20;
       return (
@@ -100,7 +102,6 @@ const renderChildRows = (row, depthLevel = 1) => {
                     {row.child.code !== null && row.child.code !== "null" && (
                       <a
                         style={{ color: "blue", borderBottom: "1px solid blue" }}
-                       onClick={() => handleCodeClick(row.code)}
                       >
                         {row.child.code}
                       </a>
@@ -129,15 +130,15 @@ const renderChildRows = (row, depthLevel = 1) => {
         }}
       >
         {!global.values || !global.values.code ? (
-          <Alphabet
+          <Alphabetm
             setSelectedCode={setSelectedCode}
             selectedCodeDetails={results2}
           />
         ) : null}
       </Box>
 
-    {global.values && global.values.code && (
-        <div >
+      {global.values && global.values.code && (
+        <div style={{ marginTop: "0px", position: "absolute" }}>
           <TextField
             sx={{
               width: "120px",
@@ -154,110 +155,106 @@ const renderChildRows = (row, depthLevel = 1) => {
       )}
 
       {global.values && global.values.code && (
-        <div >
-          <div
-            style={{
-              overflowY: "auto",
-              height: "65vh",
-              backgroundColor: "#C7E1ED",
-              marginTop: "0px",
-              position: "absolute",
-              overflow: "scroll",
-              width: "50vw",
-            }}
-          >
-            <table style={{ marginLeft: "10px" }}>
-              <tbody style={{ textAlign: "left" }}>
-                {global.values?.code !== null &&
-                  index
-                    ?.filter((item) => {
-                      return search.toLowerCase() === ""
-                        ? item
-                        : item.title.toLowerCase().includes(search);
-                    })
-                    .map((row) => (
-                      <Fragment key={row.id}>
-                        <tr>
-                          <td>
-                            <ul
-                              style={{
-                                listStyleType: "square",
-                                paddingLeft: "20px",
-                                margin: 0,
-                              }}
-                            >
-                              {row.nemod ? (
-                                <li>
-                                  {row.title}{" "}
-                                  {row.nemod !== null &&
-                                    row.nemod !== "null" &&
-                                    row.nemod}
-                                </li>
-                              ) : (
-                                <li>{row.title}</li>
-                              )}
-                            </ul>
-                          </td>
+        <div
+          style={{
+            width: "97vw",
 
-                          {row.seealso !== null && row.seealso !== "null" && (
-                            <td>
-                              <a
-                                style={{
-                                  color: "blue",
-                                  borderBottom: "1px solid blue",
-                                }}
-                              >
-                                seeAlso {row.seealso}
-                              </a>
-                            </td>
-                          )}
-                          {row.see !== null && row.see !== "null" && (
-                            <td>
-                              <a
-                                style={{
-                                  color: "blue",
-                                  borderBottom: "1px solid blue",
-                                }}
-                              >
-                                See{row.see}
-                              </a>
-                            </td>
-                          )}
+            height: "65vh",
+            backgroundColor: "#C7E1ED",
+            marginTop: "33px",
+            overflow: "scroll",
+          }}
+        >
+          <table style={{ marginLeft: "10px" }}>
+            <tbody style={{ textAlign: "left" }}>
+              {global.values?.code !== null &&
+                index
+                  ?.filter((item) => {
+                    return search.toLowerCase() === ""
+                      ? item
+                      : item.title.toLowerCase().includes(search);
+                  })
+                  .map((row) => (
+                    <Fragment key={row.id}>
+                      <tr>
+                        <td>
+                          <ul
+                            style={{
+                              listStyleType: "square",
+                              paddingLeft: "20px",
+                              margin: 0,
+                            }}
+                          >
+                            {row.nemod ? (
+                              <li>
+                                {row.title}{" "}
+                                {row.nemod !== null &&
+                                  row.nemod !== "null" &&
+                                  row.nemod}
+                              </li>
+                            ) : (
+                              <li>{row.title}</li>
+                            )}
+                          </ul>
+                        </td>
+
+                        {row.seealso !== null && row.seealso !== "null" && (
                           <td>
                             <a
                               style={{
                                 color: "blue",
                                 borderBottom: "1px solid blue",
                               }}
-                              onClick={() => handleCodeClick(row.code)}
                             >
-                              {row.code !== null &&
-                                row.code !== "null" &&
-                                row.code}
+                              seeAlso {row.seealso}
                             </a>
                           </td>
-                        </tr>
-                        {renderChildRows(row)}
-                      </Fragment>
-                    ))}
-              </tbody>
+                        )}
+                        {row.see !== null && row.see !== "null" && (
+                          <td>
+                            <a
+                              style={{
+                                color: "blue",
+                                borderBottom: "1px solid blue",
+                              }}
+                            >
+                              See{row.see}
+                            </a>
+                          </td>
+                        )}
+                        <td>
+                          <a
+                            style={{
+                              color: "blue",
+                              borderBottom: "1px solid blue",
+                            }}
+                            onClick={() => handleCodeClick(row.code)}
+                          >
+                            {row.code !== null &&
+                              row.code !== "null" &&
+                              row.code}
+                          </a>
+                        </td>
+                      </tr>
+                      {renderChildRows(row)}
+                    </Fragment>
+                  ))}
+            </tbody>
 
-              {global.values?.code !== null && index && index.length === 0 && (
-                <Typography
-                  marginLeft={30}
-                  variant="caption"
-                  color={"#4185D2"}
-                  fontWeight={800}
-                >
-                  No Index codes found for the given search criteria.
-                </Typography>
-              )}
-            </table>
-          </div>
+            {global.values?.code !== null && index && index.length === 0 && (
+              <Typography
+                marginLeft={30}
+                variant="caption"
+                color={"#4185D2"}
+                fontWeight={800}
+              >
+                <h3>No Index codes found for the given search criteria.</h3>
+              </Typography>
+            )}
+          </table>
         </div>
       )}
     </>
   );
 };
-    
-export default IndexTables1;
+export default IndexTables1m;

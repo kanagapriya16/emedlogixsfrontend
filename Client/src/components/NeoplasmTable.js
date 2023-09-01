@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -15,12 +16,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     backgroundColor: "#90B2D8",
-    padding: "0px 12px 0px 0px",
+   
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: 1,
     border: "1px solid grey",
+   
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -28,7 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
     height: 1,
   },
-  // hide last border
+
   "&:last-child td, &:last-child th": {
     height: 1,
   },
@@ -36,9 +38,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   const [neo, setNeo] = useState(null);
   const [neo1, setNeo1] = useState(null);
-  const [clickedCode, setClickedCode] = useState(null); // Define setClickedCode
-  const [result1, setResult1] = useState([]); // Define result1 state
-  const [fetchedData, setFetchedData] = useState(null); // Define fetchedData state
+  const [clickedCode, setClickedCode] = useState(null);
+  const [result1, setResult1] = useState([]);
+  const [fetchedData, setFetchedData] = useState(null);
   React.useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -61,7 +63,6 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     fetchBooks();
   }, [global.values?.code]);
   console.log("our neo is", neo);
-  //All neoplasm values
   React.useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -75,7 +76,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setIsLoading(false); // Set isLoading to false when the API call is completed
+        setIsLoading(false);
       }
     };
     setNeo1(null);
@@ -88,15 +89,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   function handleChange(e) {
     setWord(e.target.value);
   }
-  /* function getTitleFromNestedChild(row) {
-    if (row.child?.child?.code) {
-      return ` ${row.child.title} - ${row.child.child.title} `;
-    } else if (row.child?.code) {
-      return ` ${row.child.title} `;
-    } else {
-      return row.title;
-    }
-  }*/ function getTitleFromNestedChild(row) {
+  function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
     } else if (row.child?.child?.child?.code) {
@@ -108,18 +101,18 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     } else {
       return row.title;
     }
-  } // Function to fetch code details when a row.code is clicked
+  }
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     await fetchCodeDetails(code);
-    setResult1(fetchedData); // Update result1 state with the fetched code details
+    setResult1(fetchedData);
     setSelectedCode(code);
     global.selectedCodeDetails = fetchedData;
-    global.selectedSectionDetails=fetchedData;
-    global.selectedChapterDetails=fetchedData;
-
+    global.selectedSectionDetails = fetchedData;
+    global.selectedChapterDetails = fetchedData;
     global.intable = null;
     global.selectedCode = code;
+    global.isCodeClicked = true;
   };
   const fetchCodeDetails = async (code) => {
     try {
@@ -129,7 +122,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data); // Store the fetched data in the state
+          setFetchedData(data);
           setResult1(data);
         } else {
           console.error("Failed to fetch data");
@@ -141,59 +134,51 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   };
   return (
     <>
-      <Box
-        sx={{
-          height: "20px",
-          width: "100%",
-          textAlign: "left",
-          ml: "-40px",
-          mt: "240px",
-        }}
-      ></Box>
       <TableContainer
         sx={{
-          mt: "-200px",
-          display: "flex",
           position: "absolute",
-          width: "910px",
-          ml: "-115px",
-          height: "450px",
-          overflowY: "scroll",
+          height: "66vh",
+          width: "50vw",
+        
+
+          mt: "30px",
         }}
       >
-        <Table sx={{ height: "5px" }}>
-          <TableHead sx={{ height: "5px", minHeight: "10px" }}>
+        <Table
+          sx={{
+            ml: "1%",
+            width: "50vw",
+            mt: "-8px",
+          }}
+        >
+          <TableHead>
             <TableRow>
-              <div>
-                <div className="table">
-                  <Box
+              <Box
+                sx={{
+                  width: "100px",
+                  height: "20%",
+                  marginTop: "5%",
+                }}
+              >
+                <Box sx={{ width: "120px", height: "22%" }}>
+                  <TextField
                     sx={{
-                      width: "100px",
-                      height: "20%",
-                      marginTop: "5%",
+                      width: "130px",
+                      "& input": {
+                        height: "10px",
+                        bgcolor: "background.paper",
+
+                        color: (theme) =>
+                          theme.palette.getContrastText(
+                            theme.palette.background.paper
+                          ),
+                      },
                     }}
-                  >
-                    <Box sx={{ width: "120px", height: "22%" }}>
-                      <TextField
-                        sx={{
-                          width: "130px",
-                          "& input": {
-                            height: "10px",
-                            bgcolor: "background.paper",
-                            marginTop: "-5%",
-                            color: (theme) =>
-                              theme.palette.getContrastText(
-                                theme.palette.background.paper
-                              ),
-                          },
-                        }}
-                        placeholder="Use Filter"
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
-                    </Box>
-                  </Box>
-                </div>
-              </div>
+                    placeholder="Use Filter"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </Box>
+              </Box>
             </TableRow>
           </TableHead>
           <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
@@ -279,7 +264,6 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   );
                 })
                 .map((row) => {
-                  // Check if the parent or child code array has a value of null
                   const hasValidParentCode = row.code && row.code[0] !== "null";
                   const hasValidChildCode =
                     row.child && row.child.code && row.child.code[0] !== "null";
@@ -301,7 +285,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                     row.child.child.child.child &&
                     row.child.child.child.child.code &&
                     row.child.child.child.child.code[0] !== "null";
-                  // Filter out rows where all code arrays (parent, child, child.child, child.child.child, and child.child.child.child) are null
+
                   if (
                     !(
                       hasValidParentCode ||
@@ -313,7 +297,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   ) {
                     return null;
                   }
-                  // Concatenate the values of the code array into a single string
+
                   const codeDetails = (
                     hasValidChildChildChildChildCode
                       ? row.child.child.child.child.code
@@ -325,7 +309,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                       ? row.child.code
                       : row.code
                   ).join(", ");
-                  // Split the codeDetails into chunks of six elements
+
                   const chunkedCodeDetails = codeDetails
                     .split(", ")
                     .reduce((acc, code) => {
@@ -412,7 +396,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
           )}
           {!global.values?.code && neo1 && neo1.length === 0 && (
             <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
-              <h3>No Neoplasm codes available in the data.</h3>
+              No Neoplasm codes available in the data.
             </Typography>
           )}
         </Table>
