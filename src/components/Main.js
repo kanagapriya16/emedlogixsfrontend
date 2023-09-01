@@ -611,7 +611,7 @@ export const Main = ({ refreshMain }) => {
                             textAlign: "left",
                         
                             marginTop: "20px",
-                            overflowX: "hidden",
+                            overflowX: "auto",
                             width: "44vw",
                           }}
                         >

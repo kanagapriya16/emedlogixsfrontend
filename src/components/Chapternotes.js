@@ -36,13 +36,13 @@ const Chapternotes = () => {
   }, [global.values]);
 
   useEffect(() => {
-    if (global.selectedCodeDetails && global.isCodeClicked ){
-    setResults(global.selectedChapterDetails);}
+    if ( global.isCodeClicked ){
+    setResults(global.selectedCodeDetails);}
     else {
       // Handle the case when no code is selected
       setResults(null);
     }
-  }, [global.selectedChapterDetails]);
+  }, [global.selectedCodeDetails]);
 
   console.log("our result is", results);
   const shouldDisplayClassification = (classification, index) => {
