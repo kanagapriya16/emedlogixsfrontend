@@ -11,7 +11,7 @@ const Codedet = () => {
   console.log(global.results);
   console.log(global.values.code);
 
-  const Code = global.values?.code?.replace(/-/g, "") || '';
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
 
   useEffect(() => {
     if (global.selectedCodeDetails) {

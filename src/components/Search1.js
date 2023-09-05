@@ -21,6 +21,7 @@ const Search1 = () => {
   const [isDescriptionFetched, setIsDescriptionFetched] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [refreshMain, setRefreshMain] = useState(false);
+  const [sortedResult, setSortedResult] = useState([]);
 
 
   const handleChange = (event) => {
@@ -46,65 +47,102 @@ const Search1 = () => {
 
   };
   console.log(word);
+
+
   useEffect(() => {
     const getdataAftertimeout = setTimeout(() => {
-    global.inatbleresult = null;
-    const fetchBooks = async () => {
-      try {
-        if (word) {
-          let response;
-          const regex =
-            /^[a-zA-Z]$|^[a-zA-Z]+\d+$|^[a-zA-Z]+\d+[a-zA-Z]+$|^[a-zA-Z]+\d+[a-zA-Z]+\d+$/;
-          if (regex.test(word)) {
-            response = await fetch(`/codes/${word}/matches`);
-            setIsDescriptionFetched(false);
-          } else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3) {
-            response = await fetch(
-              `/codes/index/search/name?name=${word}&mainTermSearch=true`
-            );
-            setIsDescriptionFetched(true);
+      global.inatbleresult = null;
+  
+      const fetchBooks = async () => {
+        try {
+          if (word) {
+            const regex =
+              /^[a-zA-Z]$|^[a-zA-Z]+\d+$|^[a-zA-Z]+\d+[a-zA-Z]+$|^[a-zA-Z]+\d+[a-zA-Z]+\d+$/;
+            const combinedData = [];
+  
+            if (regex.test(word)) {
+              const response = await fetch(`/codes/${word}/matches`);
+              setIsDescriptionFetched(false);
+  
+              if (response.ok) {
+                const data = await response.json();
+                combinedData.push(...data);
+              }  else {
+                console.error("Failed to fetch data from the first API");
+              }
+            } else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3) {
+        
+              const response = await fetch(
+                `/codes/index/search/name?name=${word}&mainTermSearch=true`
+              );
+              setIsDescriptionFetched(true);
+  
+              if (response.ok) {
+                const data = await response.json();
+                combinedData.push(...data);
+              } else {
+                console.error("Failed to fetch data from the first API");
+              }
+  
+              
+              const alterResponse = await fetch(`/alter-terms/search?alterDescription=${word}`);
+              setIsDescriptionFetched(true);
+              if (alterResponse.ok) {
+                const alterData = await alterResponse.json();
+                combinedData.push(...alterData);
+             
+                console.log("Second API response:", alterData);
+              } else {
+                console.error("Failed to fetch data from the second API");
+              }
+const thirdResponse = await fetch(`/codes/${word}/description`);
+              setIsDescriptionFetched(true);
+              if (thirdResponse.ok) {
+                const alterrData = await thirdResponse.json();
+                combinedData.push(...alterrData);
+            console.log("Second API response:", alterrData);
+              } else {
+                console.error("Failed to fetch data from the second API");
+              }
+            } else {
+              console.error("Invalid input");
+            }
+            setResult(combinedData);
           } else {
-            console.error("Invalid input");
-            return;
+            setResult([]);
           }
-          if (response.ok) {
-            const data = await response.json();
-            setResult(data);
-          } else {
-            console.error("Failed to fetch data");
-          }
-        } else {
-          setResult([]);
+        } catch (error) {
+          console.error("Error:", error);
         }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    fetchBooks();
-  },800)
-  return () => clearTimeout(getdataAftertimeout);
+      };
+  
+      fetchBooks();
+    }, 700);
+  
+    return () => clearTimeout(getdataAftertimeout);
   }, [word]);
+
   console.log("our result is", result);
   console.log(first);
   global.values = first;
   global.words = word;
-
-  
-
-  if (setIsDescriptionFetched) {
-    window.sortOptions = (options, typedValue) => {
-      const typedValueLower = typedValue.toLowerCase();
-      return options.sort((a, b) => {
-        const aTitle = a.title ?? "";
+if (setIsDescriptionFetched) {
+   window.sortOptions = (options, typedValueLower) => {
+  return options.sort((a, b) => {
+       const aTitle = a.title ?? "";
         const bTitle = b.title ?? "";
         const aLower = aTitle.toLowerCase();
-        const bLower = bTitle.toLowerCase();
+       const bLower = bTitle.toLowerCase();
         if (aLower.startsWith(typedValueLower)) return -1;
-        if (bLower.startsWith(typedValueLower)) return 1;
+       if (bLower.startsWith(typedValueLower)) return 1;
         return aLower.localeCompare(bLower);
-      });
-    };
+     });
+   };
   }
+
+
+  
+  
   const matches = useMediaQuery("(max-width:768px)");
   return (
     <>
@@ -134,7 +172,7 @@ const Search1 = () => {
                 selectedItem && isValueSelected
                   ? ` ${
                       selectedItem.code !== "null" ? selectedItem.code : ""
-                    } ${selectedItem.description || ""} ${
+                    } ${selectedItem.description || ""} ${selectedItem.alterDescription || ""} ${
                       selectedItem.title || ""
                     }`
                   : word
@@ -176,9 +214,9 @@ const Search1 = () => {
                   item.seealso || ""
                 }   ${item.id || ""}  ${item.description || ""} ${
                   item.code || ""
-                } ${item.nemod}`
+                } ${item.nemod} ${item.alterDescription || ""}`
               }
-              options={
+           options={
                 isDescriptionFetched
                   ? window.sortOptions([...result], word)
                   : [...result]
@@ -232,7 +270,8 @@ const Search1 = () => {
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title}{" "}{result1.seealso !== 'null' ? `seealso:${result1.seealso}` : ''}{" "}{result1.see !== 'null' ? `see:${result1.see}` : ''}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}{result1.seealso !== 'null' && result1.seealso !== undefined ? `seealso:${result1.seealso}` : ''}
+                  {result1.see !== 'null' && result1.see !== undefined ? `see:${result1.see}` : ''}{" "}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>
@@ -266,7 +305,7 @@ const Search1 = () => {
                 selectedItem && isValueSelected
                   ? ` ${
                       selectedItem.code !== "null" ? selectedItem.code : ""
-                    } ${selectedItem.description || ""} ${
+                    } ${selectedItem.description || ""} ${selectedItem.alterDescription || ""} ${
                       selectedItem.title || ""
                     }`
                   : word
@@ -308,7 +347,7 @@ const Search1 = () => {
                   item.seealso || ""
                 }   ${item.id || ""}  ${item.description || ""} ${
                   item.code || ""
-                } ${item.nemod}`
+                } ${item.nemod}${item.alterDescription || ""}`
               }
               options={
                 isDescriptionFetched
@@ -365,7 +404,8 @@ const Search1 = () => {
            
                <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title}{" "}{result1.seealso !== 'null' ? `seealso:${result1.seealso}` : ''}{" "}{result1.see !== 'null' ? `see:${result1.see}` : ''}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}{result1.seealso !== 'null' && result1.seealso !== undefined ? `seealso:${result1.seealso}` : ''}
+                  {result1.see !== 'null' && result1.see !== undefined ? `see:${result1.see}` : ''}{" "}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>

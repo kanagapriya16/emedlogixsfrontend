@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 const Sectionnotesm = () => {
   const [results, setResults] = useState(null);
   const globalValuesCode = global.values.code;
-  const Code = global.values?.code?.replace(/-/g, "") || '';
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
   useEffect(() => {
     const fetchBooks = async () => {
       try {

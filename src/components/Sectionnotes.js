@@ -6,7 +6,7 @@ const Sectionnotes = () => {
   const [results, setResults] = useState(null);
   const globalValuesCode = global.values.code;
 
-  const Code = global.values?.code?.replace(/-/g, "") || '';
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
   
   useEffect(() => {
     const fetchBooks = async () => {
