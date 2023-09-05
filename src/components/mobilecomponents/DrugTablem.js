@@ -49,7 +49,12 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
     const fetchDrugData = async () => {
       try {
         if (global.values && global.values.code) {
-          const response = await fetch(`/codes/${global.values.code}/drug`);
+          const response = await fetch(`/codes/${global.values.code}/drug`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setDrug(data);
@@ -72,7 +77,12 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
       try {
-        const response = await fetch(`/codes/alldetails/drug`);
+        const response = await fetch(`/codes/alldetails/drug`, {
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setDrug1(data);
@@ -123,7 +133,12 @@ function getTitleFromNestedChild(row) {
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`
+          `/codes/${code}/details/?version=${global.years}`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();

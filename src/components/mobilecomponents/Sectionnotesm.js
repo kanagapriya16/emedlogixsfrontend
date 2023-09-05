@@ -10,7 +10,12 @@ const Sectionnotesm = () => {
       try {
         if (globalValuesCode && global.years && !global.isCodeClicked) {
           const response = await fetch(
-            `/codes/${Code}/details/?version=${global.years}`
+            `/codes/${Code}/details/?version=${global.years}`, {
+              method:'GET',
+              headers: {
+                Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+              },
+            }
           );
           if (response.ok) {
             const data = await response.json();

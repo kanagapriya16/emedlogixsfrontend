@@ -1,21 +1,23 @@
 
 import { Header } from "./components/Header";
 import './App.css'
-import Codedet from "./components/Codedet";
-import { Main } from "./components/Main";
+import SignUp from "./components/sign-Up";
+import SignIn from "./components/SignIn";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 function App() {
   return (
 
     <>
-    <div className="page">
-    <Header/>
-    
-   
-    </div>   
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn/>} />
+        <Route path="/SignUp" element={<SignUp/>} />
+        <Route path="/get" element={<Header/>} />
+      </Routes>
+    </BrowserRouter>
   </>
- 
   );
 }
 

@@ -23,6 +23,9 @@ const Search1 = () => {
   const [refreshMain, setRefreshMain] = useState(false);
   const [sortedResult, setSortedResult] = useState([]);
 
+  global.tokens=localStorage.getItem("emed");
+  console.log(global.tokens);
+
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -61,7 +64,12 @@ const Search1 = () => {
             const combinedData = [];
   
             if (regex.test(word)) {
-              const response = await fetch(`/codes/${word}/matches`);
+              const response = await fetch(`/codes/${word}/matches`, {
+                method:'GET',
+                headers: {
+                  Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+                },
+              });
               setIsDescriptionFetched(false);
   
               if (response.ok) {
@@ -73,8 +81,13 @@ const Search1 = () => {
             } else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3) {
         
               const response = await fetch(
-                `/codes/index/search/name?name=${word}&mainTermSearch=true`
-              );
+                `/codes/index/search/name?name=${word}&mainTermSearch=true`,
+                {
+                  method:'GET',
+                  headers: {
+                    Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+                  },
+                });
               setIsDescriptionFetched(true);
   
               if (response.ok) {
@@ -85,7 +98,12 @@ const Search1 = () => {
               }
   
               
-              const alterResponse = await fetch(`/alter-terms/search?alterDescription=${word}`);
+              const alterResponse = await fetch(`/alter-terms/search?alterDescription=${word}`, {
+                method:'GET',
+                headers: {
+                  Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+                },
+              });
               setIsDescriptionFetched(true);
               if (alterResponse.ok) {
                 const alterData = await alterResponse.json();
@@ -95,7 +113,12 @@ const Search1 = () => {
               } else {
                 console.error("Failed to fetch data from the second API");
               }
-const thirdResponse = await fetch(`/codes/${word}/description`);
+         const thirdResponse = await fetch(`/codes/${word}/description`,{
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+          },
+        });
               setIsDescriptionFetched(true);
               if (thirdResponse.ok) {
                 const alterrData = await thirdResponse.json();

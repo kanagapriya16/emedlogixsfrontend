@@ -41,7 +41,12 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     const fetchBooks = async () => {
       try {
         const response = await fetch(
-          `codes/alldetails/index/title?filterBy=${global.clickedTab}`
+          `codes/alldetails/index/title?filterBy=${global.clickedTab}`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();
@@ -75,7 +80,12 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`
+          `/codes/${code}/details/?version=${global.years}`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();

@@ -21,7 +21,12 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code !== null) {
-          const response = await fetch(`/codes/${global.values.code}/index`);
+          const response = await fetch(`/codes/${global.values.code}/index`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setIndex(data);
@@ -49,7 +54,12 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`
+          `/codes/${code}/details/?version=${global.years}`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();

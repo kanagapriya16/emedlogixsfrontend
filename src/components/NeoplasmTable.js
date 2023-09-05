@@ -45,7 +45,12 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code) {
-          const response = await fetch(`/codes/${global.values.code}/neoplasm`);
+          const response = await fetch(`/codes/${global.values.code}/neoplasm`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setNeo(data);
@@ -66,7 +71,12 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   React.useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch(`/codes/alldetails/neoplasm`);
+        const response = await fetch(`/codes/alldetails/neoplasm`, {
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setNeo1(data);
@@ -118,7 +128,12 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`
+          `/codes/${code}/details/?version=${global.years}`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();

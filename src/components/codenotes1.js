@@ -53,7 +53,12 @@ const Codenotes1 = ({ onCodeClick }) => {
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code !== null ) {
-          const response = await fetch(`/codes/${global.values.code}/index`);
+          const response = await fetch(`/codes/${global.values.code}/index`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setIndex(data);
@@ -78,7 +83,12 @@ const Codenotes1 = ({ onCodeClick }) => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
-        const response = await fetch(`codes/alldetails/index/title?filterBy=a`);
+        const response = await fetch(`codes/alldetails/index/title?filterBy=a`, {
+          method:'GET',
+          headers: {
+            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setIndex1(data);
@@ -100,7 +110,12 @@ const Codenotes1 = ({ onCodeClick }) => {
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`
+          `/codes/${code}/details/?version=${global.years}`, {
+            method:'GET',
+            headers: {
+              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();
