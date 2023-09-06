@@ -48,12 +48,13 @@ const Codenotes1m = ({ onCodeClick }) => {
   const [fetchedData, setFetchedData] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
   const [index, setIndex] = useState(null);
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code !== null) {
-          const response = await fetch(`/codes/${global.values.code}/index`, {
+          const response = await fetch(`/codes/${Code}/index`, {
             method:'GET',
             headers: {
               Authorization: `Bearer ${global.tokens} `// Replace with your actual token

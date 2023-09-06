@@ -45,12 +45,13 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
   const [clickedCode, setClickedCode] = useState(null);
   const [result1, setResult1] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
 
   React.useEffect(() => {
     const fetchDrugData = async () => {
       try {
         if (global.values && global.values.code) {
-          const response = await fetch(`/codes/${global.values.code}/drug`, {
+          const response = await fetch(`/codes/${Code}/drug`, {
             method:'GET',
             headers: {
               Authorization: `Bearer ${global.tokens} `// Replace with your actual token

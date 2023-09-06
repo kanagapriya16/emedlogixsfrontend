@@ -36,6 +36,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
   const [index1, setIndex1] = useState(null);
   const [fetchedData, setFetchedData] = useState(null);
   const [clickedCode, setClickedCode] = useState(null);
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {

@@ -14,13 +14,14 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
   const [results2, setResults2] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
   const [activeBtnIndex, setActiveBtnIndex] = useState(0);
+  const Code = (global.values?.code || '').replace(/[-.]/g, '');
 
   React.useEffect(() => {
     console.log("enter index table");
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code !== null) {
-          const response = await fetch(`/codes/${global.values.code}/index`, {
+          const response = await fetch(`/codes/${Code}/index`, {
             method:'GET',
             headers: {
               Authorization: `Bearer ${global.tokens} `// Replace with your actual token
