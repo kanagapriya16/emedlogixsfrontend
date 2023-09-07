@@ -45,16 +45,15 @@ const Sectionnotesm = () => {
   return (
     <div
       style={{
-        height: "40vh",
-        width: "43vw",
+        height: "50vh",
+        width: "auto",
         marginTop: "-20px",
         fontFamily: "Verdana ",
+           marginLeft: "-20%",
       }}
     >
       <div
-        style={{
-          marginLeft: "-100px",
-        }}
+       
       >
         {results ? (
           results.section && results.section.notes ? (
