@@ -107,7 +107,7 @@ console.log(newPassword);
     setPasswordChanged(true);
   };
   const handleGoToHomePage = () => {
-
+    navigate('/')
     alert("Redirecting to the home page");
   };
   return (
@@ -214,7 +214,7 @@ console.log(newPassword);
                   sx={{ mt: 3, mb: 2 }}
                   onClick={handleGoToHomePage}
                 >
-                  Go to Home Page
+                  Go to Sign in Page
                 </Button>
               </div>
             )}
