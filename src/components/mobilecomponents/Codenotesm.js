@@ -46,29 +46,29 @@ const Codenotesm = () => {
     <div
       style={{
         height: "60vh",
-        width: "44vw",
-        marginLeft: "13px",
+        width: "auto",
+        marginLeft: "50px",
         fontFamily: "Verdana",
         fontSize: "13px",
       }}
     >
+  <div style={{ height: "60vh", width: "auto" }}>
       {results ? (
         results.chapter && results.chapter.description ? (
           <div key={results.code}>
-            <div style={{ marginLeft: "17px" }}>
+            <div style={{ marginLeft: "17px" ,width:"auto"}}>
               {results.chapter.description}
             </div>
           </div>
         ) : (
           <div
-            style={{
-              marginLeft: "40px",
-            }}
+           
           >
             No Section notes
           </div>
         )
       ) : null}
+        </div>
     </div>
   );
 };
