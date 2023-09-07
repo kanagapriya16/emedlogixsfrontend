@@ -61,31 +61,6 @@ function ForgetPassword() {
   };
 
 
-//   async function  handleVerifyOTPClick (e){
-//   console.log(otp)
-//     let result = await  fetch(`verify-otp?otp=${otp}`,{
-//         method:'POST',
-//         headers:{
-//             'Content-Type': 'application/json',
-//             'Access-Control-Allow-Origin': '*',
-//             'Access-Control-Allow-Credentials': 'true'
-//         },
-    
-//     });
-   
-//     console.log(result);
-
-//   console.log(otp,global.otps)
-
-//   if (otp === global.otps) {
-//       setOtp(""); // Clear the OTP field
-//       setShowChangePassword(true); // Show the password change input fields
-//     } 
-//     else {
-//      // Handle the case where the OTP is incorrect
-//        console.log("Incorrect OTP");
-//       }
-//    }
 async function handleVerifyOTPClick(e) {
     console.log(otp);
   
@@ -116,8 +91,19 @@ async function handleVerifyOTPClick(e) {
     }
   }
   
-  const handleChangePasswordClick = () => {
-  
+  async function handleChangePasswordClick(e) {
+    
+console.log(newPassword);
+    let result = await fetch(`reset-password?email=${global.emails}&password=${newPassword}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true'
+      },
+      
+    });
+    console.log(result);
     setPasswordChanged(true);
   };
   const handleGoToHomePage = () => {

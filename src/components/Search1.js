@@ -78,7 +78,8 @@ const Search1 = () => {
               }  else {
                 console.error("Failed to fetch data from the first API");
               }
-            } else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3) {
+            } //else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3)
+            else if (/^[a-zA-Z]{2,}\s$/.test(word) || word.length > 3) {
         
               const response = await fetch(
                 `/codes/index/search/name?name=${word}&mainTermSearch=true`,
