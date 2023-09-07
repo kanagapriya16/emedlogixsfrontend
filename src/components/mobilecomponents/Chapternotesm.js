@@ -57,7 +57,7 @@ const Chapternotesm = () => {
         style={{
           marginTop: "1%",
           height: "50vh",
-          width: "44vw",
+             marginLeft: "10%",
           fontFamily: "Verdana",
           fontSize: "13px",
         }}
@@ -101,7 +101,8 @@ const Chapternotesm = () => {
           ) : (
             <div
               style={{
-                marginLeft: "40px",
+            marginLeft: "50%",
+            width: "200px",
                 fontSize: "13px",
                 fontFamily: "Verdana",
               }}
