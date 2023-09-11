@@ -129,57 +129,62 @@ export default function Drug1({ onCodeClick }) {
 
   return (
     <>
+    <Box sx={{ width: "120px", height: "22%",  mt:"-47px" ,ml:"5px",color:"red",backgroundColor:"red"}}>
+                
+                <TextField
+                  sx={{
+                    width: "130px",
+                    "& input": {
+                      height: "10px",
+                      bgcolor: "background.paper",
+
+                      color: (theme) =>
+                        theme.palette.getContrastText(
+                          theme.palette.background.paper
+                        ),
+                    },
+                  }}
+                  placeholder="Use Filter"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+        
+              </Box> 
    
           {" "}
           <TableContainer
             sx={{
-              height: "65vh",
-              overflowY: "auto",
-              position:"absolute",
-              width:"50vw",
-              mt:"-80px",
+              position: "absolute",
+              height: "66vh",
+              width: "50vw",
+            
+    
+              mt: "30px",
+              
+              
             }}
           >
             <Table
               sx={{
                 ml: "1%",
-                width: "50vw",
-                mt: "-8px",
+            width: "50vw",
+            mt: "-8px",
               }}
             >
-              <TableHead sx={{ height: "5px", minHeight: "10px" }}>
-                <TableRow>
-                  
-                      <Box
-                        sx={{
-                          width: "100px",
-                          height: "20%",
-                          marginTop: "5%",
-                        }}
-                      >
-                        <Box sx={{ width: "120px", height: "22%",  }}>
-                          <TextField
-                            sx={{
-                              width: "130px",
-                              "& input": {
-                                height: "10px",
-                                bgcolor: "background.paper",
-                                marginTop: "-5%",
-                                color: (theme) =>
-                                  theme.palette.getContrastText(
-                                    theme.palette.background.paper
-                                  ),
-                              },
-                            }}
-                            placeholder="Use Filter"
-                            onChange={(e) => setSearch(e.target.value)}
-                          />
-                        </Box>
-                      </Box>
-                    
-                  
-                </TableRow>
-              </TableHead>
+             <TableHead>
+            <TableRow>
+              <Box
+                sx={{
+                  width: "100px",
+                  height: "20%",
+                  marginTop: "5%",
+                }}
+              >
+                
+             
+            
+              </Box>
+            </TableRow>
+          </TableHead>
               <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
                 <TableRow
                   sx={{
