@@ -90,6 +90,8 @@ export const Alphabetneo= ({ setSelectedCode }) => {
     setSelectedCodeDetails(details);
   };
   return (
+
+    
     <div>
  
       <Stack direction={"column"} ml={20} mt={1.5} sx={{ width: "5px" }}>
@@ -110,9 +112,10 @@ export const Alphabetneo= ({ setSelectedCode }) => {
               color: "black",
               fontFamily: "sans-serif",
               fontSize: "13px",
-
-              mt: "-12px",
-              ml: "-189px",
+ml:"-187px",
+mt:"60px"
+            
+            
             }}
           >
             <Stack direction={"row"} gap={"0px"} ml={5}>
@@ -584,11 +587,11 @@ export const Alphabetneo= ({ setSelectedCode }) => {
                   style={{
                     height: "60vh",
                     width: "49.9vw",
-                    overflowY: "scroll",
+                  
 
-                    backgroundColor: "#C7E1ED",
-                    marginTop: "-8px",
-                    marginLeft: "-40px",
+                  
+                    marginTop: "-36px",
+                    marginLeft: "-46px",
 
                     display: "flex",
                   }}
@@ -654,9 +657,7 @@ export const Alphabetneo= ({ setSelectedCode }) => {
                   <CustomTabPanel value={value} index={19}>
                     <Neoplasm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
-                  <CustomTabPanel value={value} index={14}>
-                    <Neoplasm2 onCodeClick={setSelectedCode} />
-                  </CustomTabPanel>
+                 
                   <CustomTabPanel value={value} index={20}>
                     <Neoplasm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
