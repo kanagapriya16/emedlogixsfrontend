@@ -78,8 +78,9 @@ const Search1 = () => {
               }  else {
                 console.error("Failed to fetch data from the first API");
               }
-            } //else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3)
-            else if (/^[a-zA-Z]{2,}\s$/.test(word) || word.length > 3) {
+            } else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3)
+           // else if (/^[a-zA-Z]{2,}\s$/.test(word) || word.length > 3) 
+           {
         
               const response = await fetch(
                 `/codes/index/search/name?name=${word}&mainTermSearch=true`,
@@ -424,12 +425,36 @@ if (setIsDescriptionFetched) {
                   placeholder="Search for code"
                 />
               )}
+              
+        
               renderOption={(props, result1) => (
            
                <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}{result1.seealso !== 'null' && result1.seealso !== undefined ? `seealso:${result1.seealso}` : ''}
-                  {result1.see !== 'null' && result1.see !== undefined ? `see:${result1.see}` : ''}{" "}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
+                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `see:${result1.seealso}` : ''}
+                 {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && result1.seealso.includes("Neoplasm")? <span style={{
+               
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.seealso}</span> : '' }
+                   { result1.seealso !== 'null' && result1.seealso !== undefined  && result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm") ? <span style={{
+            
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.seealso}</span> : ''}{" "} 
+                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
+                  {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
+             
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.see}</span> : '' }
+                   { result1.see !== 'null' && result1.see !== undefined  && result1.see.includes("Drugs") && !result1.see.includes("Neoplasm") ? <span style={{
+           
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.see}</span> : ''}{" "} 
+                  {result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>

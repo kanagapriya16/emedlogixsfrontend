@@ -107,7 +107,7 @@ console.log(newPassword);
     setPasswordChanged(true);
   };
   const handleGoToHomePage = () => {
-
+    navigate('/')
     alert("Redirecting to the home page");
   };
   return (

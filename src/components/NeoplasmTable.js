@@ -69,9 +69,11 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
     fetchBooks();
   }, [global.values?.code]);
   console.log("our neo is", neo);
+
   React.useEffect(() => {
     const fetchBooks = async () => {
       try {
+        if (global.values.code == null || global.values.code == 'null') {
         const response = await fetch(`/codes/alldetails/neoplasm`, {
           method:'GET',
           headers: {
@@ -81,7 +83,8 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
         if (response.ok) {
           const data = await response.json();
           setNeo1(data);
-        } else {
+        } 
+      }else {
           console.error("Failed to fetch data");
         }
       } catch (error) {
