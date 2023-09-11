@@ -129,7 +129,26 @@ export default function Neoplasm1({  onCodeClick}) {
   };
   return (
     <>
+        <Box sx={{ width: "120px", height: "22%",  mt:"-47px" ,ml:"5px"}}>
+                
+                <TextField
+                  sx={{
+                    width: "130px",
+                    "& input": {
+                      height: "10px",
+                      bgcolor: "background.paper",
+
+                      color: (theme) =>
+                        theme.palette.getContrastText(
+                          theme.palette.background.paper
+                        ),
+                    },
+                  }}
+                  placeholder="Use Filter"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
         
+              </Box> 
  <TableContainer
         sx={{
           position: "absolute",
@@ -147,40 +166,7 @@ export default function Neoplasm1({  onCodeClick}) {
             mt: "-8px",
           }}
         >
-          <TableHead>
-            <TableRow>
-              <Box
-                sx={{
-                  width: "100px",
-                  height: "20%",
-                  marginTop: "5%",
-                }}
-              >
-                
-             <Box sx={{ width: "120px", height: "22%" }}>
-                
-                  <TextField
-                    sx={{
-                      width: "130px",
-                      "& input": {
-                        height: "10px",
-                        bgcolor: "background.paper",
-
-                        color: (theme) =>
-                          theme.palette.getContrastText(
-                            theme.palette.background.paper
-                          ),
-                      },
-                    }}
-                    placeholder="Use Filter"
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-          
-                </Box> 
-            
-              </Box>
-            </TableRow>
-          </TableHead>
+        
           <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
             <TableRow
               sx={{
