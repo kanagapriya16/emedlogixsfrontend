@@ -111,12 +111,11 @@ export const Alphabetdrug= ({ setSelectedCode }) => {
               color: "black",
               fontFamily: "sans-serif",
               fontSize: "13px",
-
-              mt: "-12px",
-              ml: "-189px",
+ml:"-187px",
+mt:"-50px"
             }}
           >
-            <Stack direction={"row"} gap={"0px"} ml={5}>
+            <Stack direction={"row"} gap={"0px"} ml={5}> 
               <Box sx={{ width: "100%" }}>
                 <Box sx={{ marginTop: "-10px" }}>
                   <Tabs
@@ -585,16 +584,16 @@ export const Alphabetdrug= ({ setSelectedCode }) => {
                   style={{
                     height: "60vh",
                     width: "49.9vw",
-                    overflowY: "scroll",
+                  
 
-                    backgroundColor: "#C7E1ED",
-                    marginTop: "-8px",
-                    marginLeft: "-40px",
+                  
+                    marginTop: "-36px",
+                    marginLeft: "-46px",
 
                     display: "flex",
                   }}
                 >
-                  {" "}
+                
                   <CustomTabPanel value={value} index={0}>
                     <Drug1 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
@@ -655,9 +654,7 @@ export const Alphabetdrug= ({ setSelectedCode }) => {
                   <CustomTabPanel value={value} index={19}>
                     <Drug2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
-                  <CustomTabPanel value={value} index={14}>
-                    <Drug2 onCodeClick={setSelectedCode} />
-                  </CustomTabPanel>
+                 
                   <CustomTabPanel value={value} index={20}>
                     <Drug2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
