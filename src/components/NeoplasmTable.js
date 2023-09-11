@@ -11,6 +11,8 @@ import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import "../App.css";
 import { Loads } from "./Loads";
+import { Alphabet } from "./Alphabet";
+import { Alphabetneo } from "./Alphabetneo";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -70,33 +72,33 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   }, [global.values?.code]);
   console.log("our neo is", neo);
 
-  React.useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        if (global.values.code == null || global.values.code == 'null') {
-        const response = await fetch(`/codes/alldetails/neoplasm`, {
-          method:'GET',
-          headers: {
-            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setNeo1(data);
-        } 
-      }else {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    setNeo1(null);
-    fetchBooks();
-  }, []);
-  console.log("our neo1 is", neo1);
+  // React.useEffect(() => {
+  //   const fetchBooks = async () => {
+  //     try {
+  //       if (global.values.code == null || global.values.code == 'null') {
+  //       const response = await fetch(`/codes/alldetails/neoplasm`, {
+  //         method:'GET',
+  //         headers: {
+  //           Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+  //         },
+  //       });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setNeo1(data);
+  //       } 
+  //     }else {
+  //         console.error("Failed to fetch data");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   setNeo1(null);
+  //   fetchBooks();
+  // }, []);
+  // console.log("our neo1 is", neo1);
   const [word, setWord] = useState("");
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -153,6 +155,23 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   };
   return (
     <>
+          <Box
+        sx={{
+          height: "20px",
+          width: "100%",
+          textAlign: "left",
+          ml: "17%",
+          display: "flex",
+        }}
+      >
+        {!global.values || !global.values.code ? (
+          <Alphabetneo
+            setSelectedCode={setSelectedCode}
+           // selectedCodeDetails={results2}
+          />
+        ) : null}
+      </Box>
+      {global.values && global.values.code && (
       <TableContainer
         sx={{
           position: "absolute",
@@ -179,7 +198,9 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   marginTop: "5%",
                 }}
               >
-                <Box sx={{ width: "120px", height: "22%" }}>
+                
+             <Box sx={{ width: "120px", height: "22%" }}>
+                
                   <TextField
                     sx={{
                       width: "130px",
@@ -196,7 +217,9 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                     placeholder="Use Filter"
                     onChange={(e) => setSearch(e.target.value)}
                   />
-                </Box>
+          
+                </Box> 
+            
               </Box>
             </TableRow>
           </TableHead>
@@ -402,7 +425,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   </StyledTableRow>
                 ))}
           </TableBody>
-          {isLoading && <Loads />}
+         {/* {isLoading && <Loads />} */}
           {global.values?.code !== null && neo && neo.length === 0 && (
             <Typography
               marginLeft={30}
@@ -413,13 +436,14 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
               <h3>No Neoplasm codes found for the given search criteria.</h3>
             </Typography>
           )}
-          {!global.values?.code && neo1 && neo1.length === 0 && (
+          {/* {!global.values?.code && neo1 && neo1.length === 0 && (
             <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
               No Neoplasm codes available in the data.
             </Typography>
-          )}
+          )} */}
         </Table>
       </TableContainer>
+      )}
     </>
   );
 }

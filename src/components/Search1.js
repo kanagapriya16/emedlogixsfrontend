@@ -78,8 +78,8 @@ const Search1 = () => {
               }  else {
                 console.error("Failed to fetch data from the first API");
               }
-            } else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3)
-           // else if (/^[a-zA-Z]{2,}\s$/.test(word) || word.length > 3) 
+            } //else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3)
+            else if (/^[a-zA-Z]{2,}\s$/.test(word) || word.length > 3) 
            {
         
               const response = await fetch(
@@ -243,8 +243,10 @@ if (setIsDescriptionFetched) {
               }
            options={
                 isDescriptionFetched
-                  ? window.sortOptions([...result], word)
-                  : [...result]
+                  //? window.sortOptions([...result], word)
+                  //: [...result]
+                  ? window.sortOptions([...result], word).slice(0, 10) // Limit to first 10 results
+                : [...result].slice(0, 10)
               }
               sx={{
                 "& .MuiOutlinedInput-notchedOutline": {
@@ -376,8 +378,10 @@ if (setIsDescriptionFetched) {
               }
               options={
                 isDescriptionFetched
-                  ? window.sortOptions([...result], word)
-                  : [...result]
+                  //? window.sortOptions([...result], word)
+                  //: [...result]
+                  ? window.sortOptions([...result], word).slice(0, 10) // Limit to first 10 results
+                : [...result].slice(0, 10)
               }
               style={{
                 width: "74vw",

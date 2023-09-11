@@ -10,6 +10,7 @@ import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import "../App.css";
 import { Loads } from "./Loads";
+import { Alphabetdrug } from "./Alphabetdrug";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -79,7 +80,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
       try {
-        const response = await fetch(`/codes/alldetails/drug`, {
+        const response = await fetch(`/codes/alldetails/drug?title=a`, {
           method:'GET',
           headers: {
             Authorization: `Bearer ${global.tokens} `// Replace with your actual token
@@ -154,8 +155,25 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
 
   return (
     <>
+    <Box
+        sx={{
+          height: "20px",
+          width: "100%",
+          textAlign: "left",
+          ml: "17%",
+          display: "flex",
+        }}
+      >
+        {!global.values || !global.values.code ? (
+          <Alphabetdrug
+            setSelectedCode={setSelectedCode}
+           // selectedCodeDetails={results2}
+          />
+        ) : null}
+      </Box>
    
           {" "}
+          {global.values && global.values.code && (
           <TableContainer
             sx={{
               height: "65vh",
@@ -436,7 +454,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
               )}
             </Table>
           </TableContainer>
-      
+          )}
     
     </>
   );
