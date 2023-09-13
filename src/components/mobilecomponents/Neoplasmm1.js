@@ -126,7 +126,7 @@ export default function Neoplasmm1({ onCodeClick }) {
   };
   return (
     <>
-      <div>
+
         <Box sx={{ width: "120px", height: "22%", mt: "-47px", ml: "5px" }}>
           <TextField
             sx={{
@@ -144,11 +144,12 @@ export default function Neoplasmm1({ onCodeClick }) {
           />
         </Box>
 
-        <TableContainer
+<div>
+              <TableContainer
           sx={{
             position: "absolute",
             height: "66vh",
-            width: "98vw",
+            width: "97vw",
             ml: "5px",
             mt: "30px",
           }}
@@ -394,7 +395,7 @@ export default function Neoplasmm1({ onCodeClick }) {
           )} */}
           </Table>
         </TableContainer>
-      </div>
+     <div>
     </>
   );
 }
