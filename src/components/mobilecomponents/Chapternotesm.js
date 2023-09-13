@@ -68,7 +68,7 @@ const Chapternotesm = () => {
             <div key={results.code}>
               <div
                 style={{
-                  marginLeft: "17px",
+                  marginLeft: "21px",
                   fontSize: "13px",
                   fontFamily: "Verdana",
                 }}
