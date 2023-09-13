@@ -131,7 +131,7 @@ export default function Neoplasm1({  onCodeClick}) {
 
   return (
     <>
-<h1>yguhijkmkkkm</h1>
+
 
 <Box sx={{ width: "120px", height: "22%",  mt:"-47px" ,ml:"5px"}}>
                 
