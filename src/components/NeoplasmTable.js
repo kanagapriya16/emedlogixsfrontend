@@ -72,33 +72,6 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
   }, [global.values?.code]);
   console.log("our neo is", neo);
 
-  // React.useEffect(() => {
-  //   const fetchBooks = async () => {
-  //     try {
-  //       if (global.values.code == null || global.values.code == 'null') {
-  //       const response = await fetch(`/codes/alldetails/neoplasm`, {
-  //         method:'GET',
-  //         headers: {
-  //           Authorization: `Bearer ${global.tokens} `// Replace with your actual token
-  //         },
-  //       });
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setNeo1(data);
-  //       } 
-  //     }else {
-  //         console.error("Failed to fetch data");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   setNeo1(null);
-  //   fetchBooks();
-  // }, []);
-  // console.log("our neo1 is", neo1);
   const [word, setWord] = useState("");
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -118,33 +91,36 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
       return row.title;
     }
   }
+ 
   const handleCodeClick = async (code) => {
     setClickedCode(code);
-    await fetchCodeDetails(code);
-    setResult1(fetchedData);
-    setSelectedCode(code);
-    global.selectedCodeDetails = fetchedData;
-    global.selectedSectionDetails = fetchedData;
-    global.selectedChapterDetails = fetchedData;
-    global.intable = null;
-    global.selectedCode = code;
-    global.isCodeClicked = true;
-  };
-  const fetchCodeDetails = async (code) => {
+    console.log(clickedCode);
+   const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
+
+    // Fetch code details and update the state immediately
     try {
       if (code) {
-        const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`, {
-            method:'GET',
-            headers: {
-              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
-            },
-          }
-        );
+        const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${global.tokens}`,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
+          // Update other global variables as needed
+          setSelectedCode(Code1);
+          global.selectedCodeDetails = data;
+          global.selectedSectionDetails = data;
+          global.selectedChapterDetails = data;
+          global.intable = null;
+          global.selectedCode = Code1;
+          global.isCodeClicked = true;
+          //onCodeClick(Code1);
+         
+          
         } else {
           console.error("Failed to fetch data");
         }

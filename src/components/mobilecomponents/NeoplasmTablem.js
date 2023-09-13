@@ -10,6 +10,7 @@ import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import "../../App.css";
 import { Loadsm } from "./Loadsm";
+import { Alphabetmneo } from "./Alphabetmneo";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -149,7 +150,24 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
     }
   };
   return (
-    <>
+    <>       
+     <Box
+    sx={{
+      height: "20px",
+      width: "100%",
+      textAlign: "left",
+      ml: "17%",
+      display: "flex",
+    }}
+  >
+    {!global.values || !global.values.code ? (
+      <Alphabetmneo
+        setSelectedCode={setSelectedCode}
+       // selectedCodeDetails={results2}
+      />
+    ) : null}
+  </Box>
+  {global.values && global.values.code && (
       <TableContainer
         sx={{
           position: "absolute",
@@ -416,6 +434,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
           )}
         </Table>
       </TableContainer>
+  )}
     </>
   );
 }

@@ -134,6 +134,7 @@ const Codenotes1 = ({ onCodeClick }) => {
   
   const handleCodeClick = async (code) => {
     setClickedCode(code);
+    
     fetchCodeDetails(code); // Call the function to fetch code details
     global.intable = null;
     await fetchCodeDetails(code);
@@ -144,6 +145,11 @@ const Codenotes1 = ({ onCodeClick }) => {
     global.isCodeClicked = true;
     // global.values = null;
   };
+  React.useEffect(() => {
+    if (fetchedData) {
+      global.selectedCodeDetails = fetchedData;
+    }
+  }, [fetchedData]);
   return (
     <>
       <div>

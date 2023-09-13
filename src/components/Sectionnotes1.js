@@ -77,6 +77,11 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     global.isCodeClicked = true;
     // global.values = null;
   };
+  React.useEffect(() => {
+    if (fetchedData) {
+      global.selectedCodeDetails = fetchedData;
+    }
+  }, [fetchedData]);
   const fetchCodeDetails = async (code) => {
     try {
       if (code) {

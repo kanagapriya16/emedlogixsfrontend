@@ -12,6 +12,7 @@ import { Main } from "./Main";
 import { BlindsClosed } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+ 
 const Search1 = () => {
   const [result, setResult] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -53,7 +54,7 @@ const Search1 = () => {
 
 
   useEffect(() => {
-    const getdataAftertimeout = setTimeout(() => {
+ 
       global.inatbleresult = null;
   
       const fetchBooks = async () => {
@@ -67,7 +68,7 @@ const Search1 = () => {
               const response = await fetch(`/codes/${word}/matches`, {
                 method:'GET',
                 headers: {
-                  Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+                  Authorization: `Bearer ${global.tokens} `
                 },
               });
               setIsDescriptionFetched(false);
@@ -78,8 +79,8 @@ const Search1 = () => {
               }  else {
                 console.error("Failed to fetch data from the first API");
               }
-            } //else if (/^[a-zA-Z]{2}$/.test(word) || word.length > 3)
-            else if (/^[a-zA-Z]{2,}\s$/.test(word) || word.length > 3) 
+            } 
+            else if (/^[a-zA-Z]{2,}\s[a-zA-Z]{2,}$/.test(word) || word.length > 3) 
            {
         
               const response = await fetch(
@@ -87,7 +88,7 @@ const Search1 = () => {
                 {
                   method:'GET',
                   headers: {
-                    Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+                    Authorization: `Bearer ${global.tokens} `
                   },
                 });
               setIsDescriptionFetched(true);
@@ -103,7 +104,7 @@ const Search1 = () => {
               const alterResponse = await fetch(`/alter-terms/search?alterDescription=${word}`, {
                 method:'GET',
                 headers: {
-                  Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+                  Authorization: `Bearer ${global.tokens} `
                 },
               });
               setIsDescriptionFetched(true);
@@ -118,7 +119,7 @@ const Search1 = () => {
          const thirdResponse = await fetch(`/codes/${word}/description`,{
           method:'GET',
           headers: {
-            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            Authorization: `Bearer ${global.tokens} `
           },
         });
               setIsDescriptionFetched(true);
@@ -142,33 +143,61 @@ const Search1 = () => {
       };
   
       fetchBooks();
-    }, 700);
-  
-    return () => clearTimeout(getdataAftertimeout);
+
   }, [word]);
+  console.log(result)
 
   console.log("our result is", result);
   console.log(first);
   global.values = first;
   global.words = word;
+  
 if (setIsDescriptionFetched) {
-   window.sortOptions = (options, typedValueLower) => {
-  return options.sort((a, b) => {
-       const aTitle = a.title ?? "";
-        const bTitle = b.title ?? "";
-        const aLower = aTitle.toLowerCase();
-       const bLower = bTitle.toLowerCase();
-        if (aLower.startsWith(typedValueLower)) return -1;
-       if (bLower.startsWith(typedValueLower)) return 1;
-        return aLower.localeCompare(bLower);
-     });
-   };
+
+  function sortOptions(options, userInput) {
+    return options.sort((a, b) => {
+      if (a.type === "ismainterm") {
+        return -1; // 'a' comes before 'b'
+      } else if (b.type === "ismainterm") {
+        return 1; // 'b' comes before 'a'
+      } else if (a.type === "code" && b.type !== "code") {
+        return -1; // 'a' comes before 'b'
+      } else if (b.type === "code" && a.type !== "code") {
+        return 1; // 'b' comes before 'a'
+      } else if (a.type === "code" && b.type === "code") {
+       
+        const aMatches = a.text && a.text.includes(userInput);
+      const bMatches = b.text && b.text.includes(userInput);
+
+        if (aMatches && !bMatches) {
+          return -1; // 'a' comes before 'b'
+        } else if (!aMatches && bMatches) {
+          return 1; // 'b' comes before 'a'
+        } else {
+       
+          return 0;
+        }
+      } else if (a.type === "see") {
+        return -1; // 'a' comes before 'b'
+      } else if (b.type === "see") {
+        return 1; // 'b' comes before 'a'
+      } else if (a.type === "seealso") {
+        return -1; // 'a' comes before 'b'
+      } else if (b.type === "seealso") {
+        return 1; // 'b' comes before 'a'
+      } else if (a.type === "alterTerm") {
+        return -1; // 'a' comes before 'b'
+      } else if (b.type === "alterTerm") {
+        return 1; // 'b' comes before 'a'
+      } else {
+        return 0; // No change in order
+      }
+    });
   }
+  window.sortOptions = sortOptions;
+  }
+ const matches = useMediaQuery("(max-width:768px)");
 
-
-  
-  
-  const matches = useMediaQuery("(max-width:768px)");
   return (
     <>
       {matches ? (
@@ -214,7 +243,7 @@ if (setIsDescriptionFetched) {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
-                    {word || selectedItem ? ( // Show close icon when there's input or a selected item
+                    {word || selectedItem ? ( 
                       <CloseIcon
                         sx={{
                           fontSize: "20px",
@@ -243,10 +272,9 @@ if (setIsDescriptionFetched) {
               }
            options={
                 isDescriptionFetched
-                  //? window.sortOptions([...result], word)
-                  //: [...result]
-                  ? window.sortOptions([...result], word).slice(0, 10) // Limit to first 10 results
-                : [...result].slice(0, 10)
+                
+                   ? window.sortOptions([...result], word).slice(0, 10)
+                 : [...result].slice(0, 10)
               }
               sx={{
                 "& .MuiOutlinedInput-notchedOutline": {
@@ -297,8 +325,32 @@ if (setIsDescriptionFetched) {
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}{result1.seealso !== 'null' && result1.seealso !== undefined ? `seealso:${result1.seealso}` : ''}
-                  {result1.see !== 'null' && result1.see !== undefined ? `see:${result1.see}` : ''}{" "}{result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
+                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `see:${result1.seealso}` : ''}
+                 {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && result1.seealso.includes("Neoplasm")? <span style={{
+               
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.seealso}</span> : '' }
+                   { result1.seealso !== 'null' && result1.seealso !== undefined  && result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm") ? <span style={{
+            
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.seealso}</span> : ''}{" "} 
+                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
+                  {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
+             
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.see}</span> : '' }
+                   { result1.see !== 'null' && result1.see !== undefined  && result1.see.includes("Drugs") && !result1.see.includes("Neoplasm") ? <span style={{
+           
+                borderBottom: '1px solid blue',
+                cursor: 'pointer', 
+              }}>see:{result1.see}</span> : ''}{" "} 
+
+                  {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
+                 {result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>
@@ -349,7 +401,7 @@ if (setIsDescriptionFetched) {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
-                    {word || selectedItem ? ( // Show close icon when there's input or a selected item
+                    {word || selectedItem ? ( 
                       <CloseIcon
                         sx={{
                           fontSize: "20px",
@@ -376,13 +428,13 @@ if (setIsDescriptionFetched) {
                   item.code || ""
                 } ${item.nemod}${item.alterDescription || ""}`
               }
-              options={
+               options={
                 isDescriptionFetched
-                  //? window.sortOptions([...result], word)
-                  //: [...result]
-                  ? window.sortOptions([...result], word).slice(0, 10) // Limit to first 10 results
-                : [...result].slice(0, 10)
+             
+             ? window.sortOptions([...result], word).slice(0, 10)
+              : [...result].slice(0, 10)
               }
+            
               style={{
                 width: "74vw",
               }}
@@ -432,6 +484,7 @@ if (setIsDescriptionFetched) {
               
         
               renderOption={(props, result1) => (
+                
            
                <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
@@ -458,7 +511,9 @@ if (setIsDescriptionFetched) {
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
               }}>see:{result1.see}</span> : ''}{" "} 
-                  {result1.nemod !== 'null' ? result1.nemod : ''}{" "}{result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+
+                  {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
+                  {result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
                 )}
               </Box>

@@ -2,6 +2,7 @@ import { Close } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import "../../src/App.css";
 import React, { useEffect, useState } from "react";
+
 const Codedet = () => {
   console.log("enter codedet page");
   console.log(global.index, "codedet index value");

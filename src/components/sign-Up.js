@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,10 +13,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom"; //
 function Copyright(props) {
   return (
     <Typography
@@ -33,9 +32,7 @@ function Copyright(props) {
     </Typography>
   );
 }
-
 const defaultTheme = createTheme();
-
 export default function SignUp() {
   const [formData, setFormData] = React.useState({
     username: "",
@@ -45,23 +42,27 @@ export default function SignUp() {
     receiveEmails: false,
   });
   const [acceptedTerms, setAcceptedTerms] = React.useState(false);
-
   const [validationErrors, setValidationErrors] = React.useState({});
-  const navigate=useNavigate();
-
-   
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage1, setErrorMessage1] = React.useState("");
+  const navigate = useNavigate(); //
+  //   const handleSubmit = (event) => {
+  //     event.preventDefault();
+  //     const data = new FormData(event.currentTarget);
+  //     console.log({
+  //       email: data.get("email"),
+  //       password: data.get("password"),
+  //     });
+  //   };
   const validateForm = () => {
     const errors = {};
-
     // Check for validation errors and update the 'errors' object
     if (formData.username === "") {
       errors.username = "User name is required";
     }
-
     if (formData.email === "") {
       errors.email = "Email is required";
     }
-
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Invalid email address";
     }
@@ -75,7 +76,6 @@ export default function SignUp() {
       errors.password =
         "Password must have at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character";
     }
-
     if (formData.confirm_password === "") {
       errors.confirm_password = "Confirm password is required";
     } else if (formData.password !== formData.confirm_password) {
@@ -84,17 +84,12 @@ export default function SignUp() {
     if (!acceptedTerms) {
       errors.acceptedTerms = "You must accept the Terms and Conditions";
     }
-
     setValidationErrors(errors);
-
     return Object.keys(errors).length === 0; // Return true if no errors
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const isValid = validateForm();
-
     if (isValid) {
       try {
         const response = await axios.post("/register", {
@@ -104,18 +99,21 @@ export default function SignUp() {
           confirm_password: formData.confirm_password,
           // You can include other form fields here
         });
-
         console.log("API Response:", response.data);
-
+        navigate("/");
         // You can handle the response from the API here
       } catch (error) {
         console.error("API Error:", error);
-        // Handle API errors here
+        if (error.response.data === "Email already exists") {
+          // Email is already in use, display an error message
+          setErrorMessage("The email ID provided is already in use.");
+        } else {
+          // Handle other error cases if needed
+          setErrorMessage1("An error occurred during registration.");
+        }
       }
     }
-    navigate("/")
   };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -171,7 +169,12 @@ export default function SignUp() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   value={formData.email}
-                />
+                />{" "}
+                {errorMessage && (
+                  <Typography variant="body2" color="error">
+                    {errorMessage}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -214,28 +217,35 @@ export default function SignUp() {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      id="acceptedTerms"
                       checked={acceptedTerms}
                       onChange={(e) => setAcceptedTerms(e.target.checked)}
                       color="primary"
+                      error={validationErrors.acceptedTerms}
                     />
                   }
-                  label="I accept the Terms and Conditions"
-                  error={!!validationErrors.acceptedTerms}
-                  helperText={validationErrors.acceptedTerms}
                 />
+                <label htmlFor="acceptedTerms">
+                  I accept the Terms and Conditions
+                </label>
+                <Typography variant="body2" color="error">
+                  {validationErrors.acceptedTerms}
+                </Typography>
               </Grid>
             </Grid>
-
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
             >
               Sign Up
             </Button>
-
+            {errorMessage1 && (
+              <Typography variant="body2" color="error">
+                {errorMessage1}
+              </Typography>
+            )}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">

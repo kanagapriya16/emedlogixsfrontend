@@ -8,76 +8,71 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import "../App.css";
-import { Loads } from "./Loads";
-import { Alphabet } from "./Alphabet";
-import { Alphabetneo } from "./Alphabetneo";
+import "../../App.css";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     backgroundColor: "#90B2D8",
-   
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: 1,
     border: "1px solid grey",
-   
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
     height: 1,
+    padding: "0px 12px 0px 0px",
   },
-
+  // hide last border
   "&:last-child td, &:last-child th": {
     height: 1,
   },
 }));
-export default function Neoplasm2({  onCodeClick}) {
-  const [neo, setNeo] = useState(null);
-  const [neo1, setNeo1] = useState(null);
+export default function Drugm2({ onCodeClick }) {
+  console.log("neo enter");
+  const [drug, setDrug] = useState(null);
+  const [drug1, setDrug1] = useState(null);
+  const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [clickedCode, setClickedCode] = useState(null);
   const [result1, setResult1] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
-  const Code1 = (global.values?.code || '').replace(/[-.]/g, '');
-  
+  const Code = (global.values?.code || "").replace(/[-.]/g, "");
 
+  //all values of drug
   React.useEffect(() => {
-   const fetchBooks = async () => {
-    try {
-      if (global.values.code == null || global.values.code == 'null') {
-         const response = await fetch(`/codes/alldetails/neoplasm?title=${global.clickedTab1}`, {
-          method:'GET',
-          headers: {
-           Authorization: `Bearer ${global.tokens} `// Replace with your actual token
-          },
-        });
+    const fetchAllDetailsDrugData = async () => {
+      try {
+        const response = await fetch(
+          `/codes/alldetails/drug?title=${global.clickedTab2}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${global.tokens} `, // Replace with your actual token
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
-          setNeo1(data);
-        } 
-       }else {
-           console.error("Failed to fetch data");
+          setDrug1(data);
+        } else {
+          console.error("Failed to fetch data");
         }
-       } catch (error) {
+      } catch (error) {
         console.error("Error:", error);
-     } finally {
-         setIsLoading(false);
+      } finally {
+        setIsLoading(false);
       }
     };
-     setNeo1(null);
-     fetchBooks();
-   }, []);
-   console.log("our neo1 is", neo1);
-  const [word, setWord] = useState("");
-  const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  function handleChange(e) {
-    setWord(e.target.value);
-  }
+    setIsLoading(true);
+    setDrug1(null);
+    fetchAllDetailsDrugData();
+  }, []);
   function getTitleFromNestedChild(row) {
     if (row.child?.child?.child?.child?.code) {
       return `${row.child.title}-${row.child.child.title}-${row.child.child.child.title}-${row.child.child.child.child.title}`;
@@ -94,30 +89,34 @@ export default function Neoplasm2({  onCodeClick}) {
 
   const handleCodeClick = async (code) => {
     setClickedCode(code);
-    console.log(clickedCode);
-   const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
+    await fetchCodeDetails(code);
+    setResult1(fetchedData);
+    onCodeClick(code);
+    // setSelectedCode(code);
+    global.selectedCodeDetails = fetchedData;
+    global.selectedSectionDetails = fetchedData;
+    global.selectedChapterDetails = fetchedData;
 
-    // Fetch code details and update the state immediately
+    global.intable = null;
+    global.selectedCode = code;
+    global.isCodeClicked = true;
+  };
+  const fetchCodeDetails = async (code) => {
     try {
       if (code) {
-        const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${global.tokens}`,
-          },
-        });
+        const response = await fetch(
+          `/codes/${code}/details/?version=${global.years}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${global.tokens} `, // Replace with your actual token
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
-          // Update other global variables as needed
-          global.selectedCodeDetails = data;
-          global.selectedSectionDetails = data;
-          global.selectedChapterDetails = data;
-          global.intable = null;
-          global.selectedCode = Code1;
-          global.isCodeClicked = true;
-          onCodeClick(Code1);
         } else {
           console.error("Failed to fetch data");
         }
@@ -126,52 +125,67 @@ export default function Neoplasm2({  onCodeClick}) {
       console.error("Error:", error);
     }
   };
+
   return (
     <>
-        <Box sx={{ width: "120px", height: "22%",  mt:"-47px" ,ml:"5px"}}>
-                
-                <TextField
-                  sx={{
-                    width: "130px",
-                    "& input": {
-                      height: "10px",
-                      bgcolor: "background.paper",
+      <Box
+        sx={{
+          width: "120px",
+          height: "22%",
+          mt: "-47px",
+          ml: "5px",
+          color: "red",
+          backgroundColor: "red",
+        }}
+      >
+        <TextField
+          sx={{
+            width: "130px",
+            "& input": {
+              height: "10px",
+              bgcolor: "background.paper",
 
-                      color: (theme) =>
-                        theme.palette.getContrastText(
-                          theme.palette.background.paper
-                        ),
-                    },
-                  }}
-                  placeholder="Use Filter"
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-        
-              </Box> 
- <TableContainer
+              color: (theme) =>
+                theme.palette.getContrastText(theme.palette.background.paper),
+            },
+          }}
+          placeholder="Use Filter"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </Box>{" "}
+      <TableContainer
         sx={{
           position: "absolute",
           height: "66vh",
-          width: "50vw",
-        
-
+          width: "97vw",
+          ml: "5px",
           mt: "30px",
         }}
       >
         <Table
           sx={{
             ml: "1%",
-            width: "50vw",
+            width: "97vw",
             mt: "-8px",
           }}
         >
-        
+          <TableHead>
+            <TableRow>
+              <Box
+                sx={{
+                  width: "100px",
+                  height: "20%",
+                  marginTop: "5%",
+                }}
+              ></Box>
+            </TableRow>
+          </TableHead>
           <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
             <TableRow
               sx={{
                 border: "1px solid grey",
                 height: "20px",
-                alignItems: "center",
+                width: "10px",
               }}
             >
               <StyledTableCell
@@ -181,7 +195,7 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                N-term
+                D Index
               </StyledTableCell>
               <StyledTableCell
                 sx={{
@@ -190,7 +204,7 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                Primary Malignant
+                Accidental, UnIntentional Poisoning
               </StyledTableCell>
               <StyledTableCell
                 sx={{
@@ -199,7 +213,7 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                Secondary Malignant
+                Intentional, Selfharm Poisoning
               </StyledTableCell>
               <StyledTableCell
                 sx={{
@@ -208,7 +222,7 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                Ca in situ
+                Assault Poisoning
               </StyledTableCell>
               <StyledTableCell
                 sx={{
@@ -217,7 +231,7 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                Benign
+                Undetermined Poisoning
               </StyledTableCell>
               <StyledTableCell
                 sx={{
@@ -226,7 +240,7 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                Uncertain Behavior
+                Adverse Effect
               </StyledTableCell>
               <StyledTableCell
                 sx={{
@@ -235,13 +249,13 @@ export default function Neoplasm2({  onCodeClick}) {
                 }}
                 align="center"
               >
-                Unspecified Behavior
+                Under Dosing
               </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {global.values?.code !== null &&
-              neo
+              drug
                 ?.filter((item) => {
                   return (
                     search.toLowerCase() === "" ||
@@ -318,21 +332,23 @@ export default function Neoplasm2({  onCodeClick}) {
                           }}
                           align="center"
                         >
-                          <a
-                            style={{
-                              borderBottom: "0.5px solid blue",
-                            }}
-                            onClick={() => handleCodeClick(chunk[colIndex])}
-                          >
-                            {chunk[colIndex] || "-"}
-                          </a>
+                          {chunk[colIndex] !== "--" ? (
+                            <a
+                              style={{ borderBottom: "0.5px solid blue" }}
+                              onClick={() => handleCodeClick(chunk[colIndex])}
+                            >
+                              {chunk[colIndex]}
+                            </a>
+                          ) : (
+                            chunk[colIndex]
+                          )}
                         </StyledTableCell>
                       ))}
                     </StyledTableRow>
                   ));
                 })}
             {!global.values?.code &&
-              neo1
+              drug1
                 ?.filter((item) => {
                   return search.toLowerCase() === ""
                     ? item
@@ -351,7 +367,7 @@ export default function Neoplasm2({  onCodeClick}) {
                         }}
                         align="center"
                       >
-                        {value !== "-" ? (
+                        {value !== "--" ? (
                           <a
                             style={{
                               borderBottom: "0.5px solid blue",
@@ -361,32 +377,31 @@ export default function Neoplasm2({  onCodeClick}) {
                             {value}
                           </a>
                         ) : (
-                          "-"
+                          "--"
                         )}
                       </StyledTableCell>
                     ))}
                   </StyledTableRow>
                 ))}
           </TableBody>
-         {/* {isLoading && <Loads />} */}
-          {global.values?.code !== null && neo && neo.length === 0 && (
+
+          {global.values?.code !== null && drug && drug.length === 0 && (
             <Typography
               marginLeft={30}
+              fontWeight={800}
               variant="caption"
               color={"#4185D2"}
-              fontWeight={800}
             >
-              <h3>No Neoplasm codes found for the given search criteria.</h3>
+              <h3>No Drug codes found for the given search criteria.</h3>
             </Typography>
           )}
-          {/* {!global.values?.code && neo1 && neo1.length === 0 && (
-            <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
-              No Neoplasm codes available in the data.
+          {!global.values?.code && drug && drug1.length === 0 && (
+            <Typography variant="caption" fontWeight={800} color={"#4185D2"}>
+              <h3>No Drug codes available in the data.</h3>
             </Typography>
-          )} */}
+          )}
         </Table>
       </TableContainer>
-      
     </>
   );
 }
