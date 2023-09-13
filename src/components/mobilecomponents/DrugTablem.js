@@ -179,7 +179,7 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
             width: "97vw",
             ml: "0%",
             height: "68vh",
-            mt: "30px",
+            mt: "-50px",
           }}
         >
           <Table
