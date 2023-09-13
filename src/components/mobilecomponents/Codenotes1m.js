@@ -120,6 +120,11 @@ const Codenotes1m = ({ onCodeClick }) => {
     }, 1500);
     // global.values = null;
   };
+  React.useEffect(() => {
+    if (fetchedData) {
+      global.selectedCodeDetails = fetchedData;
+    }
+  }, [fetchedData]);
   const fetchCodeDetails = async (code) => {
     try {
       if (code) {

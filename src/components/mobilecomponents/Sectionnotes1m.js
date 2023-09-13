@@ -78,7 +78,11 @@ const Sectionnotes1m = ({ onCodeClick }) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 1500);
   };
-
+  React.useEffect(() => {
+    if (fetchedData) {
+      global.selectedCodeDetails = fetchedData;
+    }
+  }, [fetchedData]);
   const fetchCodeDetails = async (code) => {
     try {
       if (code) {

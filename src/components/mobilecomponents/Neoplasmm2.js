@@ -91,33 +91,27 @@ export default function Neoplasmm2({ onCodeClick }) {
   }
   const handleCodeClick = async (code) => {
     setClickedCode(code);
-    await fetchCodeDetails(code);
-    setResult1(fetchedData);
-    // setSelectedCode(code);
-    global.selectedCodeDetails = fetchedData;
-    global.selectedSectionDetails = fetchedData;
-    global.selectedChapterDetails = fetchedData;
-    global.intable = null;
-    global.selectedCode = code;
-    global.isCodeClicked = true;
-    onCodeClick(code);
-  };
-  const fetchCodeDetails = async (code) => {
+    console.log(clickedCode);
+   const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
     try {
       if (code) {
-        const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${global.tokens} `, // Replace with your actual token
-            },
-          }
-        );
+        const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${global.tokens}`,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
+          global.selectedCodeDetails = data;
+          global.selectedSectionDetails = data;
+          global.selectedChapterDetails = data;
+          global.intable = null;
+          global.selectedCode = Code1;
+          global.isCodeClicked = true;
+          onCodeClick(Code1);
         } else {
           console.error("Failed to fetch data");
         }

@@ -91,7 +91,11 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
     }, 1500);
     
   };
-
+  React.useEffect(() => {
+    if (fetchedData) {
+      global.selectedCodeDetails = fetchedData;
+    }
+  }, [fetchedData]);
 
   const renderChildRows = (row, depthLevel = 1) => {
     if (row.child && row.child.code !== null) {
