@@ -108,7 +108,7 @@ console.log(newPassword);
   };
   const handleGoToHomePage = () => {
     navigate('/')
-    alert("Redirecting to the home page");
+
   };
   return (
     <ThemeProvider theme={createTheme()}>
