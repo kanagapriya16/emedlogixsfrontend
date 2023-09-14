@@ -54,6 +54,7 @@ const Search1 = () => {
 
 
   useEffect(() => {
+   // const getdataAftertimeout = setTimeout(() => {
  
       global.inatbleresult = null;
   
@@ -143,7 +144,8 @@ const Search1 = () => {
       };
   
       fetchBooks();
-
+   // }, 600);
+   // return () => clearTimeout(getdataAftertimeout);
   }, [word]);
   console.log(result)
 
@@ -151,6 +153,53 @@ const Search1 = () => {
   console.log(first);
   global.values = first;
   global.words = word;
+
+
+// if (setIsDescriptionFetched) {
+  //   window.sortOptions = (options, typedValueLower) => {
+  //     return options.sort((a, b) => {
+  //       const aTitle = a.title ?? "";
+  //       const bTitle = b.title ?? "";
+  //       const aLower = aTitle.toLowerCase();
+  //       const bLower = bTitle.toLowerCase();
+  //       if (aLower.startsWith(typedValueLower)) return -1;
+  //       if (bLower.startsWith(typedValueLower)) return 1;
+  //       return aLower.localeCompare(bLower);
+  //     });
+  //   };
+  // }
+
+
+
+  // function sortOptions(options) {
+  //   return options.sort((a, b) => {
+  //     if (a.type === "ismainterm") {
+  //       return -1; // 'a' comes before 'b'
+  //     } else if (b.type === "ismainterm") {
+  //       return 1; // 'b' comes before 'a'
+  //     } else if (a.type === "code") {
+  //       return -1; // 'a' comes before 'b'
+  //     } else if (b.type === "code") {
+  //       return 1; // 'b' comes before 'a'
+  //     } else if (a.type === "see") {
+  //       return -1; // 'a' comes before 'b'
+  //     } else if (b.type === "see") {
+  //       return 1; // 'b' comes before 'a'
+  //     } else if (a.type === "seealso") {
+  //       return -1; // 'a' comes before 'b'
+  //     } else if (b.type === "seealso") {
+  //       return 1; // 'b' comes before 'a'
+  //     } else if (a.type === "alterTerm") {
+  //       return -1; // 'a' comes before 'b'
+  //     } else if (b.type === "alterTerm") {
+  //       return 1; // 'b' comes before 'a'
+  //     } else {
+  //       return 0; // No change in order
+  //     }
+  //   });
+  // }
+
+
   
 if (setIsDescriptionFetched) {
 
@@ -273,8 +322,8 @@ if (setIsDescriptionFetched) {
            options={
                 isDescriptionFetched
                 
-                   ? window.sortOptions([...result], word).slice(0, 10)
-                 : [...result].slice(0, 10)
+                   ? window.sortOptions([...result], word).slice(0, 20)
+                 : [...result].slice(0, 20)
               }
               sx={{
                 "& .MuiOutlinedInput-notchedOutline": {
@@ -325,18 +374,18 @@ if (setIsDescriptionFetched) {
               renderOption={(props, result1) => (
                 <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
-                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `see:${result1.seealso}` : ''}
+                  <span>{result1.title && (result1.code !== 'null' || result1.seealso !== 'null') ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
+                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `seealso:${result1.seealso}` : ''}
                  {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && result1.seealso.includes("Neoplasm")? <span style={{
                
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
-              }}>see:{result1.seealso}</span> : '' }
+              }}>seealso:{result1.seealso}</span> : '' }
                    { result1.seealso !== 'null' && result1.seealso !== undefined  && result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm") ? <span style={{
             
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
-              }}>see:{result1.seealso}</span> : ''}{" "} 
+              }}>seealso:{result1.seealso}</span> : ''}{" "} 
                    {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
              
@@ -350,8 +399,10 @@ if (setIsDescriptionFetched) {
               }}>see:{result1.see}</span> : ''}{" "} 
 
                   {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
-                 {result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
-                  <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
+                  {result1.code !== 'null' &&  result1.code !== null && (result1.description !== null || result1.title !== null || result1.alterDescription !== null )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.description !== null ? (
+                    <span style={{ color: 'blue' }}>{result1.code}</span>
+                  ) : null}{" "}{result1.description}</span>
                 )}
               </Box>
               )}
@@ -431,8 +482,8 @@ if (setIsDescriptionFetched) {
                options={
                 isDescriptionFetched
              
-             ? window.sortOptions([...result], word).slice(0, 10)
-              : [...result].slice(0, 10)
+             ? window.sortOptions([...result], word).slice(0, 20)
+              : [...result].slice(0, 20)
               }
             
               style={{
@@ -444,7 +495,9 @@ if (setIsDescriptionFetched) {
                 },
               }}
               isoptionequalToValue={(option, value) =>
-                option.description === value.description
+                option.description === value.description ||
+                option.see === value.see ||
+                option.seealso === value.seealso
               }
               noOptionsText={"PLEASE ENTER VALID CODES"}
               open={open}
@@ -485,21 +538,20 @@ if (setIsDescriptionFetched) {
         
               renderOption={(props, result1) => (
                 
-           
-               <Box {...props} key={result.id}>
+                <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title && result1.code !== 'null' ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
-                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `see:${result1.seealso}` : ''}
+                  <span>{result1.title && (result1.code !== 'null' || result1.seealso !== 'null') ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
+                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `seealso:${result1.seealso}` : ''}
                  {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && result1.seealso.includes("Neoplasm")? <span style={{
                
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
-              }}>see:{result1.seealso}</span> : '' }
+              }}>seealso:{result1.seealso}</span> : '' }
                    { result1.seealso !== 'null' && result1.seealso !== undefined  && result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm") ? <span style={{
             
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
-              }}>see:{result1.seealso}</span> : ''}{" "} 
+              }}>seealso:{result1.seealso}</span> : ''}{" "} 
                    {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
              
@@ -513,10 +565,13 @@ if (setIsDescriptionFetched) {
               }}>see:{result1.see}</span> : ''}{" "} 
 
                   {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
-                  {result1.code !== 'null' ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
-                  <span><span style={{ color: 'blue' }}>{result1.id}</span>{" "}{result1.description}</span>
+                  {result1.code !== 'null' &&  result1.code !== null && (result1.description !== null || result1.title !== null || result1.alterDescription !== null )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  <span>{result1.description !== null ? (
+                    <span style={{ color: 'blue' }}>{result1.code}</span>
+                  ) : null}{" "}{result1.description}</span>
                 )}
               </Box>
+               
               )}
             />
           </Box>

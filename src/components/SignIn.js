@@ -85,6 +85,10 @@ function SignIn() {
       alert("An error occurred during authentication.");
     }
   }
+global.usermail=email;
+console.log(global.usermail);
+
+
 
   return (
     <ThemeProvider theme={defaultTheme}>

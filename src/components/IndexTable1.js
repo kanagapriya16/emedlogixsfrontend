@@ -46,6 +46,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
       fetchBooks();
     }
   }, [global.values?.code]);
+  
   console.log("our index is", index);
 
  
@@ -75,6 +76,8 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   };
 
   console.log(result1);
+
+
   const handleCodeClick = async (code) => {
     global.isCodeClicked = true;
     setClickedCode(code);
@@ -88,6 +91,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     global.selectedCode = code;
     
   };
+
   React.useEffect(() => {
     if (fetchedData) {
       global.selectedCodeDetails = fetchedData;
