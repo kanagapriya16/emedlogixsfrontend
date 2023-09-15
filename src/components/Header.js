@@ -55,9 +55,7 @@ localStorage.setItem("name",first)
               className="logo"
               src="https://static.wixstatic.com/media/7607b5_dbdbad3954b74cd0b66694c3302204e0~mv2.png/v1/fill/w_275,h_40,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/EMEDLOGIX_Final-01.png"
             ></img>
-            <Box  sx={{marginLeft:"65%",color:"black",mt:"2.5%"}} >
-              <h3>Welcome {first}</h3>
-            </Box>
+           
           </Toolbar>
         
         </AppBar>

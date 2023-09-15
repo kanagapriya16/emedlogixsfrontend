@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -13,6 +11,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment"; // Import InputAdornment
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility"; // Import visibility icon
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Copyright(props) {
   return (
@@ -37,13 +39,14 @@ function SignIn() {
   const navigate = useNavigate();
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  // e.preventDefault();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   async function Logins(e) {
     e.preventDefault();
 
     if (email.length === 0 || password.length === 0) {
-      alert("Please fill in all fields.");
+      setErrorMessage("Please fill in all fields.");
       return; // Exit early if fields are empty.
     }
 
@@ -66,34 +69,26 @@ function SignIn() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("signin page",result.token)
+        console.log("signin page", result.token);
         localStorage.setItem("emed", result.token);
         localStorage.setItem("email", email);
-       
-        if( result.token != null){
-          navigate('/get')
-         // localStorage.removeItem("emed")
-          
-      }
+        if (result.token != null) {
+          navigate("/get");
+          // localStorage.removeItem("emed")
+        }
       } else {
-        alert(
-          "Authentication failed. Please check your username and password."
-        );
+        setErrorMessage("Incorrect Email Address and password.");
       }
     } catch (error) {
       console.error("Error during authentication:", error);
-      alert("An error occurred during authentication.");
+      setErrorMessage("An error occurred during authentication.");
     }
   }
-global.usermail=email;
-console.log(global.usermail);
-
-
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+    
         <Box
           sx={{
             marginTop: 8,
@@ -102,6 +97,12 @@ console.log(global.usermail);
             alignItems: "center",
           }}
         >
+          {errorMessage && (
+            <Typography variant="body2" color="error">
+              {errorMessage}
+            </Typography>
+          )}
+
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -126,15 +127,29 @@ console.log(global.usermail);
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {password.length > 0 && (
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                      >
+                        {showPassword ? (
+                          <Visibility /> // Show the eye icon when password is hidden
+                        ) : (
+                          <VisibilityOff /> // Show the crossed eye icon when password is visible
+                        )}
+                      </IconButton>
+                    )}
+                  </InputAdornment>
+                ),
+              }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth

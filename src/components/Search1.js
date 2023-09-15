@@ -54,7 +54,7 @@ const Search1 = () => {
 
 
   useEffect(() => {
-   // const getdataAftertimeout = setTimeout(() => {
+   //const getdataAftertimeout = setTimeout(() => {
  
       global.inatbleresult = null;
   
@@ -144,8 +144,8 @@ const Search1 = () => {
       };
   
       fetchBooks();
-   // }, 600);
-   // return () => clearTimeout(getdataAftertimeout);
+  //  }, 600);
+  //  return () => clearTimeout(getdataAftertimeout);
   }, [word]);
   console.log(result)
 
@@ -245,6 +245,8 @@ if (setIsDescriptionFetched) {
   }
   window.sortOptions = sortOptions;
   }
+
+
  const matches = useMediaQuery("(max-width:768px)");
 
   return (
@@ -273,10 +275,31 @@ if (setIsDescriptionFetched) {
               placeholder="Search for code"
               value={
                 selectedItem && isValueSelected
-                  ? ` ${
-                      selectedItem.code !== "null" ? selectedItem.code : ""
-                    } ${selectedItem.description || ""} ${selectedItem.alterDescription || ""} ${
-                      selectedItem.title || ""
+                  ? `${
+                      selectedItem.code !== null && selectedItem.code !== "null" && selectedItem.code !== undefined
+                        ? selectedItem.code
+                        : ""
+                    } ${
+                      selectedItem.description !== null && selectedItem.description !== "null" && selectedItem.description
+                        ? selectedItem.description
+                        : ""
+                    } ${
+                      selectedItem.alterDescription !== null &&
+                      selectedItem.alterDescription !== "null" && selectedItem.alterDescription
+                        ? selectedItem.alterDescription
+                        : ""
+                    } ${
+                      selectedItem.title !== null && selectedItem.title !== "null" && selectedItem.title !== undefined
+                        ? selectedItem.title
+                        : ""
+                    } ${
+                      selectedItem.see !== null && selectedItem.see !== "null" && selectedItem.see !== undefined
+                        ? selectedItem.see
+                        : ""
+                    } ${
+                      selectedItem.seealso !== null && selectedItem.seealso !== "null" && selectedItem.seealso !== undefined
+                        ? selectedItem.seealso
+                        : ""
                     }`
                   : word
               }
@@ -313,9 +336,9 @@ if (setIsDescriptionFetched) {
               id="users"
               defaultValue={null}
               getOptionLabel={(item) =>
-                `${item.title || ""}  ${item.level || ""}  ${
+                `${item.title || ""}  ${
                   item.seealso || ""
-                }   ${item.id || ""}  ${item.description || ""} ${
+                }    ${item.description || ""} ${
                   item.code || ""
                 } ${item.nemod} ${item.alterDescription || ""}`
               }
@@ -399,7 +422,7 @@ if (setIsDescriptionFetched) {
               }}>see:{result1.see}</span> : ''}{" "} 
 
                   {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
-                  {result1.code !== 'null' &&  result1.code !== null && (result1.description !== null || result1.title !== null || result1.alterDescription !== null )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
+                  {result1.code !== 'null' &&  result1.code !== null && (result1.description !== null || result1.title !== null || result1.alterDescription !== null || result1.description !== "null" || result1.alterDescription !== "null" || result1.title !== "null" )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span>{result1.description !== null ? (
                     <span style={{ color: 'blue' }}>{result1.code}</span>
                   ) : null}{" "}{result1.description}</span>
@@ -433,10 +456,31 @@ if (setIsDescriptionFetched) {
               placeholder="Search for code"
               value={
                 selectedItem && isValueSelected
-                  ? ` ${
-                      selectedItem.code !== "null" ? selectedItem.code : ""
-                    } ${selectedItem.description || ""} ${selectedItem.alterDescription || ""} ${
-                      selectedItem.title || ""
+                  ? `${
+                      selectedItem.code !== null && selectedItem.code !== "null" && selectedItem.code !== undefined
+                        ? selectedItem.code
+                        : ""
+                    } ${
+                      selectedItem.description !== null && selectedItem.description !== "null" && selectedItem.description
+                        ? selectedItem.description
+                        : ""
+                    } ${
+                      selectedItem.alterDescription !== null &&
+                      selectedItem.alterDescription !== "null" && selectedItem.alterDescription
+                        ? selectedItem.alterDescription
+                        : ""
+                    } ${
+                      selectedItem.title !== null && selectedItem.title !== "null" && selectedItem.title !== undefined
+                        ? selectedItem.title
+                        : ""
+                    } ${
+                      selectedItem.see !== null && selectedItem.see !== "null" && selectedItem.see !== undefined
+                        ? selectedItem.see
+                        : ""
+                    } ${
+                      selectedItem.seealso !== null && selectedItem.seealso !== "null" && selectedItem.seealso !== undefined
+                        ? selectedItem.seealso
+                        : ""
                     }`
                   : word
               }
@@ -471,11 +515,12 @@ if (setIsDescriptionFetched) {
               disableClearable
               freeSolo
               id="users"
+             
               defaultValue={null}
               getOptionLabel={(item) =>
-                `${item.title || ""}  ${item.level || ""}  ${
-                  item.seealso || ""
-                }   ${item.id || ""}  ${item.description || ""} ${
+                `${item.title || ""}   ${item.seealso || ""
+                }   ${item.see || ""
+              } ${item.description || ""} ${
                   item.code || ""
                 } ${item.nemod}${item.alterDescription || ""}`
               }
@@ -521,7 +566,7 @@ if (setIsDescriptionFetched) {
               autoSelect
               renderInput={(params) => (
                 <TextField
-                  disabled
+               // disabled
                   sx={{
                     "& input": {
                       height: "0px",
@@ -566,7 +611,7 @@ if (setIsDescriptionFetched) {
 
                   {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
                   {result1.code !== 'null' &&  result1.code !== null && (result1.description !== null || result1.title !== null || result1.alterDescription !== null )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
-                  <span>{result1.description !== null ? (
+                  <span>{result1.description !== null || result1.description !== 'null' ? (
                     <span style={{ color: 'blue' }}>{result1.code}</span>
                   ) : null}{" "}{result1.description}</span>
                 )}

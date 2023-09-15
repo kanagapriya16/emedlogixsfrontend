@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,7 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; //
+import { useNavigate } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility"; // Import visibility icon
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { IconButton } from "@mui/material";
+
 function Copyright(props) {
   return (
     <Typography
@@ -25,14 +29,16 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="">
-        Your Website
+        EmedLogix
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
   );
 }
+
 const defaultTheme = createTheme();
+
 export default function SignUp() {
   const [formData, setFormData] = React.useState({
     username: "",
@@ -42,9 +48,11 @@ export default function SignUp() {
     receiveEmails: false,
   });
   const [acceptedTerms, setAcceptedTerms] = React.useState(false);
+
   const [validationErrors, setValidationErrors] = React.useState({});
   const [errorMessage, setErrorMessage] = React.useState("");
   const [errorMessage1, setErrorMessage1] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate(); //
   //   const handleSubmit = (event) => {
   //     event.preventDefault();
@@ -56,19 +64,23 @@ export default function SignUp() {
   //   };
   const validateForm = () => {
     const errors = {};
-    // Check for validation errors and update the 'errors' object
+
+   // Check for validation errors and update the 'errors' object
     if (formData.username === "") {
       errors.username = "User name is required";
     }
+
     if (formData.email === "") {
       errors.email = "Email is required";
     }
+
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Invalid email address";
     }
     if (formData.password !== formData.confirm_password) {
       errors.confirm_password = "Passwords do not match";
-    } else if (
+    }
+    if (
       !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(
         formData.password
       )
@@ -76,6 +88,7 @@ export default function SignUp() {
       errors.password =
         "Password must have at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character";
     }
+
     if (formData.confirm_password === "") {
       errors.confirm_password = "Confirm password is required";
     } else if (formData.password !== formData.confirm_password) {
@@ -84,12 +97,17 @@ export default function SignUp() {
     if (!acceptedTerms) {
       errors.acceptedTerms = "You must accept the Terms and Conditions";
     }
+
     setValidationErrors(errors);
+
     return Object.keys(errors).length === 0; // Return true if no errors
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const isValid = validateForm();
+
     if (isValid) {
       try {
         const response = await axios.post("/register", {
@@ -99,8 +117,11 @@ export default function SignUp() {
           confirm_password: formData.confirm_password,
           // You can include other form fields here
         });
+
         console.log("API Response:", response.data);
+
         navigate("/");
+
         // You can handle the response from the API here
       } catch (error) {
         console.error("API Error:", error);
@@ -114,6 +135,7 @@ export default function SignUp() {
       }
     }
   };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -199,7 +221,7 @@ export default function SignUp() {
                   fullWidth
                   name="confirmpassword"
                   label="Confirm Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="confirmpassword"
                   autoComplete="new-password"
                   error={!!validationErrors.confirm_password}
@@ -211,6 +233,23 @@ export default function SignUp() {
                     })
                   }
                   value={formData.confirm_password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {formData.confirm_password.length > 0 && (
+                          <IconButton
+                            onClick={() => setShowPassword(!showPassword)} // Toggle visibility
+                          >
+                            {showPassword ? (
+                              <Visibility /> // Show the eye icon when password is hidden
+                            ) : (
+                              <VisibilityOff /> // Show the crossed eye icon when password is visible
+                            )}
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -233,6 +272,7 @@ export default function SignUp() {
                 </Typography>
               </Grid>
             </Grid>
+
             <Button
               type="submit"
               fullWidth
