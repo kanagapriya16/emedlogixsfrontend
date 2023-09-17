@@ -97,7 +97,6 @@ export default function Neoplasm2({  onCodeClick}) {
     console.log(clickedCode);
    const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
 
-    // Fetch code details and update the state immediately
     try {
       if (code) {
         const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
@@ -110,7 +109,7 @@ export default function Neoplasm2({  onCodeClick}) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
-          // Update other global variables as needed
+       
           global.selectedCodeDetails = data;
           global.selectedSectionDetails = data;
           global.selectedChapterDetails = data;
@@ -379,11 +378,7 @@ export default function Neoplasm2({  onCodeClick}) {
               <h3>No Neoplasm codes found for the given search criteria.</h3>
             </Typography>
           )}
-          {/* {!global.values?.code && neo1 && neo1.length === 0 && (
-            <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
-              No Neoplasm codes available in the data.
-            </Typography>
-          )} */}
+          
         </Table>
       </TableContainer>
       

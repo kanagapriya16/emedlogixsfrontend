@@ -135,7 +135,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
-          // Update other global variables as needed
+      
           setSelectedCode(Code1);
           global.selectedCodeDetails = data;
           global.selectedSectionDetails = data;
@@ -143,7 +143,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
           global.intable = null;
           global.selectedCode = Code1;
           global.isCodeClicked = true;
-          //onCodeClick(Code1);
+    
          
           
         } else {
@@ -168,7 +168,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
         {!global.values || !global.values.code ? (
           <Alphabetdrug
             setSelectedCode={setSelectedCode}
-           // selectedCodeDetails={results2}
+        
           />
         ) : null}
       </Box>

@@ -47,16 +47,14 @@ export default function Drug2({ onCodeClick }) {
   const [fetchedData, setFetchedData] = useState(null);
   const Code = (global.values?.code || '').replace(/[-.]/g, '');
 
- 
 
-  //all values of drug
   React.useEffect(() => {
     const fetchAllDetailsDrugData = async () => {
       try {
         const response = await fetch(`/codes/alldetails/drug?title=${global.clickedTab2}`, {
           method:'GET',
           headers: {
-            Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+            Authorization: `Bearer ${global.tokens} `
           },
         });
         if (response.ok) {
@@ -95,7 +93,7 @@ export default function Drug2({ onCodeClick }) {
     console.log(clickedCode);
    const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
 
-    // Fetch code details and update the state immediately
+
     try {
       if (code) {
         const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
@@ -108,9 +106,7 @@ export default function Drug2({ onCodeClick }) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
-          // Update other global variables as needed
-         // setSelectedCode(Code1);
-          global.selectedCodeDetails = data;
+           global.selectedCodeDetails = data;
           global.selectedSectionDetails = data;
           global.selectedChapterDetails = data;
           global.intable = null;

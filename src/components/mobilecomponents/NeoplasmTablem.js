@@ -136,7 +136,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
           global.intable = null;
           global.selectedCode = Code1;
           global.isCodeClicked = true;
-          //onCodeClick(Code1);
+         
          
           
         } else {
@@ -161,7 +161,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
     {!global.values || !global.values.code ? (
       <Alphabetmneo
         setSelectedCode={setSelectedCode}
-       // selectedCodeDetails={results2}
+     
       />
     ) : null}
   </Box>

@@ -49,7 +49,7 @@ export default function Neoplasmm2({ onCodeClick }) {
             {
               method: "GET",
               headers: {
-                Authorization: `Bearer ${global.tokens} `, // Replace with your actual token
+                Authorization: `Bearer ${global.tokens} `, 
               },
             }
           );
@@ -361,7 +361,7 @@ export default function Neoplasmm2({ onCodeClick }) {
                     </StyledTableRow>
                   ))}
             </TableBody>
-            {/* {isLoading && <Loads />} */}
+           
             {global.values?.code !== null && neo && neo.length === 0 && (
               <Typography
                 marginLeft={30}
@@ -372,11 +372,7 @@ export default function Neoplasmm2({ onCodeClick }) {
                 <h3>No Neoplasm codes found for the given search criteria.</h3>
               </Typography>
             )}
-            {/* {!global.values?.code && neo1 && neo1.length === 0 && (
-            <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
-              No Neoplasm codes available in the data.
-            </Typography>
-          )} */}
+        
           </Table>
         </TableContainer>
       </div>

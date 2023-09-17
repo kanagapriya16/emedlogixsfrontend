@@ -110,7 +110,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
           const data = await response.json();
           setFetchedData(data);
           setResult1(data);
-          // Update other global variables as needed
+        
           setSelectedCode(Code1);
           global.selectedCodeDetails = data;
           global.selectedSectionDetails = data;
@@ -118,7 +118,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
           global.intable = null;
           global.selectedCode = Code1;
           global.isCodeClicked = true;
-          //onCodeClick(Code1);
+      
          
           
         } else {
@@ -401,7 +401,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   </StyledTableRow>
                 ))}
           </TableBody>
-         {/* {isLoading && <Loads />} */}
+  
           {global.values?.code !== null && neo && neo.length === 0 && (
             <Typography
               marginLeft={30}
@@ -412,11 +412,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
               <h3>No Neoplasm codes found for the given search criteria.</h3>
             </Typography>
           )}
-          {/* {!global.values?.code && neo1 && neo1.length === 0 && (
-            <Typography fontWeight={800} variant="caption" color={"#4185D2"}>
-              No Neoplasm codes available in the data.
-            </Typography>
-          )} */}
+       
         </Table>
       </TableContainer>
       )}

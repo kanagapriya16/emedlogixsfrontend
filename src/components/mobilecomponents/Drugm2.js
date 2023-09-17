@@ -53,7 +53,7 @@ export default function Drugm2({ onCodeClick }) {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${global.tokens} `, // Replace with your actual token
+              Authorization: `Bearer ${global.tokens} `, 
             },
           }
         );
@@ -92,7 +92,7 @@ export default function Drugm2({ onCodeClick }) {
     console.log(clickedCode);
    const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
 
-    // Fetch code details and update the state immediately
+ 
     try {
       if (code) {
         const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {

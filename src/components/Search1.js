@@ -154,53 +154,6 @@ const Search1 = () => {
   global.values = first;
   global.words = word;
 
-
-// if (setIsDescriptionFetched) {
-  //   window.sortOptions = (options, typedValueLower) => {
-  //     return options.sort((a, b) => {
-  //       const aTitle = a.title ?? "";
-  //       const bTitle = b.title ?? "";
-  //       const aLower = aTitle.toLowerCase();
-  //       const bLower = bTitle.toLowerCase();
-  //       if (aLower.startsWith(typedValueLower)) return -1;
-  //       if (bLower.startsWith(typedValueLower)) return 1;
-  //       return aLower.localeCompare(bLower);
-  //     });
-  //   };
-  // }
-
-
-
-  // function sortOptions(options) {
-  //   return options.sort((a, b) => {
-  //     if (a.type === "ismainterm") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "ismainterm") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "code") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "code") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "see") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "see") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "seealso") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "seealso") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "alterTerm") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "alterTerm") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else {
-  //       return 0; // No change in order
-  //     }
-  //   });
-  // }
-
-
-  
 if (setIsDescriptionFetched) {
 
   function sortOptions(options, userInput) {

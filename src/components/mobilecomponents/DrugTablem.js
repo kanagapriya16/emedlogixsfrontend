@@ -121,7 +121,7 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
     console.log(clickedCode);
    const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
 
-    // Fetch code details and update the state immediately
+
     try {
       if (code) {
         const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
@@ -167,7 +167,7 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
         {!global.values || !global.values.code ? (
           <Alphabetmdrug
             setSelectedCode={setSelectedCode}
-            // selectedCodeDetails={results2}
+          
           />
         ) : null}
       </Box>{" "}
