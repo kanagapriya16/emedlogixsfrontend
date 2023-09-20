@@ -164,14 +164,23 @@ export default function DrugTablem({ setResults1, setSelectedCode }) {
           display: "flex",
         }}
       >
-        {!global.values || !global.values.code ? (
+            { global.values && global.values.code == "null" ? (
           <Alphabetmdrug
             setSelectedCode={setSelectedCode}
-          
+        
           />
         ) : null}
-      </Box>{" "}
-      {global.values && global.values.code && (
+       
+       { !global.values && !global.values.code ? (
+          <Alphabetmdrug
+            setSelectedCode={setSelectedCode}
+        
+          />
+        ) : null}
+      </Box>
+   
+          {" "}
+          {global.values && global.values.code !== "null" && (
         <TableContainer
           sx={{
             position: "absolute",

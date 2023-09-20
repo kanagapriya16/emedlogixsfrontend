@@ -230,7 +230,7 @@ export default function Neoplasmm2({ onCodeClick }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {global.values?.code !== null &&
+            {global.values.code !== null &&
                 neo
                   ?.filter((item) => {
                     return (
@@ -324,7 +324,7 @@ export default function Neoplasmm2({ onCodeClick }) {
                       </StyledTableRow>
                     ));
                   })}
-              {!global.values?.code &&
+            {global.values.code === "null" &&
                 neo1
                   ?.filter((item) => {
                     return search.toLowerCase() === ""

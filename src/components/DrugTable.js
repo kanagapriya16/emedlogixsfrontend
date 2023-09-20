@@ -165,7 +165,14 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
           display: "flex",
         }}
       >
-        {!global.values || !global.values.code ? (
+         { global.values && global.values.code == "null" ? (
+          <Alphabetdrug
+            setSelectedCode={setSelectedCode}
+        
+          />
+        ) : null}
+       
+       { !global.values && !global.values.code ? (
           <Alphabetdrug
             setSelectedCode={setSelectedCode}
         
@@ -174,7 +181,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
       </Box>
    
           {" "}
-          {global.values && global.values.code && (
+          {global.values && global.values.code !== "null" && (
           <TableContainer
             sx={{
               height: "65vh",

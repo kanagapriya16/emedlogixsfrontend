@@ -158,14 +158,21 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
       display: "flex",
     }}
   >
-    {!global.values || !global.values.code ? (
-      <Alphabetmneo
-        setSelectedCode={setSelectedCode}
-     
-      />
-    ) : null}
+    { global.values && global.values.code == "null" ? (
+          <Alphabetmneo
+            setSelectedCode={setSelectedCode}
+           // selectedCodeDetails={results2}
+          />
+        ) : null}
+
+        { !global.values && !global.values.code ? (
+          <Alphabetmneo
+            setSelectedCode={setSelectedCode}
+           // selectedCodeDetails={results2}
+          />
+        ) : null}
   </Box>
-  {global.values && global.values.code && (
+  {global.values && global.values.code !== "null" && (
       <TableContainer
         sx={{
           position: "absolute",
@@ -364,14 +371,16 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
                           }}
                           align="center"
                         >
+                          {chunk[colIndex] !== "-" ? (
                           <a
                             style={{
                               borderBottom: "0.5px solid blue",
                             }}
                             onClick={() => handleCodeClick(chunk[colIndex])}
                           >
-                            {chunk[colIndex] || "-"}
+                            {chunk[colIndex]}
                           </a>
+                          ):("-")}
                         </StyledTableCell>
                       ))}
                     </StyledTableRow>

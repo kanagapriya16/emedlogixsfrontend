@@ -255,7 +255,7 @@ export default function Drug1({ onCodeClick }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {global.values?.code !== null &&
+              {global.values.code !== null &&
                   drug
                     ?.filter((item) => {
                       return (
@@ -353,7 +353,7 @@ export default function Drug1({ onCodeClick }) {
                         </StyledTableRow>
                       ));
                     })}
-                {!global.values?.code &&
+                 {global.values.code !== null &&
                   drug1
                     ?.filter((item) => {
                       return search.toLowerCase() === ""

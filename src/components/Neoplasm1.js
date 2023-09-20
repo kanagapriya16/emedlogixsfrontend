@@ -43,6 +43,7 @@ export default function Neoplasm1({  onCodeClick}) {
   const [result1, setResult1] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
   const Code = (global.values?.code || '').replace(/[-.]/g, '');
+  const [data, setData] = useState(false);
   
 
   React.useEffect(() => {
@@ -96,8 +97,10 @@ export default function Neoplasm1({  onCodeClick}) {
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     console.log(clickedCode);
-   const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
-
+ 
+global.Code1 = (clickedCode||'').replace(/[-.]/g, '');
+ 
+   
     
     try {
       if (code) {
@@ -107,6 +110,7 @@ export default function Neoplasm1({  onCodeClick}) {
             Authorization: `Bearer ${global.tokens}`,
           },
         });
+       
         if (response.ok) {
           const data = await response.json();
           setFetchedData(data);
@@ -116,9 +120,9 @@ export default function Neoplasm1({  onCodeClick}) {
           global.selectedSectionDetails = data;
           global.selectedChapterDetails = data;
           global.intable = null;
-          global.selectedCode = Code1;
+          global.selectedCode = global.Code1;
           global.isCodeClicked = true;
-          onCodeClick(Code1);
+          onCodeClick(global.Code1);
         } else {
           console.error("Failed to fetch data");
         }
@@ -261,7 +265,7 @@ export default function Neoplasm1({  onCodeClick}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {global.values?.code !== null &&
+            {global.values.code !== null &&
               neo
                 ?.filter((item) => {
                   return (
@@ -352,7 +356,7 @@ export default function Neoplasm1({  onCodeClick}) {
                     </StyledTableRow>
                   ));
                 })}
-            {!global.values?.code &&
+            {global.values.code !== null &&
               neo1
                 ?.filter((item) => {
                   return search.toLowerCase() === ""

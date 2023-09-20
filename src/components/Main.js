@@ -51,7 +51,7 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-export const Main = ({ refreshMain }) => {
+export const Main = ({ refreshMain,isNeoplasmCodeClicked ,selectedItem,isDrugCodeClicked}) => {
   console.log("enter main");
   const [value, setValue] = useState(0);
   const [showTable, setShowTable] = useState(false);
@@ -97,6 +97,30 @@ export const Main = ({ refreshMain }) => {
       handleRefresh();
     }
   }, [selectedCode]);
+  useEffect(() => {
+   // Use a useEffect to update the state based on the selected code type
+   if (isNeoplasmCodeClicked) {
+    setActiveBtn("btn2"); // Activate the "Neoplasm" button
+    setShowTable(true); // Show the table
+    setShowIndex(false); // Hide other components if needed
+    setShowdrug(false);
+    // Hide other components if needed
+  } else if (isDrugCodeClicked) {
+    setActiveBtn("btn3"); // Activate the "Neoplasm" button
+    setShowTable(false); // Hide the table
+    setShowIndex(false); // Hide other components if needed
+    setShowdrug(true); // Show the Drug table
+  } else {
+    setActiveBtn("btn1"); // Set another button as active if needed
+    setShowTable(false);
+    setShowIndex(true);
+    setShowdrug(false);
+  }
+}, [isNeoplasmCodeClicked, isDrugCodeClicked]);
+  
+   
+ 
+  
 
   const matches = useMediaQuery("(max-width:768px)");
 
