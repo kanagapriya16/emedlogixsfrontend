@@ -103,7 +103,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
               }
   
               
-              const alterResponse = await fetch(`/alter-terms/search?alterDescription=${word}`, {
+              const alterResponse = await fetch(`/codes/alter-terms/search?alterDescription=${word}`, {
                 method:'GET',
                 headers: {
                   Authorization: `Bearer ${global.tokens} `
@@ -169,6 +169,7 @@ if (setIsDescriptionFetched) {
     };
    
   }
+
   // function sortOptions(options) {
   //   return options.sort((a, b) => {
   //     if (a.type === "ismainterm") {
