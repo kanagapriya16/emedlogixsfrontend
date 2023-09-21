@@ -154,6 +154,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   console.log(first);
   global.values = first;
   global.words = word;
+
 if (setIsDescriptionFetched) {
     window.sortOptions = (options, typedValueLower) => {
       return options.sort((a, b) => {
@@ -608,7 +609,7 @@ const HandleClick= () =>{
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
               }}onClick={HandleClicks}>see:{result1.see}</span> : ''}{" "} 
-{result1.type}
+
                   {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
                   {result1.code !== 'null' &&  result1.code !== null && (result1.description !== 'null' || result1.title !== 'null' || result1.alterDescription !== 'null' ||  result1.description !== undefined )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span>{result1.description !== null && result1.description !== 'null' &&  result1.description !== undefined ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ""}
