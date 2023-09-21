@@ -118,7 +118,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
    const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
     try {
       if (code) {
-        const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
+        const response = await fetch(`/codes/${(code || "").replace(/[-.]/g, "")}/details/?version=${global.years}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${global.tokens}`,
@@ -172,7 +172,7 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
           />
         ) : null}
   </Box>
-  {global.values && global.values.code !== "null" && (
+ {global.values && global.values.code !== "null" && (
       <TableContainer
         sx={{
           position: "absolute",
@@ -183,11 +183,13 @@ export default function NeoplasmTablem({ setResults1, setSelectedCode }) {
         }}
       >
         <Table
+        stickyHeader
           sx={{
             height: "5px",
             ml: "-0.1%",
             mt: "1px",
             width: "90vw",
+            overflowX:"scroll"
           }}
         >
           <TableHead sx={{ height: "5%", minHeight: "10px" }}>

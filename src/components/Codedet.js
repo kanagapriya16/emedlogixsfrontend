@@ -28,7 +28,7 @@ const Codedet = () => {
       try {
         if (global.values && global.values.code && global.years) {
           const response = await fetch(
-            `/codes/${Code}/details/?version=${global.years}`, {
+            `/codes/${(global.values.code || '').replace(/[-.]/g, '')}/details/?version=${global.years}`, {
               method:'GET',
               headers: {
                 Authorization: `Bearer ${global.tokens} `// Replace with your actual token

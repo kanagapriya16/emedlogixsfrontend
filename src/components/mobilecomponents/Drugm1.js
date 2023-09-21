@@ -92,7 +92,7 @@ export default function Drugm1({ onCodeClick }) {
 
     try {
       if (code) {
-        const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
+        const response = await fetch(`/codes/${(code|| '').replace(/[-.]/g, '')}/details/?version=${global.years}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${global.tokens}`,
@@ -157,10 +157,12 @@ export default function Drugm1({ onCodeClick }) {
         }}
       >
         <Table
+        stickyHeader
           sx={{
             ml: "1%",
             width: "97vw",
             mt: "-8px",
+            overflowX:"scroll"
           }}
         >
           <TableHead>

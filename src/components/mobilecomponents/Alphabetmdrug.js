@@ -1,8 +1,9 @@
 import { Box, Stack, Tab, Tabs, TextField } from "@mui/material";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Drug2m from "./Drugm2";
+import Drugm2 from "./Drugm2";
 import Drugm1 from "./Drugm1";
+
 
 
 
@@ -592,80 +593,80 @@ export const Alphabetmdrug = ({ setSelectedCode }) => {
                     <Drugm1 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={1}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={2}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={3}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={4}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={5}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={6}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={7}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={8}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={9}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={10}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={11}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={12}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={13}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={14}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={15}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={16}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={17}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={18}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={19}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
 
                   <CustomTabPanel value={value} index={20}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={21}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={22}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={23}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={24}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={25}>
-                    <Drug2m onCodeClick={setSelectedCode} />
+                    <Drugm2 onCodeClick={setSelectedCode} />
                   </CustomTabPanel>
                 </div>
               </Box>

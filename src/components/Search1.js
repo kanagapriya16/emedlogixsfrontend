@@ -128,7 +128,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
               if (thirdResponse.ok) {
                 const alterrData = await thirdResponse.json();
                 combinedData.push(...alterrData);
-            console.log("Second API response:", alterrData);
+            console.log("third API response:", alterrData);
               } else {
                 console.error("Failed to fetch data from the third API");
               }
@@ -154,19 +154,20 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   console.log(first);
   global.values = first;
   global.words = word;
-// if (setIsDescriptionFetched) {
-  //   window.sortOptions = (options, typedValueLower) => {
-  //     return options.sort((a, b) => {
-  //       const aTitle = a.title ?? "";
-  //       const bTitle = b.title ?? "";
-  //       const aLower = aTitle.toLowerCase();
-  //       const bLower = bTitle.toLowerCase();
-  //       if (aLower.startsWith(typedValueLower)) return -1;
-  //       if (bLower.startsWith(typedValueLower)) return 1;
-  //       return aLower.localeCompare(bLower);
-  //     });
-  //   };
-  // }
+if (setIsDescriptionFetched) {
+    window.sortOptions = (options, typedValueLower) => {
+      return options.sort((a, b) => {
+        const aTitle = a.title ?? "";
+        const bTitle = b.title ?? "";
+        const aLower = aTitle.toLowerCase();
+        const bLower = bTitle.toLowerCase();
+        if (aLower.startsWith(typedValueLower)) return -1;
+        if (bLower.startsWith(typedValueLower)) return 1;
+        return aLower.localeCompare(bLower);
+      });
+    };
+   
+  }
   // function sortOptions(options) {
   //   return options.sort((a, b) => {
   //     if (a.type === "ismainterm") {
@@ -194,50 +195,50 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   //     }
   //   });
   // }
-if (setIsDescriptionFetched) {
+// if (setIsDescriptionFetched) {
 
-  function sortOptions(options, userInput) {
-    return options.sort((a, b) => {
-      if (a.type === "ismainterm") {
-        return -1; // 'a' comes before 'b'
-      } else if (b.type === "ismainterm") {
-        return 1; // 'b' comes before 'a'
-      } else if (a.type === "code" && b.type !== "code") {
-        return -1; // 'a' comes before 'b'
-      } else if (b.type === "code" && a.type !== "code") {
-        return 1; // 'b' comes before 'a'
-      } else if (a.type === "code" && b.type === "code") {
+//   function sortOptions(options, userInput) {
+//     return options.sort((a, b) => {
+//       if (a.type === "ismainterm") {
+//         return -1; // 'a' comes before 'b'
+//       } else if (b.type === "ismainterm") {
+//         return 1; // 'b' comes before 'a'
+//       } else if (a.type === "code" && b.type !== "code") {
+//         return -1; // 'a' comes before 'b'
+//       } else if (b.type === "code" && a.type !== "code") {
+//         return 1; // 'b' comes before 'a'
+//       } else if (a.type === "code" && b.type === "code") {
        
-        const aMatches = a.text && a.text.includes(userInput);
-      const bMatches = b.text && b.text.includes(userInput);
+//         const aMatches = a.text && a.text.includes(userInput);
+//       const bMatches = b.text && b.text.includes(userInput);
 
-        if (aMatches && !bMatches) {
-          return -1; // 'a' comes before 'b'
-        } else if (!aMatches && bMatches) {
-          return 1; // 'b' comes before 'a'
-        } else {
+//         if (aMatches && !bMatches) {
+//           return -1; // 'a' comes before 'b'
+//         } else if (!aMatches && bMatches) {
+//           return 1; // 'b' comes before 'a'
+//         } else {
        
-          return 0;
-        }
-      } else if (a.type === "see") {
-        return -1; // 'a' comes before 'b'
-      } else if (b.type === "see") {
-        return 1; // 'b' comes before 'a'
-      } else if (a.type === "seealso") {
-        return -1; // 'a' comes before 'b'
-      } else if (b.type === "seealso") {
-        return 1; // 'b' comes before 'a'
-      } else if (a.type === "alterTerm") {
-        return -1; // 'a' comes before 'b'
-      } else if (b.type === "alterTerm") {
-        return 1; // 'b' comes before 'a'
-      } else {
-        return 0; // No change in order
-      }
-    });
-  }
-  window.sortOptions = sortOptions;
-  }
+//           return 0;
+//         }
+//       } else if (a.type === "see") {
+//         return -1; // 'a' comes before 'b'
+//       } else if (b.type === "see") {
+//         return 1; // 'b' comes before 'a'
+//       } else if (a.type === "seealso") {
+//         return -1; // 'a' comes before 'b'
+//       } else if (b.type === "seealso") {
+//         return 1; // 'b' comes before 'a'
+//       } else if (a.type === "alterTerm") {
+//         return -1; // 'a' comes before 'b'
+//       } else if (b.type === "alterTerm") {
+//         return 1; // 'b' comes before 'a'
+//       } else {
+//         return 0; // No change in order
+//       }
+//     });
+//   }
+//   window.sortOptions = sortOptions;
+//   }
 
 
  const matches = useMediaQuery("(max-width:768px)");
@@ -607,7 +608,7 @@ const HandleClick= () =>{
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
               }}onClick={HandleClicks}>see:{result1.see}</span> : ''}{" "} 
-
+{result1.type}
                   {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
                   {result1.code !== 'null' &&  result1.code !== null && (result1.description !== 'null' || result1.title !== 'null' || result1.alterDescription !== 'null' ||  result1.description !== undefined )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
                   <span>{result1.description !== null && result1.description !== 'null' &&  result1.description !== undefined ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ""}

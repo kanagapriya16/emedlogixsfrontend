@@ -21,7 +21,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     const fetchBooks = async () => {
       try {
         if (global.values && global.values.code !== null) {
-          const response = await fetch(`/codes/${Code}/index`, {
+          const response = await fetch(`/codes/${(global.values.code || "").replace(/[-.]/g, "")}/index`, {
             method:'GET',
             headers: {
               Authorization: `Bearer ${global.tokens} `// Replace with your actual token
@@ -49,23 +49,27 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
   
   console.log("our index is", index);
 
- 
-
-  const fetchCodeDetails = async (code) => {
+ const handleCodeClick = async (code) => {
+    global.isCodeClicked = true;
+    setClickedCode(code);
+  
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`, {
-            method:'GET',
+          `/codes/${(code || '').replace(/[-.]/g, '')}/details/?version=${global.years}`, {
+            method: 'GET',
             headers: {
-              Authorization: `Bearer ${global.tokens} `// Replace with your actual token
+              Authorization: `Bearer ${global.tokens} `
             },
           }
         );
         if (response.ok) {
           const data = await response.json();
-          setFetchedData(data);
-          setResult1(data);
+          setResults1(data);
+          global.selectedCodeDetails = data;
+          global.selectedSectionDetails = data;
+          global.selectedChapterDetails = data;
+          global.selectedCode = code;
         } else {
           console.error("Failed to fetch data");
         }
@@ -75,28 +79,7 @@ const IndexTables1 = ({ setResults1, setSelectedCode }) => {
     }
   };
 
-  console.log(result1);
 
-
-  const handleCodeClick = async (code) => {
-    global.isCodeClicked = true;
-    setClickedCode(code);
-
-    await fetchCodeDetails(code);
-    setResults1(fetchedData);
-    global.selectedCodeDetails = fetchedData;
-    global.selectedSectionDetails = fetchedData;
-    global.selectedChapterDetails = fetchedData;
-
-    global.selectedCode = code;
-    
-  };
-
-  React.useEffect(() => {
-    if (fetchedData) {
-      global.selectedCodeDetails = fetchedData;
-    }
-  }, [fetchedData]);
 
 
 const renderChildRows = (row, depthLevel = 1) => {

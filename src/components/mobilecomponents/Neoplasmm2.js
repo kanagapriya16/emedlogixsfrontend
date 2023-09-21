@@ -95,7 +95,7 @@ export default function Neoplasmm2({ onCodeClick }) {
    const Code1 = (clickedCode|| '').replace(/[-.]/g, '');
     try {
       if (code) {
-        const response = await fetch(`/codes/${code}/details/?version=${global.years}`, {
+        const response = await fetch(`/codes/${(code || "").replace(/[-.]/g, "")}/details/?version=${global.years}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${global.tokens}`,
@@ -150,10 +150,12 @@ export default function Neoplasmm2({ onCodeClick }) {
           }}
         >
           <Table
+          stickyHeader
             sx={{
               ml: "1%",
               width: "97vw",
               mt: "-8px",
+              overflowX:"scroll"
             }}
           >
             <TableHead sx={{ height: "20px", border: "1px solid grey" }}>
@@ -324,7 +326,7 @@ export default function Neoplasmm2({ onCodeClick }) {
                       </StyledTableRow>
                     ));
                   })}
-            {global.values.code === "null" &&
+    {global.values.code !== null &&
                 neo1
                   ?.filter((item) => {
                     return search.toLowerCase() === ""
