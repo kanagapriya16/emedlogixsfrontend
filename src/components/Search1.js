@@ -135,6 +135,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
             } else {
               console.error("Invalid input");
             }
+            
             setResult(combinedData);
           } else {
             setResult([]);
@@ -155,101 +156,76 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   global.values = first;
   global.words = word;
 
+//if (setIsDescriptionFetched) {
+    // window.sortOptions = (options, typedValueLower) => {
+    //   return options.sort((a, b) => {
+    //     const aTitle = (a.title || a.description || a.alterDescription || a.see || a.seealso)?? "";
+    //     const bTitle = (b.title || b.description || b.alterDescription || a.see || a.seealso )?? "";
+    //     const aLower = aTitle.toLowerCase();
+    //     const bLower = bTitle.toLowerCase();
+    //     if (aLower.startsWith(typedValueLower)) return -1;
+    //     if (bLower.startsWith(typedValueLower)) return 1;
+    //     return aLower.localeCompare(bLower);
+    //   });
+    // };
+
+
+
+
+
 if (setIsDescriptionFetched) {
-    window.sortOptions = (options, typedValueLower) => {
-      return options.sort((a, b) => {
-        const aTitle = a.title ?? "";
-        const bTitle = b.title ?? "";
-        const aLower = aTitle.toLowerCase();
-        const bLower = bTitle.toLowerCase();
-        if (aLower.startsWith(typedValueLower)) return -1;
-        if (bLower.startsWith(typedValueLower)) return 1;
-        return aLower.localeCompare(bLower);
-      });
-    };
-   
-  }
+window.sortOptions = (options, typedValue) => {
+  const typedValueLower = typedValue.toLowerCase();
+  const sanitizedTypedValue = typedValueLower.replace(/['s-]/g, '');
 
-  // function sortOptions(options) {
-  //   return options.sort((a, b) => {
-  //     if (a.type === "ismainterm") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "ismainterm") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "code") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "code") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "see") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "see") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "seealso") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "seealso") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else if (a.type === "alterTerm") {
-  //       return -1; // 'a' comes before 'b'
-  //     } else if (b.type === "alterTerm") {
-  //       return 1; // 'b' comes before 'a'
-  //     } else {
-  //       return 0; // No change in order
-  //     }
-  //   });
-  // }
-// if (setIsDescriptionFetched) {
+  return options
+ 
 
-//   function sortOptions(options, userInput) {
-//     return options.sort((a, b) => {
-//       if (a.type === "ismainterm") {
-//         return -1; // 'a' comes before 'b'
-//       } else if (b.type === "ismainterm") {
-//         return 1; // 'b' comes before 'a'
-//       } else if (a.type === "code" && b.type !== "code") {
-//         return -1; // 'a' comes before 'b'
-//       } else if (b.type === "code" && a.type !== "code") {
-//         return 1; // 'b' comes before 'a'
-//       } else if (a.type === "code" && b.type === "code") {
-       
-//         const aMatches = a.text && a.text.includes(userInput);
-//       const bMatches = b.text && b.text.includes(userInput);
 
-//         if (aMatches && !bMatches) {
-//           return -1; // 'a' comes before 'b'
-//         } else if (!aMatches && bMatches) {
-//           return 1; // 'b' comes before 'a'
-//         } else {
-       
-//           return 0;
-//         }
-//       } else if (a.type === "see") {
-//         return -1; // 'a' comes before 'b'
-//       } else if (b.type === "see") {
-//         return 1; // 'b' comes before 'a'
-//       } else if (a.type === "seealso") {
-//         return -1; // 'a' comes before 'b'
-//       } else if (b.type === "seealso") {
-//         return 1; // 'b' comes before 'a'
-//       } else if (a.type === "alterTerm") {
-//         return -1; // 'a' comes before 'b'
-//       } else if (b.type === "alterTerm") {
-//         return 1; // 'b' comes before 'a'
-//       } else {
-//         return 0; // No change in order
-//       }
-//     });
-//   }
-//   window.sortOptions = sortOptions;
-//   }
+  .sort((a, b) => {
+    // Check if either 'a' or 'b' has a type property equal to "ismainterm"
+    if (a.type === "ismainterm") {
+      return -1; // 'a' comes before 'b'
+    } else if (b.type === "ismainterm") {
+      return 1; // 'b' comes before 'a'
+    }
+
+    const aContent = `${a.title || ""} ${a.description || ""} ${a.alterDescription || ""}`;
+    const bContent = `${b.title || ""} ${b.description || ""} ${b.alterDescription || ""}`;
+    const aLower = aContent.toLowerCase();
+    const bLower = bContent.toLowerCase();
+
+    // Preprocess the content of a and b to ignore 's and hyphens
+    const aContentSanitized = aLower.replace(/['s-]/g, '');
+    const bContentSanitized = bLower.replace(/['s-]/g, '');
+
+    // Calculate how well a and b match the typed value
+    const matchScoreA = aContentSanitized.includes(sanitizedTypedValue) ? 1 : 0;
+    const matchScoreB = bContentSanitized.includes(sanitizedTypedValue) ? 1 : 0;
+
+    // Sort in descending order of match score
+    if (matchScoreA > matchScoreB) return -1;
+    if (matchScoreA < matchScoreB) return 1;
+
+    // If match scores are equal, sort alphabetically
+    return aLower.localeCompare(bLower);
+  });
+};
+}
+
+
+
+
+
 
 
  const matches = useMediaQuery("(max-width:768px)");
-const HandleClick= () =>{
-  setisNeoplasmCodeClicked(true);
+ const HandleClick= () =>{
+   setisNeoplasmCodeClicked(true);
  }
  const HandleClicks= () =>{
-  setisDrugCodeClicked(true);
- }
+   setisDrugCodeClicked(true);
+  }
 
   return (
     <>
@@ -347,7 +323,7 @@ const HandleClick= () =>{
            options={
                 isDescriptionFetched
                 
-                   ? window.sortOptions([...result], word).slice(0, 20)
+              ? window.sortOptions([...result], word).slice(0, 20)
                  : [...result].slice(0, 20)
               }
               sx={{
@@ -526,11 +502,11 @@ const HandleClick= () =>{
                   item.code || ""
                 } ${item.nemod}${item.alterDescription || ""}`
               }
-               options={
+              options={
                 isDescriptionFetched
-             
+                  
              ? window.sortOptions([...result], word).slice(0, 20)
-              : [...result].slice(0, 20)
+                  : [...result].slice(0, 20)
               }
             
               style={{
@@ -543,7 +519,7 @@ const HandleClick= () =>{
               }}
               isoptionequalToValue={(option, value) =>
                 option.description === value.description ||
-                option.see === value.see ||
+                                option.see === value.see ||
                 option.seealso === value.seealso
               }
               noOptionsText={"PLEASE ENTER VALID CODES"}

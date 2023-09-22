@@ -136,7 +136,7 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
         ) : null}
       </Box>
 
-      {global.values && global.values.code && (
+      {/* {global.values && global.values.code && (
         <div style={{ marginTop: "0px", position: "absolute" }}>
           <TextField
             sx={{
@@ -151,7 +151,7 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-      )}
+      )} */}
 
       {global.values && global.values.code && (
         <div

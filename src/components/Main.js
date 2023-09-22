@@ -98,26 +98,24 @@ export const Main = ({ refreshMain,isNeoplasmCodeClicked ,selectedItem,isDrugCod
     }
   }, [selectedCode]);
   useEffect(() => {
-   // Use a useEffect to update the state based on the selected code type
-   if (isNeoplasmCodeClicked) {
-    setActiveBtn("btn2"); // Activate the "Neoplasm" button
-    setShowTable(true); // Show the table
-    setShowIndex(false); // Hide other components if needed
-    setShowdrug(false);
-    // Hide other components if needed
-  } else if (isDrugCodeClicked) {
-    setActiveBtn("btn3"); // Activate the "Neoplasm" button
-    setShowTable(false); // Hide the table
-    setShowIndex(false); // Hide other components if needed
-    setShowdrug(true); // Show the Drug table
-  } else {
-    setActiveBtn("btn1"); // Set another button as active if needed
-    setShowTable(false);
-    setShowIndex(true);
-    setShowdrug(false);
-  }
-}, [isNeoplasmCodeClicked, isDrugCodeClicked]);
-  
+    // Use a useEffect to update the state based on the selected code type
+    if (isNeoplasmCodeClicked && !showTable) {
+      setActiveBtn("btn2"); // Activate the "Neoplasm" button
+      setShowTable(true); // Show the table
+      setShowIndex(false); // Hide other components if needed
+      setShowdrug(false);
+    } else if (isDrugCodeClicked && !showDrug) {
+      setActiveBtn("btn3"); // Activate the "Neoplasm" button
+      setShowTable(false); // Hide the table
+      setShowIndex(false);
+      setShowdrug(true); // Show the Drug table
+    } else if (!isNeoplasmCodeClicked && !isDrugCodeClicked) {
+      setActiveBtn("btn1"); // Set another button as active if needed
+      setShowTable(false);
+      setShowIndex(true);
+      setShowdrug(false);
+    }
+  }, [isNeoplasmCodeClicked, isDrugCodeClicked]);
    
  
   

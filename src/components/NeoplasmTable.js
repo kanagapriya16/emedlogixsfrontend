@@ -184,7 +184,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                 }}
               >
                 
-             <Box sx={{ width: "120px", height: "22%" }}>
+             {/* <Box sx={{ width: "120px", height: "22%" }}>
                 
                   <TextField
                     sx={{
@@ -204,7 +204,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                   />
           
                 </Box> 
-            
+             */}
               </Box>
             </TableRow>
           </TableHead>

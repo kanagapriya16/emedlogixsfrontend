@@ -138,7 +138,7 @@ const renderChildRows = (row, depthLevel = 1) => {
         ) : null}
       </Box>
 
-    {global.values && global.values.code && (
+    {/* {global.values && global.values.code && (
         <div >
           <TextField
             sx={{
@@ -153,7 +153,7 @@ const renderChildRows = (row, depthLevel = 1) => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-      )}
+      )} */}
 
       {global.values && global.values.code && (
         <div >

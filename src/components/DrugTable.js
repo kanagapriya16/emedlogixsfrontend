@@ -210,7 +210,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                           marginTop: "5%",
                         }}
                       >
-                        <Box sx={{ width: "120px", height: "22%",  }}>
+                        {/* <Box sx={{ width: "120px", height: "22%",  }}>
                           <TextField
                             sx={{
                               width: "130px",
@@ -227,7 +227,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                             placeholder="Use Filter"
                             onChange={(e) => setSearch(e.target.value)}
                           />
-                        </Box>
+                        </Box> */}
                       </Box>
                     
                   
