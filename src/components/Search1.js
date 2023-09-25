@@ -82,7 +82,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
                 console.error("Failed to fetch data from the first API");
               }
             } 
-            else if (/^[a-zA-Z]{2,}\s[a-zA-Z]{1,}\s[a-zA-Z]{1,}$/.test(word) || word.length > 3) 
+            else if (/^[a-zA-Z]{2,}$/.test(word) || word.length > 3) 
            {
         
               const response = await fetch(
@@ -156,6 +156,8 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   global.values = first;
   global.words = word;
 
+
+  
 //if (setIsDescriptionFetched) {
     // window.sortOptions = (options, typedValueLower) => {
     //   return options.sort((a, b) => {
@@ -173,53 +175,53 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
 
 
 
+
+
 if (setIsDescriptionFetched) {
-window.sortOptions = (options, typedValue) => {
-  const typedValueLower = typedValue.toLowerCase();
-  const sanitizedTypedValue = typedValueLower.replace(/['s-]/g, '');
+  window.sortOptions = (options, typedValue) => {
+    const typedValueLower = typedValue ? typedValue.toLowerCase() : "";
+    const words = typedValueLower.split(' ');
+    const sanitizedTypedValues = words.map(word => word.replace(/['s-]/g, ''));
 
-  return options
- 
+    return options.sort((a, b) => {
+      if (a.type === "ismainterm") {
+        return -1;
+      } else if (b.type === "ismainterm") {
+        return 1;
+      }
+     
+      const aContent = `${a.title || ""} ${a.description || ""} ${a.alterDescription || ""} ${a.see || ""} ${a.seealso || ""}`;
+      const bContent = `${b.title || ""} ${b.description || ""} ${b.alterDescription || ""} ${a.see || ""} ${a.seealso || ""}`;
+      const aLower = aContent.toLowerCase();
+      const bLower = bContent.toLowerCase();
 
+      const aContentSanitized = aLower.replace(/['s-]/g, '');
+      const bContentSanitized = bLower.replace(/['s-]/g, '');
 
-  .sort((a, b) => {
-    // Check if either 'a' or 'b' has a type property equal to "ismainterm"
-    if (a.type === "ismainterm") {
-      return -1; // 'a' comes before 'b'
-    } else if (b.type === "ismainterm") {
-      return 1; // 'b' comes before 'a'
-    }
+      let matchScoreA = 0;
+      let matchScoreB = 0;
 
-    const aContent = `${a.title || ""} ${a.description || ""} ${a.alterDescription || ""}`;
-    const bContent = `${b.title || ""} ${b.description || ""} ${b.alterDescription || ""}`;
-    const aLower = aContent.toLowerCase();
-    const bLower = bContent.toLowerCase();
+      // Calculate match scores for each word in the typed value
+      words.forEach((word, index) => {
+        if (aContentSanitized.includes(sanitizedTypedValues[index])) {
+          matchScoreA += 1;
+        }
+        if (bContentSanitized.includes(sanitizedTypedValues[index])) {
+          matchScoreB += 1;
+        }
+      });
 
-    // Preprocess the content of a and b to ignore 's and hyphens
-    const aContentSanitized = aLower.replace(/['s-]/g, '');
-    const bContentSanitized = bLower.replace(/['s-]/g, '');
+      // Sort in descending order of total match score
+      if (matchScoreA > matchScoreB) return -1;
+      if (matchScoreA < matchScoreB) return 1;
 
-    // Calculate how well a and b match the typed value
-    const matchScoreA = aContentSanitized.includes(sanitizedTypedValue) ? 1 : 0;
-    const matchScoreB = bContentSanitized.includes(sanitizedTypedValue) ? 1 : 0;
-
-    // Sort in descending order of match score
-    if (matchScoreA > matchScoreB) return -1;
-    if (matchScoreA < matchScoreB) return 1;
-
-    // If match scores are equal, sort alphabetically
-    return aLower.localeCompare(bLower);
-  });
+      // If match scores are equal, sort alphabetically
+      return aLower.localeCompare(bLower);
+    });
+  };
 };
-}
 
-
-
-
-
-
-
- const matches = useMediaQuery("(max-width:768px)");
+const matches = useMediaQuery("(max-width:768px)");
  const HandleClick= () =>{
    setisNeoplasmCodeClicked(true);
  }
@@ -323,7 +325,7 @@ window.sortOptions = (options, typedValue) => {
            options={
                 isDescriptionFetched
                 
-              ? window.sortOptions([...result], word).slice(0, 20)
+              ? window.sortOptions([...result], word).slice(0, 50)
                  : [...result].slice(0, 20)
               }
               sx={{
@@ -355,6 +357,30 @@ window.sortOptions = (options, typedValue) => {
                 setWord(newValue ? newValue.title : "");
                 setFirst(newValue);
                 setIsValueSelected(true);
+                // Check if newValue has "Neoplasm," "Leukemia," or "Cancer" in seealso or see properties
+                if (
+                  newValue?.seealso?.includes("Neoplasm") ||
+                  newValue?.see?.includes("Neoplasm") ||
+                  newValue?.seealso?.includes("Leukemia") ||
+                  newValue?.see?.includes("Leukemia") ||
+                  newValue?.seealso?.includes("Cancer") ||
+                  newValue?.see?.includes("Cancer")
+                ) {
+                  setisNeoplasmCodeClicked(true);
+                  setisDrugCodeClicked(false);
+                } else if (
+                  newValue?.seealso?.includes("Drugs") ||
+                  newValue?.see?.includes("Drugs") ||
+                  newValue?.seealso?.includes("Poisoning") ||
+                  newValue?.see?.includes("Poisoning")
+                ) {
+                  setisDrugCodeClicked(true);
+                  setisNeoplasmCodeClicked(false);
+                } else {
+                  // If none of the conditions are met, set both flags to false
+                  setisNeoplasmCodeClicked(false);
+                  setisDrugCodeClicked(false);
+                }
               }}
               autoSelect
               renderInput={(params) => (
@@ -505,8 +531,8 @@ window.sortOptions = (options, typedValue) => {
               options={
                 isDescriptionFetched
                   
-             ? window.sortOptions([...result], word).slice(0, 20)
-                  : [...result].slice(0, 20)
+             ? window.sortOptions([...result], word).slice(0, 100)
+                  : [...result].slice(0, 100)
               }
             
               style={{
@@ -540,6 +566,30 @@ window.sortOptions = (options, typedValue) => {
                 setWord(newValue ? newValue.title : "");
                 setFirst(newValue);
                 setIsValueSelected(true);
+                // Check if newValue has "Neoplasm," "Leukemia," or "Cancer" in seealso or see properties
+                if (
+                  newValue?.seealso?.includes("Neoplasm") ||
+                  newValue?.see?.includes("Neoplasm") ||
+                  newValue?.seealso?.includes("Leukemia") ||
+                  newValue?.see?.includes("Leukemia") ||
+                  newValue?.seealso?.includes("Cancer") ||
+                  newValue?.see?.includes("Cancer")
+                ) {
+                  setisNeoplasmCodeClicked(true);
+                  setisDrugCodeClicked(false);
+                } else if (
+                  newValue?.seealso?.includes("Drugs") ||
+                  newValue?.see?.includes("Drugs") ||
+                  newValue?.seealso?.includes("Poisoning") ||
+                  newValue?.see?.includes("Poisoning")
+                ) {
+                  setisDrugCodeClicked(true);
+                  setisNeoplasmCodeClicked(false);
+                } else {
+                  // If none of the conditions are met, set both flags to false
+                  setisNeoplasmCodeClicked(false);
+                  setisDrugCodeClicked(false);
+                }
               }}
               autoSelect
               renderInput={(params) => (
@@ -575,7 +625,7 @@ window.sortOptions = (options, typedValue) => {
                 borderBottom: '1px solid blue',
                 cursor: 'pointer', 
               }}onClick={HandleClicks}>seealso:{result1.seealso}</span> : ''}{" "} 
-                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
+                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs" ) && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
              
                 borderBottom: '1px solid blue',
