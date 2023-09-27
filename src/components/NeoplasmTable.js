@@ -184,27 +184,7 @@ export default function NeoplasmTable({ setResults1, setSelectedCode }) {
                 }}
               >
                 
-             {/* <Box sx={{ width: "120px", height: "22%" }}>
-                
-                  <TextField
-                    sx={{
-                      width: "130px",
-                      "& input": {
-                        height: "10px",
-                        bgcolor: "background.paper",
-
-                        color: (theme) =>
-                          theme.palette.getContrastText(
-                            theme.palette.background.paper
-                          ),
-                      },
-                    }}
-                    placeholder="Use Filter"
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-          
-                </Box> 
-             */}
+           
               </Box>
             </TableRow>
           </TableHead>

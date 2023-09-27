@@ -138,22 +138,7 @@ const renderChildRows = (row, depthLevel = 1) => {
         ) : null}
       </Box>
 
-    {/* {global.values && global.values.code && (
-        <div >
-          <TextField
-            sx={{
-              width: "120px",
-              "& input": {
-                height: "4px",
-                color: (theme) =>
-                  theme.palette.getContrastText(theme.palette.background.paper),
-              },
-            }}
-            placeholder=" Use Filter"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      )} */}
+
 
       {global.values && global.values.code && (
         <div >

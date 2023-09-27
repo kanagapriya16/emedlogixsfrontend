@@ -210,24 +210,7 @@ export default function DrugTable({ setResults1, setSelectedCode }) {
                           marginTop: "5%",
                         }}
                       >
-                        {/* <Box sx={{ width: "120px", height: "22%",  }}>
-                          <TextField
-                            sx={{
-                              width: "130px",
-                              "& input": {
-                                height: "10px",
-                                bgcolor: "background.paper",
-                                marginTop: "-5%",
-                                color: (theme) =>
-                                  theme.palette.getContrastText(
-                                    theme.palette.background.paper
-                                  ),
-                              },
-                            }}
-                            placeholder="Use Filter"
-                            onChange={(e) => setSearch(e.target.value)}
-                          />
-                        </Box> */}
+                  
                       </Box>
                     
                   

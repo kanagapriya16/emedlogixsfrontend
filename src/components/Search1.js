@@ -9,7 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import { Main } from "./Main";
-import { BlindsClosed } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
  
@@ -55,7 +54,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
 
 
   useEffect(() => {
-   //const getdataAftertimeout = setTimeout(() => {
+ 
  
       global.inatbleresult = null;
   
@@ -146,8 +145,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
       };
   
       fetchBooks();
-  //  }, 600);
-  //  return () => clearTimeout(getdataAftertimeout);
+
   }, [word]);
   console.log(result)
 
@@ -156,78 +154,41 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   global.values = first;
   global.words = word;
 
-
-  
-//if (setIsDescriptionFetched) {
-    // window.sortOptions = (options, typedValueLower) => {
-    //   return options.sort((a, b) => {
-    //     const aTitle = (a.title || a.description || a.alterDescription || a.see || a.seealso)?? "";
-    //     const bTitle = (b.title || b.description || b.alterDescription || a.see || a.seealso )?? "";
-    //     const aLower = aTitle.toLowerCase();
-    //     const bLower = bTitle.toLowerCase();
-    //     if (aLower.startsWith(typedValueLower)) return -1;
-    //     if (bLower.startsWith(typedValueLower)) return 1;
-    //     return aLower.localeCompare(bLower);
-    //   });
-    // };
-
-
-
-
-
-
-
 if (setIsDescriptionFetched) {
+
   window.sortOptions = (options, typedValue) => {
     const typedValueLower = typedValue ? typedValue.toLowerCase() : "";
-    const words = typedValueLower.split(' ');
-    const sanitizedTypedValues = words.map(word => word.replace(/['s-]/g, ''));
-
+    const sanitizedTypedValue = typedValueLower.replace(/['s-]/g, '');
+    
     return options.sort((a, b) => {
-      if (a.type === "ismainterm") {
-        return -1;
-      } else if (b.type === "ismainterm") {
-        return 1;
-      }
-     
-      const aContent = `${a.title || ""} ${a.description || ""} ${a.alterDescription || ""} ${a.see || ""} ${a.seealso || ""}`;
-      const bContent = `${b.title || ""} ${b.description || ""} ${b.alterDescription || ""} ${a.see || ""} ${a.seealso || ""}`;
-      const aLower = aContent.toLowerCase();
-      const bLower = bContent.toLowerCase();
-
+      const aTitle = (a.title || a.description || a.alterDescription || a.see || a.seealso) ?? "";
+      const bTitle = (b.title || b.description || b.alterDescription || b.see || b.seealso) ?? "";
+      const aLower = aTitle.toLowerCase();
+      const bLower = bTitle.toLowerCase();
       const aContentSanitized = aLower.replace(/['s-]/g, '');
       const bContentSanitized = bLower.replace(/['s-]/g, '');
-
-      let matchScoreA = 0;
-      let matchScoreB = 0;
-
-      // Calculate match scores for each word in the typed value
-      words.forEach((word, index) => {
-        if (aContentSanitized.includes(sanitizedTypedValues[index])) {
-          matchScoreA += 1;
-        }
-        if (bContentSanitized.includes(sanitizedTypedValues[index])) {
-          matchScoreB += 1;
-        }
-      });
-
-      // Sort in descending order of total match score
-      if (matchScoreA > matchScoreB) return -1;
-      if (matchScoreA < matchScoreB) return 1;
-
-      // If match scores are equal, sort alphabetically
-      return aLower.localeCompare(bLower);
+  
+      // Check if any part of the user-typed value matches with "ismainTerm" options
+      const matchesA = a.type === "ismainterm" && aContentSanitized.includes(sanitizedTypedValue);
+      const matchesB = b.type === "ismainterm" && bContentSanitized.includes(sanitizedTypedValue);
+  
+      if (matchesA && !matchesB) return -1;
+      if (matchesB && !matchesA) return 1;
+  
+      if (aContentSanitized.startsWith(sanitizedTypedValue)) return -1;
+      if (bContentSanitized.startsWith(sanitizedTypedValue)) return 1;
+  
+      return aContentSanitized.localeCompare(bContentSanitized);
     });
   };
+ 
 };
 
 const matches = useMediaQuery("(max-width:768px)");
- const HandleClick= () =>{
-   setisNeoplasmCodeClicked(true);
- }
- const HandleClicks= () =>{
-   setisDrugCodeClicked(true);
-  }
+function handleclick(){
+
+}
+
 
   return (
     <>
@@ -269,7 +230,7 @@ const matches = useMediaQuery("(max-width:768px)");
                         ? selectedItem.alterDescription
                         : ""
                     } ${
-                      selectedItem.title !== null && selectedItem.title !== "null" && selectedItem.title !== undefined
+                      selectedItem.title !== null && selectedItem.title !== "null" && selectedItem.title !== undefined 
                         ? selectedItem.title
                         : ""
                     } ${
@@ -282,7 +243,7 @@ const matches = useMediaQuery("(max-width:768px)");
                         : ""
                     }`
                   : word
-              }
+      }
               onKeyDown={(event) => {
                 if (event.key === "Backspace") {
                   setSelectedItem(null);
@@ -325,8 +286,8 @@ const matches = useMediaQuery("(max-width:768px)");
            options={
                 isDescriptionFetched
                 
-              ? window.sortOptions([...result], word).slice(0, 50)
-                 : [...result].slice(0, 20)
+              ? window.sortOptions([...result], word).slice(0, 30)
+                 : [...result].slice(0, 30)
               }
               sx={{
                 "& .MuiOutlinedInput-notchedOutline": {
@@ -357,7 +318,7 @@ const matches = useMediaQuery("(max-width:768px)");
                 setWord(newValue ? newValue.title : "");
                 setFirst(newValue);
                 setIsValueSelected(true);
-                // Check if newValue has "Neoplasm," "Leukemia," or "Cancer" in seealso or see properties
+                
                 if (
                   newValue?.seealso?.includes("Neoplasm") ||
                   newValue?.see?.includes("Neoplasm") ||
@@ -377,7 +338,7 @@ const matches = useMediaQuery("(max-width:768px)");
                   setisDrugCodeClicked(true);
                   setisNeoplasmCodeClicked(false);
                 } else {
-                  // If none of the conditions are met, set both flags to false
+        
                   setisNeoplasmCodeClicked(false);
                   setisDrugCodeClicked(false);
                 }
@@ -402,34 +363,81 @@ const matches = useMediaQuery("(max-width:768px)");
               
                 <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title && (result1.code !== 'null' || result1.seealso !== 'null') ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
-                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `seealso:${result1.seealso}` : ''}
-                 {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && result1.seealso.includes("Neoplasm")? <span style={{
-               
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }} onClick={HandleClick}>seealso:{result1.seealso}</span> : '' }
-                   { result1.seealso !== 'null' && result1.seealso !== undefined  && result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm") ? <span style={{
-            
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }}onClick={HandleClicks}>seealso:{result1.seealso}</span> : ''}{" "} 
-                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
-                  {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
-             
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }} onClick={HandleClick} >see:{result1.see}</span> : '' }
-                   { result1.see !== 'null' && result1.see !== undefined  && result1.see.includes("Drugs") && !result1.see.includes("Neoplasm") ? <span style={{
-           
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }}onClick={HandleClicks}>see:{result1.see}</span> : ''}{" "} 
-
-                  {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
-                  {result1.code !== 'null' &&  result1.code !== null && (result1.description !== 'null' || result1.title !== 'null' || result1.alterDescription !== 'null' ||  result1.description !== undefined )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
-                  <span>{result1.description !== null && result1.description !== 'null' &&  result1.description !== undefined ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ""}
-                  {" "}{result1.description !== null && result1.description !== 'null' &&  result1.description !== undefined ? result1.description : ""}</span>
+                  <span>
+                    {result1.title && (result1.code !== 'null' || result1.seealso !== 'null') ? result1.title + " " : ''}{" "}
+                    {result1.description !== 'null' ? result1.description : ''}{" "}
+                    {result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
+                    {result1.seealso !== 'null' && result1.seealso !== undefined && !(
+                      result1.seealso.includes("Drugs") || result1.seealso.includes("Poisoning")
+                    ) && !(
+                      result1.seealso.includes("Neoplasm") || result1.seealso.includes("Leukemia") || result1.seealso.includes("cancer")
+                    ) ? (
+                      <span style={{
+                   
+                        cursor: 'pointer', 
+                      }}>seealso:{result1.seealso}</span>
+                    ) : ''}
+                    {result1.seealso !== 'null' && result1.seealso !== undefined && !(
+                      result1.seealso.includes("Drugs") || result1.seealso.includes("Poisoning")
+                    ) && (
+                      result1.seealso.includes("Neoplasm") || result1.seealso.includes("Leukemia") || result1.seealso.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>seealso:{result1.seealso}</span>
+                    ) : ''}
+                    {result1.seealso !== 'null' && result1.seealso !== undefined && (
+                      result1.seealso.includes("Drugs") || result1.seealso.includes("Poisoning")
+                    ) && !(
+                      result1.seealso.includes("Neoplasm") || result1.seealso.includes("Leukemia") || result1.seealso.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>seealso:{result1.seealso}</span>
+                    ) : ''}{" "}
+                    {result1.see !== 'null' && result1.see !== undefined && !(
+                      result1.see.includes("Drugs") || result1.see.includes("Poisoning")
+                    ) && !(
+                      result1.see.includes("Neoplasm") || result1.see.includes("Leukemia") || result1.see.includes("cancer")
+                    ) ? (
+                      `see:${result1.see}`
+                    ) : ''}
+                    {result1.see !== 'null' && result1.see !== undefined && !(
+                      result1.see.includes("Drugs") || result1.see.includes("Poisoning")
+                    ) && (
+                      result1.see.includes("Neoplasm") || result1.see.includes("Leukemia") || result1.see.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>see:{result1.see}</span>
+                    ) : ''}
+                    {result1.see !== 'null' && result1.see !== undefined && (
+                      result1.see.includes("Drugs") || result1.see.includes("Poisoning")
+                    ) && !(
+                      result1.see.includes("Neoplasm") || result1.see.includes("Leukemia") || result1.see.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>see:{result1.see}</span>
+                    ) : ''}{" "}
+                    {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
+                    {result1.code !== 'null' && result1.code !== null && (
+                      result1.description !== 'null' || result1.title !== 'null' || result1.alterDescription !== 'null' || result1.description !== undefined
+                    ) ? (
+                      <span style={{ color: 'blue' }}>{result1.code}</span>
+                    ) : ''}
+                  </span>
+                ) : (
+                  <span>
+                    {result1.description !== null && result1.description !== 'null' && result1.description !== undefined ? (
+                      <span style={{ color: 'blue' }}>{result1.code}</span>
+                    ) : ""}
+                    {" "}{result1.description !== null && result1.description !== 'null' && result1.description !== undefined ? result1.description : ""}
+                  </span>
                 )}
               </Box>
               )}
@@ -444,7 +452,7 @@ const matches = useMediaQuery("(max-width:768px)");
             ml: "130px",
           }}
         >
-          <Box
+          <Box 
             sx={{ margin: "auto", color: "black", mt: "20px" }}
             direction="column"
             gap={5}
@@ -487,7 +495,7 @@ const matches = useMediaQuery("(max-width:768px)");
                         : ""
                     }`
                   : word
-              }
+      }
               onKeyDown={(event) => {
                 if (event.key === "Backspace") {
                   setSelectedItem(null);
@@ -531,8 +539,8 @@ const matches = useMediaQuery("(max-width:768px)");
               options={
                 isDescriptionFetched
                   
-             ? window.sortOptions([...result], word).slice(0, 100)
-                  : [...result].slice(0, 100)
+             ? window.sortOptions([...result], word).slice(0, 50)
+                  : [...result].slice(0, 50)
               }
             
               style={{
@@ -566,7 +574,7 @@ const matches = useMediaQuery("(max-width:768px)");
                 setWord(newValue ? newValue.title : "");
                 setFirst(newValue);
                 setIsValueSelected(true);
-                // Check if newValue has "Neoplasm," "Leukemia," or "Cancer" in seealso or see properties
+     
                 if (
                   newValue?.seealso?.includes("Neoplasm") ||
                   newValue?.see?.includes("Neoplasm") ||
@@ -586,10 +594,11 @@ const matches = useMediaQuery("(max-width:768px)");
                   setisDrugCodeClicked(true);
                   setisNeoplasmCodeClicked(false);
                 } else {
-                  // If none of the conditions are met, set both flags to false
+                  
                   setisNeoplasmCodeClicked(false);
                   setisDrugCodeClicked(false);
                 }
+               
               }}
               autoSelect
               renderInput={(params) => (
@@ -613,34 +622,81 @@ const matches = useMediaQuery("(max-width:768px)");
                 
                 <Box {...props} key={result.id}>
                 {isDescriptionFetched ? (
-                  <span>{result1.title && (result1.code !== 'null' || result1.seealso !== 'null') ? result1.title + " " : ''}{" "}{result1.description !== 'null' ? result1.description : ''}{" "}{result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
-                   {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm")? `seealso:${result1.seealso}` : ''}
-                 {result1.seealso !== 'null' && result1.seealso !== undefined &&  !result1.seealso.includes("Drugs") && result1.seealso.includes("Neoplasm")? <span style={{
-               
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }} onClick={HandleClick}>seealso:{result1.seealso}</span> : '' }
-                   { result1.seealso !== 'null' && result1.seealso !== undefined  && result1.seealso.includes("Drugs") && !result1.seealso.includes("Neoplasm") ? <span style={{
-            
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }}onClick={HandleClicks}>seealso:{result1.seealso}</span> : ''}{" "} 
-                   {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs" ) && !result1.see.includes("Neoplasm")? `see:${result1.see}` : ''}
-                  {result1.see !== 'null' && result1.see !== undefined &&  !result1.see.includes("Drugs") && result1.see.includes("Neoplasm")? <span style={{
-             
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }} onClick={HandleClick} >see:{result1.see}</span> : '' }
-                   { result1.see !== 'null' && result1.see !== undefined  && result1.see.includes("Drugs") && !result1.see.includes("Neoplasm") ? <span style={{
-           
-                borderBottom: '1px solid blue',
-                cursor: 'pointer', 
-              }}onClick={HandleClicks}>see:{result1.see}</span> : ''}{" "} 
-
-                  {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
-                  {result1.code !== 'null' &&  result1.code !== null && (result1.description !== 'null' || result1.title !== 'null' || result1.alterDescription !== 'null' ||  result1.description !== undefined )?(<span style={{ color: 'blue' }}>{result1.code}</span>) : ('')}</span>) : (
-                  <span>{result1.description !== null && result1.description !== 'null' &&  result1.description !== undefined ? (<span style={{ color: 'blue' }}>{result1.code}</span>) : ""}
-                  {" "}{result1.description !== null && result1.description !== 'null' &&  result1.description !== undefined ? result1.description : ""}</span>
+                  <span>
+                    {result1.title && (result1.code !== 'null' || result1.seealso !== 'null') ? result1.title + " " : ''}{" "}
+                    {result1.description !== 'null' ? result1.description : ''}{" "}
+                    {result1.alterDescription !== 'null' ? result1.alterDescription : ''}{" "}
+                    {result1.seealso !== 'null' && result1.seealso !== undefined && !(
+                      result1.seealso.includes("Drugs") || result1.seealso.includes("Poisoning")
+                    ) && !(
+                      result1.seealso.includes("Neoplasm") || result1.seealso.includes("Leukemia") || result1.seealso.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        
+                        cursor: 'pointer', 
+                      }}onClick={handleclick(result1.seealso)}>seealso:{result1.seealso}</span>
+                    ) : ''}
+                    {result1.seealso !== 'null' && result1.seealso !== undefined && !(
+                      result1.seealso.includes("Drugs") || result1.seealso.includes("Poisoning")
+                    ) && (
+                      result1.seealso.includes("Neoplasm") || result1.seealso.includes("Leukemia") || result1.seealso.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>seealso:{result1.seealso}</span>
+                    ) : ''}
+                    {result1.seealso !== 'null' && result1.seealso !== undefined && (
+                      result1.seealso.includes("Drugs") || result1.seealso.includes("Poisoning")
+                    ) && !(
+                      result1.seealso.includes("Neoplasm") || result1.seealso.includes("Leukemia") || result1.seealso.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>seealso:{result1.seealso}</span>
+                    ) : ''}{" "}
+                    {result1.see !== 'null' && result1.see !== undefined && !(
+                      result1.see.includes("Drugs") || result1.see.includes("Poisoning")
+                    ) && !(
+                      result1.see.includes("Neoplasm") || result1.see.includes("Leukemia") || result1.see.includes("cancer")
+                    ) ? (
+                      `see:${result1.see}`
+                    ) : ''}
+                    {result1.see !== 'null' && result1.see !== undefined && !(
+                      result1.see.includes("Drugs") || result1.see.includes("Poisoning")
+                    ) && (
+                      result1.see.includes("Neoplasm") || result1.see.includes("Leukemia") || result1.see.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>see:{result1.see}</span>
+                    ) : ''}
+                    {result1.see !== 'null' && result1.see !== undefined && (
+                      result1.see.includes("Drugs") || result1.see.includes("Poisoning")
+                    ) && !(
+                      result1.see.includes("Neoplasm") || result1.see.includes("Leukemia") || result1.see.includes("cancer")
+                    ) ? (
+                      <span style={{
+                        borderBottom: '1px solid blue',
+                        cursor: 'pointer', 
+                      }}>see:{result1.see}</span>
+                    ) : ''}{" "}
+                    {result1.nemod !== 'null' ? result1.nemod : ''}{" "}
+                    {result1.code !== 'null' && result1.code !== null && (
+                      result1.description !== 'null' || result1.title !== 'null' || result1.alterDescription !== 'null' || result1.description !== undefined
+                    ) ? (
+                      <span style={{ color: 'blue' }}>{result1.code}</span>
+                    ) : ''}
+                  </span>
+                ) : (
+                  <span>
+                    {result1.description !== null && result1.description !== 'null' && result1.description !== undefined ? (
+                      <span style={{ color: 'blue' }}>{result1.code}</span>
+                    ) : ""}
+                    {" "}{result1.description !== null && result1.description !== 'null' && result1.description !== undefined ? result1.description : ""}
+                  </span>
                 )}
               </Box>
                

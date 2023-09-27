@@ -136,22 +136,7 @@ const IndexTables1m = ({ setResults1, setSelectedCode }) => {
         ) : null}
       </Box>
 
-      {/* {global.values && global.values.code && (
-        <div style={{ marginTop: "0px", position: "absolute" }}>
-          <TextField
-            sx={{
-              width: "120px",
-              "& input": {
-                height: "4px",
-                color: (theme) =>
-                  theme.palette.getContrastText(theme.palette.background.paper),
-              },
-            }}
-            placeholder=" Use Filter"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      )} */}
+    
 
       {global.values && global.values.code && (
         <div
