@@ -175,8 +175,8 @@ if (setIsDescriptionFetched) {
       if (matchesA && !matchesB) return -1;
       if (matchesB && !matchesA) return 1;
   
-      if (aContentSanitized.startsWith(sanitizedTypedValue)) return -1;
-      if (bContentSanitized.startsWith(sanitizedTypedValue)) return 1;
+     if (aContentSanitized === sanitizedTypedValue) return -1;
+      if (bContentSanitized === sanitizedTypedValue) return 1;
   
       return aContentSanitized.localeCompare(bContentSanitized);
     });
