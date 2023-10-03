@@ -36,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     height: 1,
   },
 }));
-export default function Drug1({ onCodeClick }) {
+export default function Drug1({ onCodeClick ,filterText}) {
   console.log("neo enter");
   const [drug, setDrug] = useState(null);
   const [drug1, setDrug1] = useState(null);
@@ -89,7 +89,21 @@ export default function Drug1({ onCodeClick }) {
     }
   }
 
+  const filteredDrug = drug
+  ?.filter((item) => {
+    return (
+      filterText.toLowerCase() === "" ||
+      item.title.toLowerCase().includes(filterText.toLowerCase())
+    );
+  });
 
+const filteredDrug1 = drug1
+  ?.filter((item) => {
+    return (
+      filterText.toLowerCase() === "" ||
+      item.title.toLowerCase().includes(filterText.toLowerCase())
+    );
+  });
   const handleCodeClick = async (code) => {
     setClickedCode(code);
     console.log(clickedCode);
@@ -128,26 +142,7 @@ export default function Drug1({ onCodeClick }) {
   };
   return (
     <>
-    <Box sx={{ width: "120px", height: "22%",  mt:"-47px" ,ml:"5px",color:"red",backgroundColor:"red"}}>
-                
-                <TextField
-                  sx={{
-                    width: "130px",
-                    "& input": {
-                      height: "10px",
-                      bgcolor: "background.paper",
-
-                      color: (theme) =>
-                        theme.palette.getContrastText(
-                          theme.palette.background.paper
-                        ),
-                    },
-                  }}
-                  placeholder="Use Filter"
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-        
-              </Box> 
+    
    
           {" "}
           <TableContainer
@@ -258,14 +253,8 @@ export default function Drug1({ onCodeClick }) {
               </TableHead>
               <TableBody>
               {global.values.code !== null &&
-                  drug
-                    ?.filter((item) => {
-                      return (
-                        search.toLowerCase() === "" ||
-                        item.title.toLowerCase().includes(search)
-                      );
-                    })
-                    .map((row) => {
+  filteredDrug
+    ?.map((row) => {
                       const hasValidParentCode =
                         row.code && row.code[0] !== "null";
                       const hasValidChildCode =
@@ -355,42 +344,39 @@ export default function Drug1({ onCodeClick }) {
                         </StyledTableRow>
                       ));
                     })}
-                 {global.values.code !== null &&
-                  drug1
-                    ?.filter((item) => {
-                      return search.toLowerCase() === ""
-                        ? item
-                        : item.title.toLowerCase().includes(search);
-                    })
-                    .map((row) => (
-                      <StyledTableRow key={row.id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.title}
-                        </StyledTableCell>
-                        {row.code.map((value, index) => (
-                          <StyledTableCell
-                            key={index}
-                            sx={{
-                              border: "1px solid grey",
-                            }}
-                            align="center"
-                          >
-                            {value !== "--" ? (
-                              <a
-                                style={{
-                                  borderBottom: "0.5px solid blue",
-                                }}
-                                onClick={() => handleCodeClick(value)}
-                              >
-                                {value}
-                              </a>
-                            ) : (
-                              "--"
-                            )}
-                          </StyledTableCell>
-                        ))}
-                      </StyledTableRow>
-                    ))}
+                {global.values.code !== null &&
+  filteredDrug1
+    ?.map((row) => {
+      return (
+        <StyledTableRow key={row.id}>
+          <StyledTableCell component="th" scope="row">
+            {row.title}
+          </StyledTableCell>
+          {row.code.map((value, index) => (
+            <StyledTableCell
+              key={index}
+              sx={{
+                border: "1px solid grey",
+              }}
+              align="center"
+            >
+              {value !== "--" ? (
+                <a
+                  style={{
+                    borderBottom: "0.5px solid blue",
+                  }}
+                  onClick={() => handleCodeClick(value)}
+                >
+                  {value}
+                </a>
+              ) : (
+                "--"
+              )}
+            </StyledTableCell>
+          ))}
+        </StyledTableRow>
+      );
+    })}
               </TableBody>
               {isLoading && <Loads />}
               {global.values?.code !== null && drug && drug.length === 0 && (

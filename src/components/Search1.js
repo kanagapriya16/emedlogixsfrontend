@@ -86,6 +86,7 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
         
               const response = await fetch(
                 `/codes/index/search/name?name=${word}&mainTermSearch=true`,
+            // `/codes/index/search/combined?name=${word}&mainTermSearch=true`,
                 {
                   method:'GET',
                   headers: {

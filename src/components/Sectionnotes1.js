@@ -86,7 +86,7 @@ const Sectionnotes1 = ({ onCodeClick }) => {
     try {
       if (code) {
         const response = await fetch(
-          `/codes/${code}/details/?version=${global.years}`, {
+          `/codes/${(code || '').replace(/[-.]/g, '')}/details/?version=${global.years}`, {
             method:'GET',
             headers: {
               Authorization: `Bearer ${global.tokens} `// Replace with your actual token

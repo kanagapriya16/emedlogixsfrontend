@@ -11,8 +11,10 @@ const Codedet = () => {
   const [isClosed, setIsClosed] = useState(false);
   console.log(global.results);
   console.log(global.values.code);
+  console.log(global.seealsocode)
 
-  const Code = (global.values?.code || '').replace(/[-.]/g, '');
+ 
+const Code = (global.values?.code || '').replace(/[-.]/g, '');
 
   useEffect(() => {
     if (global.selectedCodeDetails) {
