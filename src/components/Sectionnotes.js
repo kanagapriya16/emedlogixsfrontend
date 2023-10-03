@@ -135,6 +135,35 @@ const Sectionnotes = () => {
             </tbody>
           </table>
         ) : null}
+             { results?.section?.sevenChrDef ? (
+           
+          <table className="table1" border="1">
+            <thead>
+              <tr>
+                <th className="tablees" rowSpan="2">
+                  <h4>7th Char</h4>
+                </th>
+                <th className="tablees" rowSpan="2">
+                <h4>Description</h4>
+                </th>
+              </tr>
+              
+            </thead>
+            <tbody>
+            {
+            results.section.sevenChrDef.extensionList.map((charac)=>{
+return(
+  <tr key ={charac.charValue}>
+    <td className="tablees">{charac.charValue}</td>
+    <td className="tablees">{charac.extensionValue}</td>
+
+  </tr>
+)
+            })
+          }
+            </tbody>
+          </table>
+        ) : null}
       </div>
     </div>
   );

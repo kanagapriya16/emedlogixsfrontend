@@ -155,6 +155,10 @@ const [isDrugCodeClicked, setisDrugCodeClicked] = useState(false);
   global.values = first;
   global.words = word;
 
+
+
+
+
 if (setIsDescriptionFetched) {
 
   window.sortOptions = (options, typedValue) => {
